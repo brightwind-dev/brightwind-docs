@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>load.load &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Structure.html">Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute.html">How to contribute?</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <h1>Source code for load.load</h1><div class="highlight"><pre>
+<span></span><span class="c1">#     brightwind is a library that provides wind analysts with easy to use tools for working with meteorological data.</span>
+<span class="c1">#     Copyright (C) 2018 Stephen Holleran, Inder Preet</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is free software: you can redistribute it and/or modify</span>
+<span class="c1">#     it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">#     the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">#     (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is distributed in the hope that it will be useful,</span>
+<span class="c1">#     but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">#     GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1">#     You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">#     along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;load_csv&#39;</span><span class="p">,</span> <span class="s1">&#39;load_campbell_scientific&#39;</span><span class="p">,</span> <span class="s1">&#39;load_excel&#39;</span><span class="p">,</span> <span class="s1">&#39;load_brightdata&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_list_files</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">file_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of file names retrieved from a folder filtering for a specific list of file types. This will walk</span>
+<span class="sd">    through all subfolders.</span>
+
+<span class="sd">    :param folder_path: The path to the folder to search through.</span>
+<span class="sd">    :type folder_path: str</span>
+<span class="sd">    :param file_type: Is a list of file extensions to filter for e.g. [&#39;.csv&#39;, &#39;.txt&#39;]</span>
+<span class="sd">    :type file_type: List[str]</span>
+<span class="sd">    :return: List of file names with the full folder path.</span>
+<span class="sd">    :rtype: List[str]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">file_type</span><span class="p">:</span>
+                <span class="n">files_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">files_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="s1">&#39;Not valid folder.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">files_list</span>
+
+
+<span class="k">def</span> <span class="nf">_assemble_df_from_folder</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">function_to_get_df</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble a dataframe from from multiple data files scattered in subfolders filtering for a</span>
+<span class="sd">    specific list of file types and reading those files with a specific function.</span>
+
+<span class="sd">    :param source_folder: Is the main folder to search through.</span>
+<span class="sd">    :type source_folder: str</span>
+<span class="sd">    :param file_type: Is a list of file extensions to filter for e.g. [&#39;.csv&#39;, &#39;.txt&#39;]</span>
+<span class="sd">    :type file_type: List[str]</span>
+<span class="sd">    :param function_to_get_df: The function to call to read each data file into a dataframe.</span>
+<span class="sd">    :type function_to_get_df: python function</span>
+<span class="sd">    :param print_progress: If you want print out statements of the files been processed set to true. Default is False.</span>
+<span class="sd">    :type print_progress: bool, default False</span>
+<span class="sd">    :param kwargs: All the kwargs that can be passed to this function.</span>
+<span class="sd">    :return: A dataframe with timestamps as it&#39;s index</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_list</span> <span class="o">=</span> <span class="n">_list_files</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">assembled_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">function_to_get_df</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">assembled_df</span> <span class="o">=</span> <span class="n">assembled_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_progress</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> file read and appended&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+        <span class="n">ctr</span> <span class="o">=</span> <span class="n">ctr</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">print_progress</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Processed </span><span class="si">{0}</span><span class="s1"> files&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ctr</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">assembled_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_is_file</span><span class="p">(</span><span class="n">file_or_folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns True is file_or_folder is a file.</span>
+<span class="sd">    :param file_or_folder: The file or folder path.</span>
+<span class="sd">    :type file_or_folder: str</span>
+<span class="sd">    :return: True if a file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_or_folder</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">file_or_folder</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;File or folder doesn&#39;t seem to exist.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_pandas_read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper function around the Pandas read_csv function.</span>
+<span class="sd">    :param filepath: The file to read.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :param kwargs: Extra key word arguments to be applied.</span>
+<span class="sd">    :return: A pandas dataframe.</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">error</span>
+
+
+<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../load.html#load.load.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load timeseries data from a csv file, or group of files in a folder, into a dataframe.</span>
+<span class="sd">    The format of the csv file should be column headings in the first row with the timestamp column as the first</span>
+<span class="sd">    column, however these can be over written by sending your own arguments as this is a wrapper around the</span>
+<span class="sd">    pandas.read_csv function. The pandas.read_csv documentation can be found at:</span>
+<span class="sd">    https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</span>
+
+<span class="sd">    :param filepath_or_folder: Location of the file folder containing the timeseries data.</span>
+<span class="sd">    :type filepath_or_folder: str</span>
+<span class="sd">    :param search_by_file_type: Is a list of file extensions to search for e.g. [&#39;.csv&#39;, &#39;.txt&#39;] if a folder is sent.</span>
+<span class="sd">    :type search_by_file_type: List[str], default .csv</span>
+<span class="sd">    :param print_progress: If you want to print out statements of the file been processed set to True. Default is False.</span>
+<span class="sd">    :type print_progress: bool, default False</span>
+<span class="sd">    :param kwargs: All the kwargs from pandas.read_csv can be passed to this function.</span>
+<span class="sd">    :return: A dataframe with timestamps as it&#39;s index.</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+
+<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    duplicates and throws an error if any found.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        filepath = r&#39;C:\\some\\folder\\some_data2.csv&#39;</span>
+<span class="sd">        df = bw.load_csv(filepath)</span>
+<span class="sd">        print(df)</span>
+
+<span class="sd">    To load a group of files from a folder other than a .csv file type::</span>
+
+<span class="sd">        folder = r&#39;C:\\some\\folder\\with\\txt\\files&#39;</span>
+<span class="sd">        df = bw.load_csv(folder, search_by_file_type=[&#39;.txt&#39;], print_progress=True)</span>
+
+<span class="sd">    If you want to load something that is different from a standard file where the column headings are not in the first</span>
+<span class="sd">    row, the pandas.read_csv key word arguments (kwargs) can be used::</span>
+
+<span class="sd">        filepath = r&#39;C:\\some\\folder\\some_data_with_column_headings_on_second_line.csv&#39;</span>
+<span class="sd">        df = bw.load_csv(filepath, skiprows=[0])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">is_file</span> <span class="o">=</span> <span class="n">_is_file</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">)</span>
+    <span class="n">fn_arguments</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;parse_dates&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="n">merged_fn_args</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">fn_arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_pandas_read_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_assemble_df_from_folder</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="p">,</span> <span class="n">_pandas_read_csv</span><span class="p">,</span> <span class="n">print_progress</span><span class="p">,</span>
+                                        <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_campbell_scientific"><a class="viewcode-back" href="../../load.html#load.load.load_campbell_scientific">[docs]</a><span class="k">def</span> <span class="nf">load_campbell_scientific</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load timeseries data from Campbell Scientific CR1000 formatted file, or group of files in a folder, into a</span>
+<span class="sd">    dataframe. If the file format is slightly different your own key word arguments can be sent as this is a wrapper</span>
+<span class="sd">    around the pandas.read_csv function. The pandas.read_csv documentation can be found at:</span>
+<span class="sd">    https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</span>
+
+<span class="sd">    :param filepath_or_folder: Location of the file folder containing the timeseries data.</span>
+<span class="sd">    :type filepath_or_folder: str</span>
+<span class="sd">    :param print_progress: If you want to print out statements of the file been processed set to True. Default is False.</span>
+<span class="sd">    :type print_progress: bool, default False</span>
+<span class="sd">    :param kwargs: All the kwargs from pandas.read_csv can be passed to this function.</span>
+<span class="sd">    :return: A dataframe with timestamps as it&#39;s index</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+
+<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    duplicates and throws an error if any found.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        filepath = r&#39;C:\\some\\folder\\some_CR1000_data.csv&#39;</span>
+<span class="sd">        df = bw.load_campbell_scientific(filepath)</span>
+<span class="sd">        print(df)</span>
+
+<span class="sd">    To load a group of files from a folder::</span>
+
+<span class="sd">        folder = r&#39;C:\\some\\folder\\with\\CR1000\\files&#39;</span>
+<span class="sd">        df = bw.load_campbell_scientific(folder, print_progress=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">is_file</span> <span class="o">=</span> <span class="n">_is_file</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">)</span>
+    <span class="n">fn_arguments</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;header&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;parse_dates&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;skiprows&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+    <span class="n">merged_fn_args</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">fn_arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_pandas_read_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_assemble_df_from_folder</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;.dat&#39;</span><span class="p">,</span> <span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">_pandas_read_csv</span><span class="p">,</span> <span class="n">print_progress</span><span class="p">,</span>
+                                        <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_pandas_read_excel</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper function around the Pandas read_excel function.</span>
+<span class="sd">    :param filepath: The file to read.</span>
+<span class="sd">    :type filepath: str</span>
+<span class="sd">    :param kwargs: Extra key word arguments to be applied.</span>
+<span class="sd">    :return: A pandas dataframe</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">error</span>
+
+
+<div class="viewcode-block" id="load_excel"><a class="viewcode-back" href="../../load.html#load.load.load_excel">[docs]</a><span class="k">def</span> <span class="nf">load_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load timeseries data from an Excel file, or group of files in a folder, into a dataframe.</span>
+<span class="sd">    The format of the Excel file should be column headings in the first row with the timestamp column as the first</span>
+<span class="sd">    column, however these can be over written by sending your own arguments as this is a wrapper around the</span>
+<span class="sd">    pandas.read_excel function. The pandas.read_excel documentation can be found at:</span>
+<span class="sd">    https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_excel.html</span>
+
+<span class="sd">    :param filepath_or_folder: Location of the file folder containing the timeseries data.</span>
+<span class="sd">    :type filepath_or_folder: str</span>
+<span class="sd">    :param search_by_file_type: Is a list of file extensions to search for e.g. [&#39;.xlsx&#39;] if a folder is sent.</span>
+<span class="sd">    :type search_by_file_type: List[str], default .xlsx</span>
+<span class="sd">    :param print_progress: If you want to print out statements of the file been processed set to True. Default is False.</span>
+<span class="sd">    :type print_progress: bool, default False</span>
+<span class="sd">    :param sheet_name: The Excel file sheet name you want to read from.</span>
+<span class="sd">    :type sheet_name: string, int, mixed list of strings/ints, or None, default 0</span>
+<span class="sd">    :param kwargs: All the kwargs from pandas.read_excel can be passed to this function.</span>
+<span class="sd">    :return: A dataframe with timestamps as it&#39;s index.</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+
+<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    duplicates and throws an error if any found.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        filepath = r&#39;C:\\some\\folder\\some_data.xlsx&#39;</span>
+<span class="sd">        df = bw.load_excel(filepath)</span>
+<span class="sd">        print(df)</span>
+
+<span class="sd">    To load a group of files from a folder other than a .csv file type::</span>
+
+<span class="sd">        folder = r&#39;C:\\some\\folder\\with\\excel\\files&#39;</span>
+<span class="sd">        df = bw.load_excel(folder, print_progress=True)</span>
+
+<span class="sd">    If you want to load something that is different from a standard file where the column headings are not in the first</span>
+<span class="sd">    row, the pandas.read_excel key word arguments (kwargs) can be used::</span>
+
+<span class="sd">        filepath = r&#39;C:\\some\\folder\\some_data_with_column_headings_on_second_line.xlsx&#39;</span>
+<span class="sd">        df = bw.load_excel(filepath, skiprows=[0])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">is_file</span> <span class="o">=</span> <span class="n">_is_file</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">)</span>
+    <span class="n">fn_arguments</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;index_col&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;parse_dates&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;sheet_name&#39;</span><span class="p">:</span> <span class="n">sheet_name</span><span class="p">}</span>
+    <span class="n">merged_fn_args</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">fn_arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_pandas_read_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_file</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_assemble_df_from_folder</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="p">,</span> <span class="n">_pandas_read_excel</span><span class="p">,</span> <span class="n">print_progress</span><span class="p">,</span>
+                                        <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">load_nrg_txt</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;not yet implemented&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_assemble_files_to_folder</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">destination_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">print_filename</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble files scattered in subfolders of a certain directory and copy them to a single folder filtering for a</span>
+<span class="sd">    specific list of file types. If there are duplicates, the largest file will be kept.</span>
+
+<span class="sd">    :param source_folder: Is the main folder to search through.</span>
+<span class="sd">    :type source_folder: str</span>
+<span class="sd">    :param destination_folder: Is where you want all the files found to be copied to. If there are duplicates, the</span>
+<span class="sd">           largest file will be kept.</span>
+<span class="sd">    :type destination_folder: str</span>
+<span class="sd">    :param file_type: Is a list of file extensions to filter for e.g. [&#39;.csv&#39;, &#39;.txt&#39;]</span>
+<span class="sd">    :type file_type: List[str]</span>
+<span class="sd">    :param print_filename: If you want all the file names found to be printed set to true. Default is False.</span>
+<span class="sd">    :type print_filename: bool, default False</span>
+<span class="sd">    :return: None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_list</span> <span class="o">=</span> <span class="n">_list_files</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files_list</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">new_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_filename</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">new_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filepath</span> <span class="o">==</span> <span class="n">destination_folder</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">print_filename</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File to be moved is itself. Skipping.&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">new_file</span><span class="p">):</span>
+            <span class="n">new_file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">new_file</span><span class="p">)</span>
+            <span class="n">current_file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_file_size</span> <span class="o">&lt;=</span> <span class="n">current_file_size</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">print_filename</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File from source_folder is greater size than an existing one in destination_folder. File &#39;</span>
+                          <span class="s1">&#39;in destination_folder will be overwritten.&#39;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_file</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">new_file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">new_file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">destination_folder</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">NotADirectoryError</span><span class="p">(</span><span class="s1">&#39;Destination folder is not valid folder.&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">error</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">print_filename</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of files processed: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files_list</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;. Number of files moved: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_append_files_together</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">assembled_file_name</span><span class="p">,</span> <span class="n">file_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble files scattered in subfolders of a certain directory and copy them to a single file filtering for a</span>
+<span class="sd">    specific list of file types.</span>
+
+<span class="sd">    :param source_folder: Is the main folder to search through.</span>
+<span class="sd">    :type source_folder: str</span>
+<span class="sd">    :param assembled_file_name: Name of the newly created file with all the appended data.</span>
+<span class="sd">    :type assembled_file_name: str</span>
+<span class="sd">    :param file_type: Is a list of file extensions to filter for e.g. [&#39;.csv&#39;, &#39;.txt&#39;]</span>
+<span class="sd">    :type file_type: List[str]</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">list_of_files</span> <span class="o">=</span> <span class="n">_list_files</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">)</span>
+
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">assembled_file_name</span><span class="p">),</span> <span class="s1">&#39;a+&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">list_of_files</span><span class="p">:</span>
+        <span class="n">file_handler2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_handler2</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">file_handler2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">file_handler</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">Reanalysis</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Object defining a Reanalysis dataset</span>
+
+<span class="sd">    :param latitude: object.latitude gives the latitude of the location of dataset</span>
+<span class="sd">    :type latitude: str</span>
+<span class="sd">    :param longitude: object.longitude gives the longitude of the location of dataset</span>
+<span class="sd">    :type longitude: str</span>
+<span class="sd">    :param data: object.data returns the data from the location</span>
+<span class="sd">    :type data: pandas.DataFrame</span>
+<span class="sd">    :param source: Source of the dataset like MERA, MERRA2, etc.</span>
+<span class="sd">    :type source: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+
+
+<span class="k">def</span> <span class="nf">_get_brightdata_credentials</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s1">&#39;BRIGHTDATA_USERNAME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;BRIGHTDATA_USERNAME environmental variable is not set.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;BRIGHTDATA_PASSWORD&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;BRIGHTDATA_PASSWORD environmental variable is not set.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;BRIGHTDATA_USERNAME&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;BRIGHTDATA_PASSWORD&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="p">,</span> <span class="n">to_date</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get era5 data from the brightdata platform and format it for use.</span>
+<span class="sd">    :param lat:</span>
+<span class="sd">    :param long:</span>
+<span class="sd">    :param nearest:</span>
+<span class="sd">    :param from_date:</span>
+<span class="sd">    :param to_date:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="n">_get_brightdata_credentials</span><span class="p">()</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;http://api.brightwindanalysis.com/brightdata&#39;</span>
+    <span class="c1"># base_url = &#39;http://localhost:5000&#39;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span>  <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="p">,</span>
+        <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span>
+        <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="n">long</span><span class="p">,</span>
+        <span class="s1">&#39;nearest&#39;</span><span class="p">:</span> <span class="n">nearest</span><span class="p">,</span>
+        <span class="s1">&#39;from_date&#39;</span><span class="p">:</span> <span class="n">from_date</span><span class="p">,</span>
+        <span class="s1">&#39;to_date&#39;</span><span class="p">:</span> <span class="n">to_date</span>
+    <span class="p">})</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">json_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">401</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Please check your BRIGHTDATA_USERNAME and BRIGHTDATA_PASSWORD are correct.&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Http code </span><span class="si">{}</span><span class="s1">, something is wrong with the server.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)))</span>
+    <span class="n">reanalysis_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">json_response</span><span class="p">:</span>
+        <span class="n">temp_reanalysis</span> <span class="o">=</span> <span class="n">Reanalysis</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">temp_reanalysis</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span>
+            <span class="n">temp_reanalysis</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span>
+            <span class="n">temp_reanalysis</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">dataset</span>
+            <span class="n">temp_reanalysis</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;errors&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">json_response</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">error</span>
+        <span class="n">reanalysis_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_reanalysis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">reanalysis_list</span>
+
+
+<div class="viewcode-block" id="load_brightdata"><a class="viewcode-back" href="../../load.html#load.load.load_brightdata">[docs]</a><span class="k">def</span> <span class="nf">load_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve timeseries datasets available from the brightdata platform. Returns a list of Reanalysis objects in order</span>
+<span class="sd">    of closest distance to the requested lat, long.</span>
+
+<span class="sd">    :param dataset: dataset type to be retrieved from brightdata e.g. merra2, era5.</span>
+<span class="sd">    :type dataset: str</span>
+<span class="sd">    :param lat: latitude of your point of interest.</span>
+<span class="sd">    :type lat: float</span>
+<span class="sd">    :param long: longitude of your point of interest.</span>
+<span class="sd">    :type long: float</span>
+<span class="sd">    :param nearest: the number of nearest nodes to your point of interest to retrieve. Currently only 1 to 4 is</span>
+<span class="sd">                    accepted.</span>
+<span class="sd">    :type nearest: int</span>
+<span class="sd">    :param from_date: date from in &#39;yyyy-mm-dd&#39; format.</span>
+<span class="sd">    :type from_date: str</span>
+<span class="sd">    :param to_date: date to in &#39;yyyy-mm-dd&#39; format.</span>
+<span class="sd">    :type to_date: str</span>
+<span class="sd">    :return: a list of Reanalysis objects in order of closest distance to the requested lat, long.</span>
+<span class="sd">    :rtype: List(Reanalysis)</span>
+
+<span class="sd">    To use load_brightdata the BRIGHTDATA_USERNAME and BRIGHTDATA_PASSWORD environmental variables need to be set. In</span>
+<span class="sd">    Windows this can be done by running the command prompt in Administrator mode and running:</span>
+
+<span class="sd">    &gt;&gt;&gt; setx BRIGHTDATA_USERNAME &quot;username&quot;</span>
+<span class="sd">    &gt;&gt;&gt; setx BRIGHTDATA_PASSWORD &quot;password&quot;</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        nodes = bw.load_brightdata(&#39;era5&#39;, 53.4, -7.2, 4, &#39;2018-01-01&#39;, &#39;2018-10-01&#39;)</span>
+<span class="sd">        for node in nodes:</span>
+<span class="sd">            print(node.data)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">handlers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="s1">&#39;era5&#39;</span><span class="p">,</span> <span class="s1">&#39;process_fn&#39;</span><span class="p">:</span> <span class="n">_get_brightdata</span><span class="p">,</span> <span class="s1">&#39;fn_arguments&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="n">long</span><span class="p">,</span> <span class="s1">&#39;from_date&#39;</span><span class="p">:</span> <span class="n">from_date</span><span class="p">,</span> <span class="s1">&#39;to_date&#39;</span><span class="p">:</span> <span class="n">to_date</span><span class="p">,</span> <span class="s1">&#39;nearest&#39;</span><span class="p">:</span> <span class="n">nearest</span>
+            <span class="p">}</span>
+         <span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="s1">&#39;merra2&#39;</span><span class="p">,</span> <span class="s1">&#39;process_fn&#39;</span><span class="p">:</span> <span class="n">_get_brightdata</span><span class="p">,</span> <span class="s1">&#39;fn_arguments&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="n">long</span><span class="p">,</span> <span class="s1">&#39;from_date&#39;</span><span class="p">:</span> <span class="n">from_date</span><span class="p">,</span> <span class="s1">&#39;to_date&#39;</span><span class="p">:</span> <span class="n">to_date</span><span class="p">,</span> <span class="s1">&#39;nearest&#39;</span><span class="p">:</span> <span class="n">nearest</span>
+            <span class="p">}</span>
+         <span class="p">}</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">handlers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="n">handler</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">handler</span><span class="p">[</span><span class="s1">&#39;process_fn&#39;</span><span class="p">](</span><span class="o">**</span><span class="n">handler</span><span class="p">[</span><span class="s1">&#39;fn_arguments&#39;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">error</span>
+
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;dataset not identified.&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2018, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
