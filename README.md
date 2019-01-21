@@ -1,6 +1,6 @@
 # brightwind-docs
 Holds documentation for brightwind. Documentation is
-automated using Sphinx. Gituhb uses gh-pages branch to host the website. In the main repo brightwind the docs folder contains the configuration and makefile needed by shpinx to run.
+automated using Sphinx. Github uses gh-pages branch to host the website. In the main repo brightwind the docs folder contains the configuration and makefile needed by shpinx to run.
 
 To update documentation take care of
 the following:
