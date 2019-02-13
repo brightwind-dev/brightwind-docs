@@ -1,0 +1,22 @@
+brightwind package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    brightwind.analyse
+    brightwind.datasets
+    brightwind.export
+    brightwind.load
+    brightwind.transform
+    brightwind.utils
+
+Module contents
+---------------
+
+.. automodule:: brightwind
+    :members:
+    :undoc-members:
+    :show-inheritance:
