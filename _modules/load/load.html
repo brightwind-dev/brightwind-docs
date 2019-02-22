@@ -61,10 +61,6 @@
               
             
             
-              
-                
-              
-            
             
             
             
@@ -86,7 +82,11 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+        </div>
+      </div>
+    <div class="col-md-9 content">
       
   <h1>Source code for load.load</h1><div class="highlight"><pre>
 <span></span><span class="c1">#     brightwind is a library that provides wind analysts with easy to use tools for working with meteorological data.</span>
@@ -204,7 +204,7 @@
         <span class="k">raise</span> <span class="n">error</span>
 
 
-<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../load.html#load.load.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../load.load.load_csv.html#load.load.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load timeseries data from a csv file, or group of files in a folder, into a dataframe.</span>
 <span class="sd">    The format of the csv file should be column headings in the first row with the timestamp column as the first</span>
@@ -254,7 +254,7 @@
                                         <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_campbell_scientific"><a class="viewcode-back" href="../../load.html#load.load.load_campbell_scientific">[docs]</a><span class="k">def</span> <span class="nf">load_campbell_scientific</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_campbell_scientific"><a class="viewcode-back" href="../../load.load.load_campbell_scientific.html#load.load.load_campbell_scientific">[docs]</a><span class="k">def</span> <span class="nf">load_campbell_scientific</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load timeseries data from Campbell Scientific CR1000 formatted file, or group of files in a folder, into a</span>
 <span class="sd">    dataframe. If the file format is slightly different your own key word arguments can be sent as this is a wrapper</span>
@@ -312,7 +312,7 @@
         <span class="k">raise</span> <span class="n">error</span>
 
 
-<div class="viewcode-block" id="load_excel"><a class="viewcode-back" href="../../load.html#load.load.load_excel">[docs]</a><span class="k">def</span> <span class="nf">load_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_excel"><a class="viewcode-back" href="../../load.load.load_excel.html#load.load.load_excel">[docs]</a><span class="k">def</span> <span class="nf">load_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load timeseries data from an Excel file, or group of files in a folder, into a dataframe.</span>
 <span class="sd">    The format of the Excel file should be column headings in the first row with the timestamp column as the first</span>
@@ -364,8 +364,8 @@
                                         <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">load_nrg_txt</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s1">&#39;not yet implemented&#39;</span>
+<div class="viewcode-block" id="load_nrg_txt"><a class="viewcode-back" href="../../load.load.load_nrg_txt.html#load.load.load_nrg_txt">[docs]</a><span class="k">def</span> <span class="nf">load_nrg_txt</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;not yet implemented&#39;</span></div>
 
 
 <span class="k">def</span> <span class="nf">_assemble_files_to_folder</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">destination_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">print_filename</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -442,7 +442,7 @@
     <span class="k">return</span>
 
 
-<span class="k">class</span> <span class="nc">Reanalysis</span><span class="p">:</span>
+<div class="viewcode-block" id="Reanalysis"><a class="viewcode-back" href="../../load.load.Reanalysis.html#load.load.Reanalysis">[docs]</a><span class="k">class</span> <span class="nc">Reanalysis</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Object defining a Reanalysis dataset</span>
 
 <span class="sd">    :param latitude: object.latitude gives the latitude of the location of dataset</span>
@@ -455,11 +455,11 @@
 <span class="sd">    :type source: str</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+<div class="viewcode-block" id="Reanalysis.__init__"><a class="viewcode-back" href="../../load.load.Reanalysis.__init__.html#load.load.Reanalysis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_get_brightdata_credentials</span><span class="p">():</span>
@@ -516,7 +516,7 @@
     <span class="k">return</span> <span class="n">reanalysis_list</span>
 
 
-<div class="viewcode-block" id="load_brightdata"><a class="viewcode-back" href="../../load.html#load.load.load_brightdata">[docs]</a><span class="k">def</span> <span class="nf">load_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="load_brightdata"><a class="viewcode-back" href="../../load.load.load_brightdata.html#load.load.load_brightdata">[docs]</a><span class="k">def</span> <span class="nf">load_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve timeseries datasets available from the brightdata platform. Returns a list of Reanalysis objects in order</span>
 <span class="sd">    of closest distance to the requested lat, long.</span>
