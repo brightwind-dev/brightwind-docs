@@ -1,0 +1,28 @@
+analyse.correlation
+===================
+
+.. automodule:: analyse.correlation
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CorrelBase
+      MultipleLinearRegression
+      OrdinaryLeastSquares
+      OrthogonalLeastSquares
+      SVR
+      SimpleSpeedRatio
+      SpeedSort
+   
+   
+
+   
+   
+   

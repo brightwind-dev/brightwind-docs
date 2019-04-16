@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>analyse package &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="Demos.html">Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_contribute.html">How to contribute?</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">analyse package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-analyse.analyse">analyse.analyse module</a></li>
+<li><a class="reference internal" href="#module-analyse.correlation">analyse.correlation module</a></li>
+<li><a class="reference internal" href="#module-analyse.plot">analyse.plot module</a></li>
+<li><a class="reference internal" href="#module-analyse">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/analyse.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="analyse-package">
+<h1>analyse package<a class="headerlink" href="#analyse-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-analyse.analyse">
+<span id="analyse-analyse-module"></span><h2>analyse.analyse module<a class="headerlink" href="#module-analyse.analyse" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="analyse.analyse.concurrent_coverage">
+<code class="descclassname">analyse.analyse.</code><code class="descname">concurrent_coverage</code><span class="sig-paren">(</span><em>ref</em>, <em>target</em>, <em>averaging_prd</em>, <em>aggregation_method_target='mean'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#concurrent_coverage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.concurrent_coverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts ref and target data and returns the coverage of concurrent data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ref</strong> (<em>pandas.Series</em>) – Reference data</li>
+<li><strong>target</strong> (<em>pandas.Series</em>) – Target data</li>
+<li><strong>averaging_prd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – <p>Groups data by the period specified by period.</p>
+<ul>
+<li>2T, 2 min for minutely average</li>
+<li>Set period to 1D for a daily average, 3D for three hourly average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</li>
+<li>Set period to 1M for monthly average</li>
+<li>Set period to 1AS fo annual average</li>
+</ul>
+</li>
+<li><strong>aggregation_method_target</strong> – (Optional) Calculates mean of the data for the given averaging_prd by default.
+Can be changed to ‘sum’, ‘std’, ‘max’, ‘min’, etc. or a user defined function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with concurrent coverage and resolution of the new data. The columns with coverage are named as
+&lt;column name&gt;_Coverage</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.monthly_means">
+<code class="descclassname">analyse.analyse.</code><code class="descname">monthly_means</code><span class="sig-paren">(</span><em>data</em>, <em>return_data=False</em>, <em>return_coverage=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#monthly_means"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.monthly_means" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots means for calendar months in a timeseries plot. Input can be a series or a DataFrame. Can
+also return data of monthly means with a plot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>Series</em><em> or </em><em>DataFrame</em>) – A timeseries to find monthly means of. Can have multiple columns</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return data of monthly means along with the plot.</li>
+<li><strong>return_coverage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return monthly coverage along with the data and plot.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A plot of monthly means for the input data. If return data is true it returns a tuple where
+the first element is plot and second is data pertaining to monthly means.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shell_flats_80m_csv</span><span class="p">)</span>
+
+<span class="n">monthly_means_plot</span><span class="p">,</span> <span class="n">monthly_means</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Monthly means data for all the columns:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">monthly_means</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Monthly means plot for all the columns:&quot;</span><span class="p">)</span>
+<span class="n">monthly_means_plot</span>
+
+<span class="c1"># For a single column only</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">WS80mWS425NW_Avg</span><span class="p">)</span>
+
+<span class="c1"># Return coverage</span>
+<span class="n">monthly_means_plot</span><span class="p">,</span> <span class="n">monthly_means</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">return_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">monthly_means</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.momm">
+<code class="descclassname">analyse.analyse.</code><code class="descname">momm</code><span class="sig-paren">(</span><em>data: pandas.core.frame.DataFrame</em>, <em>date_from: str = ''</em>, <em>date_to: str = ''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#momm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.momm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates and returns long term reference speed. Accepts a DataFrame
+with timestamps as index column and another column with wind-speed. You can also specify
+date_from and date_to to calculate the long term reference speed for only that period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Pandas DataFrame with timestamp as index and a column with wind-speed</li>
+<li><strong>date_from</strong> – Start date as string in format YYYY-MM-DD</li>
+<li><strong>date_to</strong> – End date as string in format YYYY-MM-DD</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Long term reference speed</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.distribution">
+<code class="descclassname">analyse.analyse.</code><code class="descname">distribution</code><span class="sig-paren">(</span><em>var1_series</em>, <em>var2_series</em>, <em>var2_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>var2_bin_labels=None</em>, <em>aggregation_method='%frequency'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to
+the bins of another variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>var1_series</strong> – Series of the variable whose distribution we need to find</li>
+<li><strong>var2_series</strong> – Series of the variable which we want to bin</li>
+<li><strong>var2_bin_array</strong> – Array of numbers where adjacent elements of array form a bin</li>
+<li><strong>var2_bin_labels</strong> – Labels of bins to be used, uses (bin-start, bin-end] format by default</li>
+<li><strong>aggregation_method</strong> – Statistical method used to find distribution it can be mean, max, min, std, count,
+describe, a custom function, etc,computes frequency in percentages by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame/Series with bins as row indexes and columns with statistics chosen by aggregation_method</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.distribution_by_wind_speed">
+<code class="descclassname">analyse.analyse.</code><code class="descname">distribution_by_wind_speed</code><span class="sig-paren">(</span><em>wspd</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#distribution_by_wind_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.distribution_by_wind_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to
+the bins of another variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>wspd</strong> – Series of the variable whose distribution we need to find</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.distribution_by_dir_sector">
+<code class="descclassname">analyse.analyse.</code><code class="descname">distribution_by_dir_sector</code><span class="sig-paren">(</span><em>var_series</em>, <em>direction_series</em>, <em>sectors=12</em>, <em>aggregation_method='%frequency'</em>, <em>direction_bin_array=None</em>, <em>direction_bin_labels=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#distribution_by_dir_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.distribution_by_dir_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a series of a variable and  wind direction. Computes the distribution of first variable with respect to
+wind direction sectors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>var_series</strong> – Series of the variable whose distribution we need to find</li>
+<li><strong>direction_series</strong> – Series of wind directions between [0-360]</li>
+<li><strong>sectors</strong> – Number of sectors to bin direction to. The first sector is centered at 0 by default. To change that
+behaviour specify direction_bin_array</li>
+<li><strong>aggregation_method</strong> – Statistical method used to find distribution it can be mean, max, min, std, count,
+describe, a custom function, etc. Computes frequency in percentages by default</li>
+<li><strong>direction_bin_array</strong> – Optional, to change default behaviour of first sector centered at 0 assign an array of
+bins to this</li>
+<li><strong>direction_bin_labels</strong> – Optional, you can specify an array of labels to be used for the bins. uses string
+labels of the format ‘30-90’ by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame/series with wind direction sector as row indexes and columns with statistics chosen by
+aggregation_method</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.freq_table">
+<code class="descclassname">analyse.analyse.</code><code class="descname">freq_table</code><span class="sig-paren">(</span><em>var_series</em>, <em>direction_series</em>, <em>var_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>sectors=12</em>, <em>var_bin_labels=None</em>, <em>direction_bin_array=None</em>, <em>direction_bin_labels=None</em>, <em>freq_as_percentage=True</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#freq_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.freq_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a variable series and direction series and computes a frequency table of percentages. Both variable and
+direction are binned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>var_series</strong> – Series of variable to be binned</li>
+<li><strong>direction_series</strong> – Series of wind directions between [0-360]</li>
+<li><strong>var_bin_array</strong> – Array of numbers where adjacent elements of array form a bin</li>
+<li><strong>sectors</strong> – Number of sectors to bin direction to. The first sector is centered at 0 by default. To change that
+behaviour specify direction_bin_array</li>
+<li><strong>var_bin_labels</strong> – Optional, an array of labels to use for variable bins</li>
+<li><strong>direction_bin_array</strong> – Optional, to change default behaviour of first sector centered at 0 assign an array of
+bins to this</li>
+<li><strong>direction_bin_labels</strong> – Optional, you can specify an array of labels to be used for the bins. uses string
+labels of the format ‘30-90’ by default</li>
+<li><strong>freq_as_percentage</strong> – Optional, True by default. Returns the frequency as percentages. To return just the
+count, set to False</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with row indexes as variable bins and columns as wind direction bins.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.time_continuity_gaps">
+<code class="descclassname">analyse.analyse.</code><code class="descname">time_continuity_gaps</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#time_continuity_gaps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.time_continuity_gaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the start and end timestamps of missing data periods. Also days lost.</p>
+<p>A missing data period is one where data is not available for some consecutive timestamps. This breaks
+time continuity of the data. The function calculates the sampling period (resolution) of the data by
+finding the most common time difference between consecutive timestamps. Then it searches where the time
+difference between consecutive timestamps does not match the sampling period, this is the missing data period.
+It returns a DataFrame where the first column is the starting timestamp of the missing period and the second
+column is the end date of the missing period. An additional column also shows how many days of data were lost
+in a missing period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Data for checking continuity, timestamp must be the index</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A DataFrame with the start and end timestamps of missing gaps in the data along with the size of the gap
+in days lost.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shell_flats_80m_csv</span><span class="p">)</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">time_continuity_gaps</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;WS70mA100NW_Avg&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.coverage">
+<code class="descclassname">analyse.analyse.</code><code class="descname">coverage</code><span class="sig-paren">(</span><em>data</em>, <em>period='1M'</em>, <em>aggregation_method='mean'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#coverage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.coverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data coverage over the period specified.</p>
+<p>Coverage is defined as the ratio of number of data points present in the period and the maximum number of
+data points that a period should have. Example, for 10 minute data resolution and a period of 1 hour the
+maximum number of data points in one period is 6. But if the number if data points available is only 3 for that
+hour the coverage is 3/6=0.5 . For more details see average_data_by_period as this function is a wrapper around it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>pandas.Series</em>) – Data to find average or aggregate of</li>
+<li><strong>period</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified here. The following formats are supported</p>
+<ul>
+<li>Set period to 10min for 10 minute average, 20min for 20 minute average and so on for 4min, 15min, etc.</li>
+<li>Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</li>
+<li>Set period to 1D for a daily average, 3D for three day average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 1W for a weekly average, 3W for three week average, similarly 2W, 4W etc.</li>
+<li>Set period to 1M for monthly average</li>
+<li>Set period to 1AS fo annual average</li>
+<li>Can be a DateOffset object too</li>
+</ul>
+</li>
+<li><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Default <cite>mean</cite>, returns the mean of the data for the specified period. Can also use
+<cite>median</cite>, <cite>prod</cite>, <cite>sum</cite>, <cite>std</cite>,`var`, <cite>max</cite>, <cite>min</cite> which are shorthands for median, product, summation,
+standard deviation, variance, maximum and minimum respectively.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with data aggregated with the specified aggregation_method (mean by default) and coverage.
+The columns with coverage are named as &lt;column name&gt;_Coverage</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_site_data</span><span class="p">)</span>
+
+<span class="c1">#To find hourly coverage</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1H&#39;</span><span class="p">)</span>
+
+<span class="c1">#To find monthly_coverage</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">)</span>
+
+<span class="c1">#To find monthly_coverage of variance</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>bw.average_data_by_period</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.basic_stats">
+<code class="descclassname">analyse.analyse.</code><code class="descname">basic_stats</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#basic_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.basic_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives basic statistical measures of the data, the DataFrame returned includes the following columns</p>
+<ul class="simple">
+<li>count, number of data points available for each column of the data</li>
+<li>mean, mean of each column of data</li>
+<li>std, standard deviation of each column of data</li>
+<li>min, minimum value of each column of data</li>
+<li>max, maximum value of each column of data</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – It can be a DataFrame containing meteorological data or a series of some variable like wind speed,
+direction, temperature, etc.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A DataFrame with columns count, mean, std, min amd max.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_site_data</span><span class="p">)</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">basic_stats</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">basic_stats</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Gust_Max_1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="analyse.analyse.twelve_by_24">
+<code class="descclassname">analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>return_data=False</em>, <em>var_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>var_series</strong> – </li>
+<li><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>function</em>) – <p>‘mean’ by default calculates mean of the variable passed. Can change it to
+‘sum’, ‘std’, ‘min’, ‘max’, ‘percentile’ for sum, standard deviation, minimum, maximum, percentile</p>
+<blockquote>
+<div>of the variable respectively. Can also pass a function.</div></blockquote>
+</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+<li><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name and units of the variable to appear on the plot</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with hours as row labels and months as column labels.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.analyse.TI">
+<em class="property">class </em><code class="descclassname">analyse.analyse.</code><code class="descname">TI</code><a class="reference internal" href="_modules/analyse/analyse.html#TI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.TI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="analyse.analyse.TI.by_sector">
+<code class="descname">by_sector</code><span class="sig-paren">(</span><em>wspd_std</em>, <em>wdir</em>, <em>min_speed=0</em>, <em>sectors=12</em>, <em>direction_bin_array=None</em>, <em>direction_bin_labels=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#TI.by_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.TI.by_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a wind speed series, its standard deviation and a direction series, calculates turbulence intensity (TI)
+and returns the distribution by of TI by sector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>wspd</strong> (<em>pandas.Series</em>) – Wind speed data series</li>
+<li><strong>wspd_std</strong> (<em>pandas.Series</em>) – Wind speed standard deviation data series</li>
+<li><strong>wdir</strong> (<em>pandas.Series</em>) – Wind direction series</li>
+<li><strong>min_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Set the minimum wind speed.</li>
+<li><strong>sectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Set the number of direction sectors. Usually 12, 16, 24, 36 or 72.</li>
+<li><strong>direction_bin_array</strong> – (Optional) Array of wind speeds where adjacent elements of array form a bin</li>
+<li><strong>direction_bin_array</strong> – (Optional) To change default behaviour of first sector centered at 0 assign an
+array of bins to this</li>
+<li><strong>direction_bin_labels</strong> – (Optional) you can specify an array of labels to be used for the bins. uses string
+labels of the format ‘30-90’ by default</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>TI distribution with columns names as:</p>
+<ul class="simple">
+<li>Mean_TI (average TI for a speed bin),</li>
+<li>TI_Count ( number of data points in the bin)</li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.TI.by_speed">
+<code class="descname">by_speed</code><span class="sig-paren">(</span><em>wspd_std</em>, <em>speed_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>speed_bin_labels=range(0</em>, <em>41)</em>, <em>percentile=90</em>, <em>IEC_class=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#TI.by_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.TI.by_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a wind speed series and its standard deviation, calculates turbulence intensity (TI) and returns the
+distribution by of TI by speed bins</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>wspd</strong> (<em>pandas.Series</em>) – Wind speed data series</li>
+<li><strong>wspd_std</strong> (<em>pandas.Series</em>) – Wind speed standard deviation data series</li>
+<li><strong>speed_bin_array</strong> (<em>List</em><em> or </em><em>array</em>) – (Optional) Array of wind speeds where adjacent elements of array form a bin</li>
+<li><strong>speed_bin_labels</strong> (<em>List</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.7)"><em>range</em></a><em> or </em><em>array</em>) – (Optional) Labels to use for speed bins, 0, 1, 2, 3 .. and so on by default</li>
+<li><strong>percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The percentile representative of TI (see return for more information)</li>
+<li><strong>IEC_class</strong> – By default IEC class 2005 is used for custom class pass a DataFrame. Note we have removed
+option to include IEC Class 1999 as no longer appropriate.
+This may need to be placed in a separate function when updated IEC standard is released</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>TI distribution with columns names as:</p>
+<ul class="simple">
+<li>Mean_TI (average TI for a speed bin),</li>
+<li>TI_Count ( number of data points in the bin),</li>
+<li>Rep_TI (Representative TI set at 90 percentile by default,</li>
+<li>TI_2Sigma (2 sigma TI),</li>
+<li>Char_TI (characteristic TI)</li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.TI.calc">
+<code class="descname">calc</code><span class="sig-paren">(</span><em>wspd_std</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#TI.calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.TI.calc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.TI.twelve_by_24">
+<code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>wspd_std</em>, <em>return_data=False</em>, <em>var_name='Turbulence Intensity'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#TI.twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.TI.twelve_by_24" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.analyse.SectorRatio">
+<em class="property">class </em><code class="descclassname">analyse.analyse.</code><code class="descname">SectorRatio</code><a class="reference internal" href="_modules/analyse/analyse.html#SectorRatio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.SectorRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="analyse.analyse.SectorRatio.by_sector">
+<code class="descname">by_sector</code><span class="sig-paren">(</span><em>wspd_2</em>, <em>wdir</em>, <em>sectors=72</em>, <em>direction_bin_array=None</em>, <em>boom_dir_1=-1</em>, <em>boom_dir_2=-1</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#SectorRatio.by_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.SectorRatio.by_sector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts two speed series and one direction series and returns the speed ratio by sector
+in a table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>wspd_1</strong> – First wind speed series. This is divisor series.</li>
+<li><strong>wspd_2</strong> – Second wind speed series</li>
+<li><strong>wdir</strong> (<em>pandas.Series</em>) – Series of wind directions</li>
+<li><strong>sectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Set the number of direction sectors. Usually 12, 16, 24, 36 or 72.</li>
+<li><strong>direction_bin_array</strong> – </li>
+<li><strong>boom_dir_1</strong> – Boom direction in degrees of speed_col_name_1.</li>
+<li><strong>boom_dir_2</strong> – Boom direction in degrees of speed_col_name_2.</li>
+<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first">wspd_1: pandas.Series</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first">wspd_2: pandas.Series</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A speed ratio plot showing average speed ratio by sector and scatter of individual datapoints.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.SectorRatio.calc">
+<code class="descname">calc</code><span class="sig-paren">(</span><em>wspd_2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#SectorRatio.calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.SectorRatio.calc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.analyse.Shear">
+<em class="property">class </em><code class="descclassname">analyse.analyse.</code><code class="descname">Shear</code><a class="reference internal" href="_modules/analyse/analyse.html#Shear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.Shear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="analyse.analyse.Shear.by_sector">
+<code class="descname">by_sector</code><span class="sig-paren">(</span><em>heights</em>, <em>wdir</em>, <em>sectors=12</em>, <em>min_speed=3</em>, <em>direction_bin_array=None</em>, <em>direction_bin_labels=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#Shear.by_sector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.Shear.by_sector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.Shear.power_law">
+<code class="descname">power_law</code><span class="sig-paren">(</span><em>heights</em>, <em>min_speed=3</em>, <em>return_alpha=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#Shear.power_law"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.Shear.power_law" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.Shear.scale">
+<code class="descname">scale</code><span class="sig-paren">(</span><em>wspd</em>, <em>height</em>, <em>height_to_scale_to</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#Shear.scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.Shear.scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.analyse.Shear.twelve_by_24">
+<code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>heights</em>, <em>min_speed=3</em>, <em>return_data=False</em>, <em>var_name='Shear'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/analyse.html#Shear.twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.analyse.Shear.twelve_by_24" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-analyse.correlation">
+<span id="analyse-correlation-module"></span><h2>analyse.correlation module<a class="headerlink" href="#module-analyse.correlation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="analyse.correlation.CorrelBase">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">CorrelBase</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd</em>, <em>coverage_threshold</em>, <em>ref_dir=None</em>, <em>target_dir=None</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="analyse.correlation.CorrelBase.get_error_metrics">
+<code class="descname">get_error_metrics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase.get_error_metrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase.get_error_metrics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.CorrelBase.get_r2">
+<code class="descname">get_r2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase.get_r2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase.get_r2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the r2 score of the model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.CorrelBase.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>title=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>For plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.CorrelBase.show_params">
+<code class="descname">show_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase.show_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase.show_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the dictionary of parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.CorrelBase.synthesize">
+<code class="descname">synthesize</code><span class="sig-paren">(</span><em>ext_input=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#CorrelBase.synthesize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.CorrelBase.synthesize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.MultipleLinearRegression">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">MultipleLinearRegression</code><span class="sig-paren">(</span><em>ref_spd: List[T], target_spd, averaging_prd='1H', coverage_threshold=0.9, preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<dl class="method">
+<dt id="analyse.correlation.MultipleLinearRegression.get_r2">
+<code class="descname">get_r2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression.get_r2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression.get_r2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the r2 score of the model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.MultipleLinearRegression.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>For plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.MultipleLinearRegression.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.MultipleLinearRegression.show_params">
+<code class="descname">show_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression.show_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression.show_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the dictionary of parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.MultipleLinearRegression.synthesize">
+<code class="descname">synthesize</code><span class="sig-paren">(</span><em>ext_input=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#MultipleLinearRegression.synthesize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.MultipleLinearRegression.synthesize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.OrdinaryLeastSquares">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">OrdinaryLeastSquares</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd='1H'</em>, <em>coverage_threshold=0.9</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrdinaryLeastSquares"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrdinaryLeastSquares" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<p>Accepts two DataFrames with timestamps as indexes and averaging period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ref_spd</strong> (<em>pandas.Series</em>) – Series containing reference speed as a column, timestamp as the index.</li>
+<li><strong>target_spd</strong> (<em>pandas.Series</em>) – DataFrame containing target speed as a column, timestamp as the index.</li>
+<li><strong>averaging_prd</strong> (<em>string</em><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified by period.</p>
+<ul>
+<li>2T, 2 min for minutely average</li>
+<li>Set period to 1D for a daily average, 3D for three hourly average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</li>
+<li>Set period to 1MS for monthly average</li>
+<li>Set period to 1AS fo annual average</li>
+</ul>
+</li>
+<li><strong>coverage_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Minimum coverage to include for correlation</li>
+<li><strong>preprocess</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To average and check for coverage before correlating</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An object representing ordinary least squares fit model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="analyse.correlation.OrdinaryLeastSquares.linear_func">
+<em class="property">static </em><code class="descname">linear_func</code><span class="sig-paren">(</span><em>p</em>, <em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrdinaryLeastSquares.linear_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrdinaryLeastSquares.linear_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.OrdinaryLeastSquares.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrdinaryLeastSquares.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrdinaryLeastSquares.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.OrthogonalLeastSquares">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">OrthogonalLeastSquares</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd</em>, <em>coverage_threshold=0.9</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrthogonalLeastSquares"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrthogonalLeastSquares" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<p>Accepts two series with timestamps as indexes and averaging period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ref_spd</strong> – Series containing reference speed as a column, timestamp as the index</li>
+<li><strong>target_spd</strong> – Series containing target speed as a column, timestamp as the index</li>
+<li><strong>averaging_prd</strong> – <p>Groups data by the period specified by period.</p>
+<ul>
+<li>2T, 2 min for minutely average</li>
+<li>Set period to 1D for a daily average, 3D for three hourly average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</li>
+<li>Set period to 1MS for monthly average</li>
+<li>Set period to 1AS fo annual average</li>
+</ul>
+</li>
+<li><strong>coverage_threshold</strong> – Minimum coverage to include for correlation</li>
+<li><strong>preprocess</strong> – To average and check for coverage before correlating</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Returns an object representing the model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="analyse.correlation.OrthogonalLeastSquares.linear_func">
+<code class="descname">linear_func</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrthogonalLeastSquares.linear_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrthogonalLeastSquares.linear_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.OrthogonalLeastSquares.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#OrthogonalLeastSquares.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.OrthogonalLeastSquares.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.SVR">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">SVR</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd</em>, <em>coverage_threshold</em>, <em>bw_model=0</em>, <em>preprocess=True</em>, <em>**sklearn_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SVR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SVR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<dl class="method">
+<dt id="analyse.correlation.SVR.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>title=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SVR.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SVR.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>For plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SVR.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SVR.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SVR.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.SimpleSpeedRatio">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">SimpleSpeedRatio</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SimpleSpeedRatio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SimpleSpeedRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<dl class="method">
+<dt id="analyse.correlation.SimpleSpeedRatio.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SimpleSpeedRatio.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SimpleSpeedRatio.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="analyse.correlation.SpeedSort">
+<em class="property">class </em><code class="descclassname">analyse.correlation.</code><code class="descname">SpeedSort</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>ref_dir</em>, <em>target_spd</em>, <em>target_dir</em>, <em>averaging_prd</em>, <em>coverage_threshold=0.9</em>, <em>sectors=12</em>, <em>direction_bin_array=None</em>, <em>lt_ref_speed=None</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#analyse.correlation.CorrelBase" title="analyse.correlation.CorrelBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">analyse.correlation.CorrelBase</span></code></a></p>
+<dl class="class">
+<dt id="analyse.correlation.SpeedSort.SectorSpeedModel">
+<em class="property">class </em><code class="descname">SectorSpeedModel</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>lt_ref_speed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.SectorSpeedModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.SectorSpeedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.SectorSpeedModel.plot_model">
+<code class="descname">plot_model</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.SectorSpeedModel.plot_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.SectorSpeedModel.plot_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.SectorSpeedModel.sector_predict">
+<code class="descname">sector_predict</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.SectorSpeedModel.sector_predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.SectorSpeedModel.sector_predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.get_result_table">
+<code class="descname">get_result_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.get_result_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.get_result_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>For plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.plot_wind_vane">
+<code class="descname">plot_wind_vane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.plot_wind_vane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.plot_wind_vane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots reference and target directions in a scatter plot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="analyse.correlation.SpeedSort.synthesize">
+<code class="descname">synthesize</code><span class="sig-paren">(</span><em>input_spd=None</em>, <em>input_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/correlation.html#SpeedSort.synthesize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.correlation.SpeedSort.synthesize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-analyse.plot">
+<span id="analyse-plot-module"></span><h2>analyse.plot module<a class="headerlink" href="#module-analyse.plot" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="analyse.plot.plot_timeseries">
+<code class="descclassname">analyse.plot.</code><code class="descname">plot_timeseries</code><span class="sig-paren">(</span><em>data</em>, <em>date_from=''</em>, <em>date_to=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analyse/plot.html#plot_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#analyse.plot.plot_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots timeseries data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – DataFrame to plot</li>
+<li><strong>date_from</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Start date used for plotting in yyyy-mm-dd format</li>
+<li><strong>date_to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – End date used for plotting in yyyy-mm-dd format</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Timeseries plot</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-analyse">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-analyse" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2018, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

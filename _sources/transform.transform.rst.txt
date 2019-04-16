@@ -1,0 +1,25 @@
+transform.transform
+===================
+
+.. automodule:: transform.transform
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      adjust_slope_offset
+      average_data_by_period
+      offset_wind_direction
+      scale_wind_speed
+   
+   
+
+   
+   
+   
+
+   
+   
+   

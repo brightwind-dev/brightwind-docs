@@ -1,0 +1,41 @@
+analyse.analyse
+===============
+
+.. automodule:: analyse.analyse
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      basic_stats
+      calc_target_value_by_linear_model
+      concurrent_coverage
+      coverage
+      distribution
+      distribution_by_dir_sector
+      distribution_by_wind_speed
+      freq_table
+      momm
+      monthly_means
+      time_continuity_gaps
+      twelve_by_24
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SectorRatio
+      Shear
+      TI
+   
+   
+
+   
+   
+   
