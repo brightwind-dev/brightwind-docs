@@ -18,6 +18,8 @@
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="brightwind.analyse package" href="brightwind.analyse.html" />
+    <link rel="prev" title="Tutorials" href="Tutorials.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -36,16 +38,11 @@
         </button>
         <a class="navbar-brand" href="index.html">
           brightwind</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
-            
-                <li><a href="index.html">Home</a></li>
-                <li><a href="Tutorials.html">Tutorials</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="Community.html">Community</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,13 +53,51 @@
      href="index.html">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"></ul>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Demos.html">Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_contribute.html">How to contribute?</a></li>
+</ul>
+</ul>
 </li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">API reference</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="Tutorials.html" title="Previous Chapter: Tutorials"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Tutorials</span>
+    </a>
+  </li>
+  <li>
+    <a href="brightwind.analyse.html" title="Next Chapter: brightwind.analyse package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">brightwind.an... &raquo;</span>
+    </a>
+  </li>
               
             
             
             
             
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/API.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
             
           </ul>
 
@@ -82,187 +117,19 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary"><li class="dropdown globaltoc-container">
-  <a role="button"
-     id="dLabelGlobalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="index.html">Site <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"
-      role="menu"
-      aria-labelledby="dLabelGlobalToc"></ul>
-</li><ul>
-<li><a class="reference internal" href="#">API reference</a><ul>
-<li><a class="reference internal" href="#datasets">Datasets</a></li>
-<li><a class="reference internal" href="#load">Load</a></li>
-<li><a class="reference internal" href="#analyse">Analyse</a><ul>
-</ul>
-</li>
-<li><a class="reference internal" href="#correlation">Correlation</a></li>
-<li><a class="reference internal" href="#transform">Transform</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <div class="section" id="api-reference">
 <span id="api-ref"></span><h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="datasets">
-<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.datasets.datasets_available.html#brightwind.datasets.datasets_available" title="brightwind.datasets.datasets_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datasets_available</span></code></a>()</td>
-<td>Example datasets that can be used with the library.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="load">
-<h2>Load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.load.load.load_csv.html#brightwind.load.load.load_csv" title="brightwind.load.load.load_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_csv</span></code></a>(filepath_or_folder[,&nbsp;…])</td>
-<td>Load timeseries data from a csv file, or group of files in a folder, into a dataframe.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.load.load.load_campbell_scientific.html#brightwind.load.load.load_campbell_scientific" title="brightwind.load.load.load_campbell_scientific"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_campbell_scientific</span></code></a>(filepath_or_folder)</td>
-<td>Load timeseries data from Campbell Scientific CR1000 formatted file, or group of files in a folder, into a dataframe.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.load.load.load_excel.html#brightwind.load.load.load_excel" title="brightwind.load.load.load_excel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_excel</span></code></a>(filepath_or_folder[,&nbsp;…])</td>
-<td>Load timeseries data from an Excel file, or group of files in a folder, into a dataframe.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.load.load.load_brightdata.html#brightwind.load.load.load_brightdata" title="brightwind.load.load.load_brightdata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_brightdata</span></code></a>(dataset,&nbsp;lat,&nbsp;long,&nbsp;nearest)</td>
-<td>Retrieve timeseries datasets available from the brightdata platform.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="analyse">
-<h2>Analyse<a class="headerlink" href="#analyse" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.concurrent_coverage.html#brightwind.analyse.analyse.concurrent_coverage" title="brightwind.analyse.analyse.concurrent_coverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concurrent_coverage</span></code></a>(ref,&nbsp;target,&nbsp;averaging_prd)</td>
-<td>Accepts ref and target data and returns the coverage of concurrent data.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.monthly_means.html#brightwind.analyse.analyse.monthly_means" title="brightwind.analyse.analyse.monthly_means"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monthly_means</span></code></a>(wdspds[,&nbsp;return_data,&nbsp;…])</td>
-<td>Plots means for calendar months in a timeseries plot.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.momm.html#brightwind.analyse.analyse.momm" title="brightwind.analyse.analyse.momm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">momm</span></code></a>(data,&nbsp;date_from,&nbsp;date_to)</td>
-<td>Calculates and returns long term reference speed.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.distribution.html#brightwind.analyse.analyse.distribution" title="brightwind.analyse.analyse.distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution</span></code></a>(var1_series,&nbsp;var2_series[,&nbsp;…])</td>
-<td>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to the bins of another variable.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.distribution_by_wind_speed.html#brightwind.analyse.analyse.distribution_by_wind_speed" title="brightwind.analyse.analyse.distribution_by_wind_speed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution_by_wind_speed</span></code></a>(wdspd[,&nbsp;return_data])</td>
-<td>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to the bins of another variable.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.distribution_by_dir_sector.html#brightwind.analyse.analyse.distribution_by_dir_sector" title="brightwind.analyse.analyse.distribution_by_dir_sector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution_by_dir_sector</span></code></a>(var_series,&nbsp;…)</td>
-<td>Accepts a series of a variable and  wind direction.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.freq_table.html#brightwind.analyse.analyse.freq_table" title="brightwind.analyse.analyse.freq_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freq_table</span></code></a>(var_series,&nbsp;direction_series[,&nbsp;…])</td>
-<td>Accepts a variable series and direction series and computes a frequency table of percentages.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.time_continuity_gaps.html#brightwind.analyse.analyse.time_continuity_gaps" title="brightwind.analyse.analyse.time_continuity_gaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_continuity_gaps</span></code></a>(data)</td>
-<td>Returns the gaps in timestamps for the data, that means that data isn’t available for that period.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.coverage.html#brightwind.analyse.analyse.coverage" title="brightwind.analyse.analyse.coverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coverage</span></code></a>(data[,&nbsp;period,&nbsp;aggregation_method])</td>
-<td>Get the data coverage over the period specified</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.basic_stats.html#brightwind.analyse.analyse.basic_stats" title="brightwind.analyse.analyse.basic_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic_stats</span></code></a>(data)</td>
-<td>Gives basic statistical measures of the data, the dataframe returned includes the following columns</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.twelve_by_24.html#brightwind.analyse.analyse.twelve_by_24" title="brightwind.analyse.analyse.twelve_by_24"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twelve_by_24</span></code></a>(var_series[,&nbsp;…])</td>
-<td>Accepts a variable series and returns 12x24 (months x hours) table for the variable.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.TI.html#brightwind.analyse.analyse.TI" title="brightwind.analyse.analyse.TI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TI</span></code></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.analyse.SectorRatio.html#brightwind.analyse.analyse.SectorRatio" title="brightwind.analyse.analyse.SectorRatio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SectorRatio</span></code></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.analyse.Shear.html#brightwind.analyse.analyse.Shear" title="brightwind.analyse.analyse.Shear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shear</span></code></a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.plot.plot_timeseries.html#brightwind.analyse.plot.plot_timeseries" title="brightwind.analyse.plot.plot_timeseries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_timeseries</span></code></a>(data[,&nbsp;date_from,&nbsp;date_to])</td>
-<td>Plots timeseries data</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="correlation">
-<h2>Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.correlation.OrdinaryLeastSquares.html#brightwind.analyse.correlation.OrdinaryLeastSquares" title="brightwind.analyse.correlation.OrdinaryLeastSquares"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrdinaryLeastSquares</span></code></a>(ref_spd,&nbsp;target_spd[,&nbsp;…])</td>
-<td>Accepts two dataframes with timestamps as indexes and averaging period.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.correlation.OrthogonalLeastSquares.html#brightwind.analyse.correlation.OrthogonalLeastSquares" title="brightwind.analyse.correlation.OrthogonalLeastSquares"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares</span></code></a>(ref_spd,&nbsp;target_spd,&nbsp;…)</td>
-<td>Accepts two series with timestamps as indexes and averaging period.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.correlation.MultipleLinearRegression.html#brightwind.analyse.correlation.MultipleLinearRegression" title="brightwind.analyse.correlation.MultipleLinearRegression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultipleLinearRegression</span></code></a>(ref_spd,&nbsp;target_spd)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.correlation.SimpleSpeedRatio.html#brightwind.analyse.correlation.SimpleSpeedRatio" title="brightwind.analyse.correlation.SimpleSpeedRatio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleSpeedRatio</span></code></a>(ref_spd,&nbsp;target_spd[,&nbsp;…])</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.analyse.correlation.SpeedSort.html#brightwind.analyse.correlation.SpeedSort" title="brightwind.analyse.correlation.SpeedSort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpeedSort</span></code></a>(ref_spd,&nbsp;ref_dir,&nbsp;target_spd,&nbsp;…)</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.analyse.correlation.SVR.html#brightwind.analyse.correlation.SVR" title="brightwind.analyse.correlation.SVR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR</span></code></a>(ref_spd,&nbsp;target_spd,&nbsp;averaging_prd,&nbsp;…)</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="transform">
-<h2>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.transform.transform.average_data_by_period.html#brightwind.transform.transform.average_data_by_period" title="brightwind.transform.transform.average_data_by_period"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average_data_by_period</span></code></a>(data,&nbsp;period[,&nbsp;…])</td>
-<td>Averages the data by the time period specified by period.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.transform.transform.adjust_slope_offset.html#brightwind.transform.transform.adjust_slope_offset" title="brightwind.transform.transform.adjust_slope_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust_slope_offset</span></code></a>(wspd,&nbsp;current_slope,&nbsp;…)</td>
-<td>Adjust a wind speed that already has a slope and offset applied with a new slope and offset.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="brightwind.transform.transform.scale_wind_speed.html#brightwind.transform.transform.scale_wind_speed" title="brightwind.transform.transform.scale_wind_speed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scale_wind_speed</span></code></a>(spd,&nbsp;scale_factor)</td>
-<td>Scales wind speed by the scale_factor</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="brightwind.transform.transform.offset_wind_direction.html#brightwind.transform.transform.offset_wind_direction" title="brightwind.transform.transform.offset_wind_direction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset_wind_direction</span></code></a>(wdir,&nbsp;offset)</td>
-<td>Add/ subtract offset from wind direction.</td>
-</tr>
-</tbody>
-</table>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.analyse.html">brightwind.analyse package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.datasets.html">brightwind.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.export.html">brightwind.export package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.load.html">brightwind.load package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.transform.html">brightwind.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="brightwind.utils.html">brightwind.utils package</a></li>
+</ul>
 </div>
 </div>
 

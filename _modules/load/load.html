@@ -36,16 +36,11 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           brightwind</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>1</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
-            
-                <li><a href="../../index.html">Home</a></li>
-                <li><a href="../../Tutorials.html">Tutorials</a></li>
-                <li><a href="../../API.html">API</a></li>
-                <li><a href="../../Community.html">Community</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,13 +51,36 @@
      href="../../index.html">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"></ul>
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Demos.html">Demos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_contribute.html">How to contribute?</a></li>
+</ul>
+</ul>
 </li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
               
             
             
             
             
+              <li class="hidden-sm"></li>
             
           </ul>
 
@@ -82,11 +100,7 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <h1>Source code for load.load</h1><div class="highlight"><pre>
 <span></span><span class="c1">#     brightwind is a library that provides wind analysts with easy to use tools for working with meteorological data.</span>
@@ -119,7 +133,7 @@
 <span class="k">def</span> <span class="nf">_list_files</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">file_type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a list of file names retrieved from a folder filtering for a specific list of file types. This will walk</span>
-<span class="sd">    through all subfolders.</span>
+<span class="sd">    through all sub-folders.</span>
 
 <span class="sd">    :param folder_path: The path to the folder to search through.</span>
 <span class="sd">    :type folder_path: str</span>
@@ -143,19 +157,19 @@
 
 <span class="k">def</span> <span class="nf">_assemble_df_from_folder</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">function_to_get_df</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Assemble a dataframe from from multiple data files scattered in subfolders filtering for a</span>
+<span class="sd">    Assemble a DataFrame from from multiple data files scattered in subfolders filtering for a</span>
 <span class="sd">    specific list of file types and reading those files with a specific function.</span>
 
 <span class="sd">    :param source_folder: Is the main folder to search through.</span>
 <span class="sd">    :type source_folder: str</span>
 <span class="sd">    :param file_type: Is a list of file extensions to filter for e.g. [&#39;.csv&#39;, &#39;.txt&#39;]</span>
 <span class="sd">    :type file_type: List[str]</span>
-<span class="sd">    :param function_to_get_df: The function to call to read each data file into a dataframe.</span>
+<span class="sd">    :param function_to_get_df: The function to call to read each data file into a DataFrame.</span>
 <span class="sd">    :type function_to_get_df: python function</span>
 <span class="sd">    :param print_progress: If you want print out statements of the files been processed set to true. Default is False.</span>
 <span class="sd">    :type print_progress: bool, default False</span>
 <span class="sd">    :param kwargs: All the kwargs that can be passed to this function.</span>
-<span class="sd">    :return: A dataframe with timestamps as it&#39;s index</span>
+<span class="sd">    :return: A DataFrame with timestamps as it&#39;s index</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">files_list</span> <span class="o">=</span> <span class="n">_list_files</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">)</span>
@@ -193,7 +207,7 @@
 <span class="sd">    :param filepath: The file to read.</span>
 <span class="sd">    :type filepath: str</span>
 <span class="sd">    :param kwargs: Extra key word arguments to be applied.</span>
-<span class="sd">    :return: A pandas dataframe.</span>
+<span class="sd">    :return: A pandas DataFrame.</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -204,9 +218,9 @@
         <span class="k">raise</span> <span class="n">error</span>
 
 
-<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../load.load.load_csv.html#load.load.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../load.html#load.load.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.csv&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load timeseries data from a csv file, or group of files in a folder, into a dataframe.</span>
+<span class="sd">    Load timeseries data from a csv file, or group of files in a folder, into a DataFrame.</span>
 <span class="sd">    The format of the csv file should be column headings in the first row with the timestamp column as the first</span>
 <span class="sd">    column, however these can be over written by sending your own arguments as this is a wrapper around the</span>
 <span class="sd">    pandas.read_csv function. The pandas.read_csv documentation can be found at:</span>
@@ -219,10 +233,10 @@
 <span class="sd">    :param print_progress: If you want to print out statements of the file been processed set to True. Default is False.</span>
 <span class="sd">    :type print_progress: bool, default False</span>
 <span class="sd">    :param kwargs: All the kwargs from pandas.read_csv can be passed to this function.</span>
-<span class="sd">    :return: A dataframe with timestamps as it&#39;s index.</span>
+<span class="sd">    :return: A DataFrame with timestamps as it&#39;s index.</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 
-<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    When assembling files from folders into a single DataFrame with timestamp as the index it automatically checks for</span>
 <span class="sd">    duplicates and throws an error if any found.</span>
 
 <span class="sd">    **Example usage**</span>
@@ -254,10 +268,10 @@
                                         <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_campbell_scientific"><a class="viewcode-back" href="../../load.load.load_campbell_scientific.html#load.load.load_campbell_scientific">[docs]</a><span class="k">def</span> <span class="nf">load_campbell_scientific</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_campbell_scientific"><a class="viewcode-back" href="../../load.html#load.load.load_campbell_scientific">[docs]</a><span class="k">def</span> <span class="nf">load_campbell_scientific</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load timeseries data from Campbell Scientific CR1000 formatted file, or group of files in a folder, into a</span>
-<span class="sd">    dataframe. If the file format is slightly different your own key word arguments can be sent as this is a wrapper</span>
+<span class="sd">    DataFrame. If the file format is slightly different your own key word arguments can be sent as this is a wrapper</span>
 <span class="sd">    around the pandas.read_csv function. The pandas.read_csv documentation can be found at:</span>
 <span class="sd">    https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</span>
 
@@ -266,10 +280,10 @@
 <span class="sd">    :param print_progress: If you want to print out statements of the file been processed set to True. Default is False.</span>
 <span class="sd">    :type print_progress: bool, default False</span>
 <span class="sd">    :param kwargs: All the kwargs from pandas.read_csv can be passed to this function.</span>
-<span class="sd">    :return: A dataframe with timestamps as it&#39;s index</span>
+<span class="sd">    :return: A DataFrame with timestamps as it&#39;s index</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 
-<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    When assembling files from folders into a single DataFrame with timestamp as the index it automatically checks for</span>
 <span class="sd">    duplicates and throws an error if any found.</span>
 
 <span class="sd">    **Example usage**</span>
@@ -301,7 +315,7 @@
 <span class="sd">    :param filepath: The file to read.</span>
 <span class="sd">    :type filepath: str</span>
 <span class="sd">    :param kwargs: Extra key word arguments to be applied.</span>
-<span class="sd">    :return: A pandas dataframe</span>
+<span class="sd">    :return: A pandas DataFrame</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -312,9 +326,9 @@
         <span class="k">raise</span> <span class="n">error</span>
 
 
-<div class="viewcode-block" id="load_excel"><a class="viewcode-back" href="../../load.load.load_excel.html#load.load.load_excel">[docs]</a><span class="k">def</span> <span class="nf">load_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="load_excel"><a class="viewcode-back" href="../../load.html#load.load.load_excel">[docs]</a><span class="k">def</span> <span class="nf">load_excel</span><span class="p">(</span><span class="n">filepath_or_folder</span><span class="p">,</span> <span class="n">search_by_file_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">],</span> <span class="n">print_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load timeseries data from an Excel file, or group of files in a folder, into a dataframe.</span>
+<span class="sd">    Load timeseries data from an Excel file, or group of files in a folder, into a DataFrame.</span>
 <span class="sd">    The format of the Excel file should be column headings in the first row with the timestamp column as the first</span>
 <span class="sd">    column, however these can be over written by sending your own arguments as this is a wrapper around the</span>
 <span class="sd">    pandas.read_excel function. The pandas.read_excel documentation can be found at:</span>
@@ -329,10 +343,10 @@
 <span class="sd">    :param sheet_name: The Excel file sheet name you want to read from.</span>
 <span class="sd">    :type sheet_name: string, int, mixed list of strings/ints, or None, default 0</span>
 <span class="sd">    :param kwargs: All the kwargs from pandas.read_excel can be passed to this function.</span>
-<span class="sd">    :return: A dataframe with timestamps as it&#39;s index.</span>
+<span class="sd">    :return: A DataFrame with timestamps as it&#39;s index.</span>
 <span class="sd">    :rtype: pandas.DataFrame</span>
 
-<span class="sd">    When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for</span>
+<span class="sd">    When assembling files from folders into a single DataFrame with timestamp as the index it automatically checks for</span>
 <span class="sd">    duplicates and throws an error if any found.</span>
 
 <span class="sd">    **Example usage**</span>
@@ -364,8 +378,8 @@
                                         <span class="o">**</span><span class="n">merged_fn_args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_nrg_txt"><a class="viewcode-back" href="../../load.load.load_nrg_txt.html#load.load.load_nrg_txt">[docs]</a><span class="k">def</span> <span class="nf">load_nrg_txt</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s1">&#39;not yet implemented&#39;</span></div>
+<span class="k">def</span> <span class="nf">load_nrg_txt</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;not yet implemented&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">_assemble_files_to_folder</span><span class="p">(</span><span class="n">source_folder</span><span class="p">,</span> <span class="n">destination_folder</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">print_filename</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -442,7 +456,7 @@
     <span class="k">return</span>
 
 
-<div class="viewcode-block" id="Reanalysis"><a class="viewcode-back" href="../../load.load.Reanalysis.html#load.load.Reanalysis">[docs]</a><span class="k">class</span> <span class="nc">Reanalysis</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Reanalysis</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Object defining a Reanalysis dataset</span>
 
 <span class="sd">    :param latitude: object.latitude gives the latitude of the location of dataset</span>
@@ -455,11 +469,11 @@
 <span class="sd">    :type source: str</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Reanalysis.__init__"><a class="viewcode-back" href="../../load.load.Reanalysis.__init__.html#load.load.Reanalysis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
 
 
 <span class="k">def</span> <span class="nf">_get_brightdata_credentials</span><span class="p">():</span>
@@ -516,7 +530,7 @@
     <span class="k">return</span> <span class="n">reanalysis_list</span>
 
 
-<div class="viewcode-block" id="load_brightdata"><a class="viewcode-back" href="../../load.load.load_brightdata.html#load.load.load_brightdata">[docs]</a><span class="k">def</span> <span class="nf">load_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="load_brightdata"><a class="viewcode-back" href="../../load.html#load.load.load_brightdata">[docs]</a><span class="k">def</span> <span class="nf">load_brightdata</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">long</span><span class="p">,</span> <span class="n">nearest</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve timeseries datasets available from the brightdata platform. Returns a list of Reanalysis objects in order</span>
 <span class="sd">    of closest distance to the requested lat, long.</span>
