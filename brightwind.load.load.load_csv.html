@@ -93,7 +93,7 @@
 <dl class="function">
 <dt id="brightwind.load.load.load_csv">
 <code class="descclassname">brightwind.load.load.</code><code class="descname">load_csv</code><span class="sig-paren">(</span><em>filepath_or_folder, search_by_file_type=['.csv'], print_progress=False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/load/load.html#load_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.load.load.load_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load timeseries data from a csv file, or group of files in a folder, into a dataframe.
+<dd><p>Load timeseries data from a csv file, or group of files in a folder, into a DataFrame.
 The format of the csv file should be column headings in the first row with the timestamp column as the first
 column, however these can be over written by sending your own arguments as this is a wrapper around the
 pandas.read_csv function. The pandas.read_csv documentation can be found at:
@@ -110,7 +110,7 @@ pandas.read_csv function. The pandas.read_csv documentation can be found at:
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dataframe with timestamps as it’s index.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A DataFrame with timestamps as it’s index.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -118,7 +118,7 @@ pandas.read_csv function. The pandas.read_csv documentation can be found at:
 </tr>
 </tbody>
 </table>
-<p>When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for
+<p>When assembling files from folders into a single DataFrame with timestamp as the index it automatically checks for
 duplicates and throws an error if any found.</p>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>

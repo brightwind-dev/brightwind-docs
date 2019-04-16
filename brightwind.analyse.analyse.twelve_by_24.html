@@ -92,7 +92,7 @@
 <h1>brightwind.analyse.analyse.twelve_by_24<a class="headerlink" href="#brightwind-analyse-analyse-twelve-by-24" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.analyse.twelve_by_24">
-<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>return_data=False</em>, <em>var_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -106,10 +106,11 @@
 <div>of the variable respectively. Can also pass a function.</div></blockquote>
 </li>
 <li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
+<li><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name and units of the variable to appear on the plot</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dataframe with hours as row labels and months as column labels.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with hours as row labels and months as column labels.</p>
 </td>
 </tr>
 </tbody>

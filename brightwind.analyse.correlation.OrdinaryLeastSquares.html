@@ -93,14 +93,14 @@
 <dl class="class">
 <dt id="brightwind.analyse.correlation.OrdinaryLeastSquares">
 <em class="property">class </em><code class="descclassname">brightwind.analyse.correlation.</code><code class="descname">OrdinaryLeastSquares</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd='1H'</em>, <em>coverage_threshold=0.9</em>, <em>preprocess=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/correlation.html#OrdinaryLeastSquares"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.correlation.OrdinaryLeastSquares" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts two dataframes with timestamps as indexes and averaging period.</p>
+<dd><p>Accepts two DataFrames with timestamps as indexes and averaging period.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>ref_spd</strong> (<em>pandas.Series</em>) – Series containing reference speed as a column, timestamp as the index.</li>
-<li><strong>target_spd</strong> (<em>pandas.Series</em>) – Dataframe containing target speed as a column, timestamp as the index.</li>
+<li><strong>target_spd</strong> (<em>pandas.Series</em>) – DataFrame containing target speed as a column, timestamp as the index.</li>
 <li><strong>averaging_prd</strong> (<em>string</em><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified by period.</p>
 <ul>
 <li>2T, 2 min for minutely average</li>

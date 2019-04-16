@@ -93,33 +93,55 @@
 <dl class="function">
 <dt id="brightwind.analyse.analyse.coverage">
 <code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">coverage</code><span class="sig-paren">(</span><em>data</em>, <em>period='1M'</em>, <em>aggregation_method='mean'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#coverage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.coverage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the data coverage over the period specified</p>
+<dd><p>Get the data coverage over the period specified.</p>
+<p>Coverage is defined as the ratio of number of data points present in the period and the maximum number of
+data points that a period should have. Example, for 10 minute data resolution and a period of 1 hour the
+maximum number of data points in one period is 6. But if the number if data points available is only 3 for that
+hour the coverage is 3/6=0.5 . For more details see average_data_by_period as this function is a wrapper around it.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Data to check the coverage of</li>
-<li><strong>period</strong> (<em>string</em><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified by period.</p>
+<li><strong>data</strong> (<em>pandas.Series</em>) – Data to find average or aggregate of</li>
+<li><strong>period</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified here. The following formats are supported</p>
 <ul>
-<li>2T, 2 min for minutely average</li>
-<li>Set period to 1D for a daily average, 3D for three hourly average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 10min for 10 minute average, 20min for 20 minute average and so on for 4min, 15min, etc.</li>
 <li>Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</li>
-<li>Set period to 1MS for monthly average</li>
+<li>Set period to 1D for a daily average, 3D for three day average, similarly 5D, 7D, 15D etc.</li>
+<li>Set period to 1W for a weekly average, 3W for three week average, similarly 2W, 4W etc.</li>
+<li>Set period to 1M for monthly average</li>
 <li>Set period to 1AS fo annual average</li>
+<li>Can be a DateOffset object too</li>
 </ul>
 </li>
-<li><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – (Optional) Calculates mean of the data for the given averaging_prd by default. Can be
-changed to ‘sum’, ‘std’, ‘max’, ‘min’, etc. or a user defined function</li>
+<li><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Default <cite>mean</cite>, returns the mean of the data for the specified period. Can also use
+<cite>median</cite>, <cite>prod</cite>, <cite>sum</cite>, <cite>std</cite>,`var`, <cite>max</cite>, <cite>min</cite> which are shorthands for median, product, summation,
+standard deviation, variance, maximum and minimum respectively.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dataframe with coverage and resolution of the new data. The columns with coverage are named as
-&lt;column name&gt;_Coverage</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DataFrame with data aggregated with the specified aggregation_method (mean by default) and coverage.
+The columns with coverage are named as &lt;column name&gt;_Coverage</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_site_data</span><span class="p">)</span>
+
+<span class="c1">#To find hourly coverage</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1H&#39;</span><span class="p">)</span>
+
+<span class="c1">#To find monthly_coverage</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">)</span>
+
+<span class="c1">#To find monthly_coverage of variance</span>
+<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>bw.average_data_by_period</p>
 </dd></dl>
 
 </div>

@@ -94,7 +94,7 @@
 <dt id="brightwind.load.load.load_campbell_scientific">
 <code class="descclassname">brightwind.load.load.</code><code class="descname">load_campbell_scientific</code><span class="sig-paren">(</span><em>filepath_or_folder</em>, <em>print_progress=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/load/load.html#load_campbell_scientific"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.load.load.load_campbell_scientific" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load timeseries data from Campbell Scientific CR1000 formatted file, or group of files in a folder, into a
-dataframe. If the file format is slightly different your own key word arguments can be sent as this is a wrapper
+DataFrame. If the file format is slightly different your own key word arguments can be sent as this is a wrapper
 around the pandas.read_csv function. The pandas.read_csv documentation can be found at:
 <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -108,7 +108,7 @@ around the pandas.read_csv function. The pandas.read_csv documentation can be fo
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dataframe with timestamps as it’s index</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A DataFrame with timestamps as it’s index</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -116,7 +116,7 @@ around the pandas.read_csv function. The pandas.read_csv documentation can be fo
 </tr>
 </tbody>
 </table>
-<p>When assembling files from folders into a single dataframe with timestamp as the index it automatically checks for
+<p>When assembling files from folders into a single DataFrame with timestamp as the index it automatically checks for
 duplicates and throws an error if any found.</p>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
