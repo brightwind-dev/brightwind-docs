@@ -93,18 +93,20 @@
 <dl class="function">
 <dt id="brightwind.analyse.analyse.twelve_by_24">
 <code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>return_data=False</em>, <em>var_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.</p>
+<dd><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.
+:param var_series:
+:param aggregation_method: ‘mean’ by default calculates mean of the variable passed. Can change it to</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>‘sum’, ‘std’, ‘min’, ‘max’, ‘percentile’ for sum, standard deviation, minimum, maximum, percentile</dt>
+<dd>of the variable respectively. Can also pass a function.</dd>
+</dl>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>var_series</strong> – </li>
-<li><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>function</em>) – <p>‘mean’ by default calculates mean of the variable passed. Can change it to
-‘sum’, ‘std’, ‘min’, ‘max’, ‘percentile’ for sum, standard deviation, minimum, maximum, percentile</p>
-<blockquote>
-<div>of the variable respectively. Can also pass a function.</div></blockquote>
-</li>
 <li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</li>
 <li><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name and units of the variable to appear on the plot</li>
 </ul>

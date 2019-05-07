@@ -103,7 +103,7 @@ hour the coverage is 3/6=0.5 . For more details see average_data_by_period as th
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>pandas.Series</em>) – Data to find average or aggregate of</li>
+<li><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Data to find average or aggregate of</li>
 <li><strong>period</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>pandas.DateOffset</em>) – <p>Groups data by the period specified here. The following formats are supported</p>
 <ul>
 <li>Set period to 10min for 10 minute average, 20min for 20 minute average and so on for 4min, 15min, etc.</li>
@@ -129,16 +129,19 @@ The columns with coverage are named as &lt;column name&gt;_Coverage</p>
 </table>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_site_data</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
 
 <span class="c1">#To find hourly coverage</span>
 <span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1H&#39;</span><span class="p">)</span>
 
+<span class="c1">#To find hourly coverage for multiple columns</span>
+<span class="n">data_hourly_multiple</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span><span class="s1">&#39;Spd60mN&#39;</span><span class="p">]],</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1H&#39;</span><span class="p">)</span>
+
 <span class="c1">#To find monthly_coverage</span>
-<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">)</span>
+<span class="n">data_monthly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">)</span>
 
 <span class="c1">#To find monthly_coverage of variance</span>
-<span class="n">data_hourly</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">)</span>
+<span class="n">data_monthly_var</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">coverage</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>bw.average_data_by_period</p>
