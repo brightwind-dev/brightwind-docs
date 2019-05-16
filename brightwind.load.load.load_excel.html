@@ -92,7 +92,7 @@
 <h1>brightwind.load.load.load_excel<a class="headerlink" href="#brightwind-load-load-load-excel" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.load.load.load_excel">
-<code class="descclassname">brightwind.load.load.</code><code class="descname">load_excel</code><span class="sig-paren">(</span><em>filepath_or_folder, search_by_file_type=['.xlsx'], print_progress=False, sheet_name=0, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/load/load.html#load_excel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.load.load.load_excel" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">brightwind.load.load.</code><code class="descname">load_excel</code><span class="sig-paren">(</span><em>filepath_or_folder, search_by_file_type=['.xlsx'], print_progress=True, sheet_name=0, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/load/load.html#load_excel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.load.load.load_excel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load timeseries data from an Excel file, or group of files in a folder, into a DataFrame.
 The format of the Excel file should be column headings in the first row with the timestamp column as the first
 column, however these can be over written by sending your own arguments as this is a wrapper around the
@@ -105,7 +105,7 @@ pandas.read_excel function. The pandas.read_excel documentation can be found at:
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>filepath_or_folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Location of the file folder containing the timeseries data.</li>
 <li><strong>search_by_file_type</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>]</em><em>, </em><em>default .xlsx</em>) – Is a list of file extensions to search for e.g. [‘.xlsx’] if a folder is sent.</li>
-<li><strong>print_progress</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default False</em>) – If you want to print out statements of the file been processed set to True. Default is False.</li>
+<li><strong>print_progress</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>default True</em>) – If you want to print out statements of the file been processed set to True. Default is True.</li>
 <li><strong>sheet_name</strong> (<em>string</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>mixed list of strings/ints</em><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>default 0</em>) – The Excel file sheet name you want to read from.</li>
 <li><strong>kwargs</strong> – All the kwargs from pandas.read_excel can be passed to this function.</li>
 </ul>
