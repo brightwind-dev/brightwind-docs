@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>brightwind.transform.transform.scale_wind_speed &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -11,7 +10,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -94,18 +93,14 @@
 <dt id="brightwind.transform.transform.scale_wind_speed">
 <code class="descclassname">brightwind.transform.transform.</code><code class="descname">scale_wind_speed</code><span class="sig-paren">(</span><em>spd</em>, <em>scale_factor: float</em><span class="sig-paren">)</span> &#x2192; pandas.core.series.Series<a class="reference internal" href="_modules/brightwind/transform/transform.html#scale_wind_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.transform.transform.scale_wind_speed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scales wind speed by the scale_factor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>spd</strong> – Series or data frame or a single value of wind speed to scale</li>
-<li><strong>scale_factor</strong> – Scaling factor in decimal, if scaling factor is 0.8 output would be (1+0.8) times wind speed,</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spd</strong> – Series or data frame or a single value of wind speed to scale</p></li>
+<li><p><strong>scale_factor</strong> – Scaling factor in decimal, if scaling factor is 0.8 output would be (1+0.8) times wind speed,</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>if it is -0.8 the output would be (1-0.8) times the wind speed
 :return: Series or data frame with scaled wind speeds</p>
 </dd></dl>
@@ -125,7 +120,7 @@
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>

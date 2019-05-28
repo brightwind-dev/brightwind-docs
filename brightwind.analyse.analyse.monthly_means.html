@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>brightwind.analyse.analyse.monthly_means &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -11,7 +10,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -95,25 +94,21 @@
 <code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">monthly_means</code><span class="sig-paren">(</span><em>data</em>, <em>return_data=False</em>, <em>return_coverage=False</em>, <em>ylabel='Wind speed [m/s]'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#monthly_means"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.monthly_means" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots means for calendar months in a timeseries plot. Input can be a series or a DataFrame. Can
 also return data of monthly means with a plot.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>Series</em><em> or </em><em>DataFrame</em>) – A timeseries to find monthly means of. Can have multiple columns</li>
-<li><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return data of monthly means along with the plot.</li>
-<li><strong>return_coverage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return monthly coverage along with the data and plot. Also plots the coverage on the
-same graph if only a single series was passed to data.</li>
-<li><strong>ylabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Label for the y-axis, Wind speed [m/s] by default</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Series</em><em> or </em><em>DataFrame</em>) – A timeseries to find monthly means of. Can have multiple columns</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return data of monthly means along with the plot.</p></li>
+<li><p><strong>return_coverage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – To return monthly coverage along with the data and plot. Also plots the coverage on the
+same graph if only a single series was passed to data.</p></li>
+<li><p><strong>ylabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Label for the y-axis, Wind speed [m/s] by default</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A plot of monthly means for the input data. If return data is true it returns a tuple where
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A plot of monthly means for the input data. If return data is true it returns a tuple where
 the first element is plot and second is data pertaining to monthly means.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">shell_flats_80m_csv</span><span class="p">)</span>
@@ -149,7 +144,7 @@ the first element is plot and second is data pertaining to monthly means.</p>
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>

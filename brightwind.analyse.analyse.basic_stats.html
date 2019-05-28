@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>brightwind.analyse.analyse.basic_stats &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -11,7 +10,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -95,23 +94,21 @@
 <code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">basic_stats</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#basic_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.basic_stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives basic statistical measures of the data, the DataFrame returned includes the following columns</p>
 <ul class="simple">
-<li>count, number of data points available for each column of the data</li>
-<li>mean, mean of each column of data</li>
-<li>std, standard deviation of each column of data</li>
-<li>min, minimum value of each column of data</li>
-<li>max, maximum value of each column of data</li>
+<li><p>count, number of data points available for each column of the data</p></li>
+<li><p>mean, mean of each column of data</p></li>
+<li><p>std, standard deviation of each column of data</p></li>
+<li><p>min, minimum value of each column of data</p></li>
+<li><p>max, maximum value of each column of data</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – It can be a DataFrame containing meteorological data or a series of some variable like wind speed,
-direction, temperature, etc.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A DataFrame with columns count, mean, std, min amd max.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – It can be a DataFrame containing meteorological data or a series of some variable like wind speed,
+direction, temperature, etc.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A DataFrame with columns count, mean, std, min amd max.</p>
+</dd>
+</dl>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
@@ -136,7 +133,7 @@ direction, temperature, etc.</td>
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
     </p>
   </div>
 </footer>
