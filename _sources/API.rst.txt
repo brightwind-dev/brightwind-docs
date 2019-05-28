@@ -22,7 +22,7 @@ Load
 
 .. autosummary::
     :toctree:
-    :align: left
+
     load_csv
     load_campbell_scientific
     load_excel
