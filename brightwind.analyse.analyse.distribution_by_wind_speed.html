@@ -81,27 +81,33 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <div class="section" id="brightwind-analyse-analyse-distribution-by-wind-speed">
 <h1>brightwind.analyse.analyse.distribution_by_wind_speed<a class="headerlink" href="#brightwind-analyse-analyse-distribution-by-wind-speed" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.analyse.distribution_by_wind_speed">
-<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">distribution_by_wind_speed</code><span class="sig-paren">(</span><em>wspd</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#distribution_by_wind_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.distribution_by_wind_speed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to
-the bins of another variable.</p>
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">distribution_by_wind_speed</code><span class="sig-paren">(</span><em>wspd</em>, <em>max_speed=30</em>, <em>max_y_value=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#distribution_by_wind_speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.distribution_by_wind_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a wind speed time series and computes it’s frequency distribution. That is, how often does the wind
+blow within each wind speed bin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>wspd</strong> – Series of the variable whose distribution we need to find</p></li>
+<li><p><strong>wspd</strong> (<em>pd.Series</em>) – Time series of the wind speed variable whose distribution we need to find.</p></li>
+<li><p><strong>max_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max wind speed to consider, default is 30 m/s.</p></li>
+<li><p><strong>max_y_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max value for the y-axis of the plot to be set. Default will be relative to max calculated
+data value.</p></li>
 <li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
 </ul>
 </dd>
 </dl>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
+
+<span class="n">freq_dist_plot</span><span class="p">,</span> <span class="n">freq_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution_by_wind_speed</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -81,34 +81,56 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <div class="section" id="brightwind-analyse-analyse-distribution">
 <h1>brightwind.analyse.analyse.distribution<a class="headerlink" href="#brightwind-analyse-analyse-distribution" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.analyse.distribution">
-<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">distribution</code><span class="sig-paren">(</span><em>var1_series</em>, <em>var2_series</em>, <em>var2_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>var2_bin_labels=None</em>, <em>aggregation_method='%frequency'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.distribution" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to
-the bins of another variable.</p>
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">distribution</code><span class="sig-paren">(</span><em>var_series</em>, <em>var_to_bin_against=None</em>, <em>bins=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>bin_labels=None</em>, <em>max_y_value=None</em>, <em>aggregation_method='%frequency'</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a variable and computes the distribution of the variable with itself as per the bins specified. Can
+also pass another variable for finding distribution with respect to another variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var1_series</strong> – Series of the variable whose distribution we need to find</p></li>
-<li><p><strong>var2_series</strong> – Series of the variable which we want to bin</p></li>
-<li><p><strong>var2_bin_array</strong> – Array of numbers where adjacent elements of array form a bin</p></li>
-<li><p><strong>var2_bin_labels</strong> – Labels of bins to be used, uses (bin-start, bin-end] format by default</p></li>
-<li><p><strong>aggregation_method</strong> – Statistical method used to find distribution it can be mean, max, min, std, count,
-describe, a custom function, etc,computes frequency in percentages by default</p></li>
+<li><p><strong>var_series</strong> (<em>pandas.Series</em>) – Time-series of the variable whose distribution we need to find</p></li>
+<li><p><strong>var_to_bin_against</strong> (<em>pandas.Series</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – (optional) Times-series of the variable which we want to bin against if required
+to bin against another variable.</p></li>
+<li><p><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em>) – Array of numbers where adjacent elements of array form a bin</p></li>
+<li><p><strong>bin_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Labels of bins to be used, uses (bin-start, bin-end] format by default</p></li>
+<li><p><strong>max_y_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max value for the y-axis of the plot to be set. Default will be relative to max calculated
+data value.</p></li>
+<li><p><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>function</em>) – Statistical method used to find distribution. It can be mean, max, min, std, count,
+%frequency or a custom function. Computes frequency in percentages by default.</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A DataFrame/Series with bins as row indexes and columns with statistics chosen by aggregation_method</p>
+<dd class="field-even"><p>A distribution plot and, if requested, a pandas.Series with bins as row indexes and column with
+statistics chosen by aggregation_method.</p>
 </dd>
 </dl>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span><span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
+
+<span class="c1">#For distribution of %frequency of wind speeds</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="n">bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="s1">&#39;gale&#39;</span><span class="p">,</span> <span class="s1">&#39;storm&#39;</span><span class="p">])</span>
+
+<span class="c1">#For distribution of mean temperature</span>
+<span class="n">temp_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="c1">#For custom aggregation function</span>
+<span class="k">def</span> <span class="nf">custom_agg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">temp_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="n">custom_agg</span><span class="p">)</span>
+
+<span class="c1">#For distribution of mean wind speeds with respect to temperature</span>
+<span class="n">spd_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+    <span class="n">bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;freezing&#39;</span><span class="p">,</span> <span class="s1">&#39;cold&#39;</span><span class="p">,</span> <span class="s1">&#39;mild&#39;</span><span class="p">,</span> <span class="s1">&#39;hot&#39;</span><span class="p">],</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

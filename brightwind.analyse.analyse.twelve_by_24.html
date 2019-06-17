@@ -81,37 +81,50 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <div class="section" id="brightwind-analyse-analyse-twelve-by-24">
 <h1>brightwind.analyse.analyse.twelve_by_24<a class="headerlink" href="#brightwind-analyse-analyse-twelve-by-24" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.analyse.twelve_by_24">
-<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>return_data=False</em>, <em>var_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.
-:param var_series:
-:param aggregation_method: ‘mean’ by default calculates mean of the variable passed. Can change it to</p>
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">twelve_by_24</code><span class="sig-paren">(</span><em>var_series</em>, <em>aggregation_method='mean'</em>, <em>var_name_label=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/brightwind/analyse/analyse.html#twelve_by_24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#brightwind.analyse.analyse.twelve_by_24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a variable series and returns a plot of 12x24 (12 months x 24 hours) for the ‘mean’ of the variable with
+the table of data as an optional return. The aggregation_method ‘mean’ can be can be changed as outlined below.
+:param var_series: Variable to compute 12x24 for
+:type var_series: pandas.Series
+:param aggregation_method: ‘mean’ by default, calculates mean of the variable passed. Can change it to</p>
 <blockquote>
-<div><dl class="simple">
-<dt>‘sum’, ‘std’, ‘min’, ‘max’, ‘percentile’ for sum, standard deviation, minimum, maximum, percentile</dt><dd><p>of the variable respectively. Can also pass a function.</p>
-</dd>
-</dl>
+<div><p>‘sum’, ‘std’, ‘min’, ‘max’, for sum, standard deviation, minimum, maximum. Can also pass a function.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>var_name_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – (Optional) Label to appear on the plot, can be name and unit of the variable</p></li>
 <li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
-<li><p><strong>var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name and units of the variable to appear on the plot</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A DataFrame with hours as row labels and months as column labels.</p>
+<dd class="field-even"><p>A plot with gradients showing , also a 12x24 table with hours as row labels and months as column labels
+when return_data is True</p>
 </dd>
 </dl>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
+
+<span class="c1"># For 12x24 table of means</span>
+<span class="n">graph</span><span class="p">,</span> <span class="n">table12x24</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">twelve_by_24</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="s1">&#39;wind speed [m/s]&#39;</span><span class="p">,</span> <span class="n">return_data</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># For 12x24 table of sums</span>
+<span class="n">graph</span><span class="p">,</span> <span class="n">table12x24</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">twelve_by_24</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">PrcpTot</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+
+<span class="c1">#For a custom aggregation_method</span>
+<span class="k">def</span> <span class="nf">custom_agg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+
+<span class="n">graph</span><span class="p">,</span> <span class="n">table12x24</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">twelve_by_24</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">PrcpTot</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="n">custom_agg</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

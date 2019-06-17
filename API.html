@@ -156,14 +156,14 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.momm.html#brightwind.analyse.analyse.momm" title="brightwind.analyse.analyse.momm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">momm</span></code></a>(data, date_from, date_to)</p></td>
 <td><p>Calculates and returns long term reference speed.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="brightwind.analyse.analyse.distribution.html#brightwind.analyse.analyse.distribution" title="brightwind.analyse.analyse.distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution</span></code></a>(var1_series, var2_series[, …])</p></td>
-<td><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to the bins of another variable.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="brightwind.analyse.analyse.distribution.html#brightwind.analyse.analyse.distribution" title="brightwind.analyse.analyse.distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution</span></code></a>(var_series[, …])</p></td>
+<td><p>Accepts a variable and computes the distribution of the variable with itself as per the bins specified.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.distribution_by_wind_speed.html#brightwind.analyse.analyse.distribution_by_wind_speed" title="brightwind.analyse.analyse.distribution_by_wind_speed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution_by_wind_speed</span></code></a>(wspd[, return_data])</p></td>
-<td><p>Accepts 2 series of same/different variables and computes the distribution of first variable with respect to the bins of another variable.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.distribution_by_wind_speed.html#brightwind.analyse.analyse.distribution_by_wind_speed" title="brightwind.analyse.analyse.distribution_by_wind_speed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution_by_wind_speed</span></code></a>(wspd[, …])</p></td>
+<td><p>Accepts a wind speed time series and computes it’s frequency distribution.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="brightwind.analyse.analyse.distribution_by_dir_sector.html#brightwind.analyse.analyse.distribution_by_dir_sector" title="brightwind.analyse.analyse.distribution_by_dir_sector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distribution_by_dir_sector</span></code></a>(var_series, …)</p></td>
-<td><p>Accepts a series of a variable and  wind direction.</p></td>
+<td><p>Derive the distribution of a time series variable with respect to wind direction sectors.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.freq_table.html#brightwind.analyse.analyse.freq_table" title="brightwind.analyse.analyse.freq_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">freq_table</span></code></a>(var_series, direction_series[, …])</p></td>
 <td><p>Accepts a variable series and direction series and computes a frequency table of percentages.</p></td>
@@ -178,12 +178,12 @@
 <td><p>Gives basic statistical measures of the data, the DataFrame returned includes the following columns</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.twelve_by_24.html#brightwind.analyse.analyse.twelve_by_24" title="brightwind.analyse.analyse.twelve_by_24"><code class="xref py py-obj docutils literal notranslate"><span class="pre">twelve_by_24</span></code></a>(var_series[, …])</p></td>
-<td><p>Accepts a variable series and returns 12x24 (months x hours) table for the variable.</p></td>
+<td><p>Accepts a variable series and returns a plot of 12x24 (12 months x 24 hours) for the ‘mean’ of the variable with the table of data as an optional return.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="brightwind.analyse.analyse.TI.html#brightwind.analyse.analyse.TI" title="brightwind.analyse.analyse.TI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TI</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="brightwind.analyse.analyse.SectorRatio.html#brightwind.analyse.analyse.SectorRatio" title="brightwind.analyse.analyse.SectorRatio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SectorRatio</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SectorRatio</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="brightwind.analyse.analyse.Shear.html#brightwind.analyse.analyse.Shear" title="brightwind.analyse.analyse.Shear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Shear</span></code></a></p></td>
@@ -269,8 +269,8 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="brightwind.export.export.export_tab_file.html#brightwind.export.export.export_tab_file" title="brightwind.export.export.export_tab_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_tab_file</span></code></a>(freq_tab, name, lat, long[, …])</p></td>
-<td><p>Export a WaSP tab file from freq_table() function</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="brightwind.export.export.export_tab_file.html#brightwind.export.export.export_tab_file" title="brightwind.export.export.export_tab_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_tab_file</span></code></a>(freq_tab, height, lat, long)</p></td>
+<td><p>Export a WaSP tab file using the output from the freq_table() function.</p></td>
 </tr>
 </tbody>
 </table>
