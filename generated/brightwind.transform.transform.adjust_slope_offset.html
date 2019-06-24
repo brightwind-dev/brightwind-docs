@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.transform.transform.adjust_slope_offset &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="brightwind-transform-transform-adjust-slope-offset">
+<h1>brightwind.transform.transform.adjust_slope_offset<a class="headerlink" href="#brightwind-transform-transform-adjust-slope-offset" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="brightwind.transform.transform.adjust_slope_offset">
+<code class="descclassname">brightwind.transform.transform.</code><code class="descname">adjust_slope_offset</code><span class="sig-paren">(</span><em>wspd</em>, <em>current_slope</em>, <em>current_offset</em>, <em>new_slope</em>, <em>new_offset</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.transform.transform.adjust_slope_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust a wind speed that already has a slope and offset applied with a new slope and offset.
+Can take either a single wind speed value or a pandas DataFrame/series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wspd</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><em>pd.DataFrame</em><em> or </em><em>pd.Series</em>) – The wind speed value or series to be adjusted.</p></li>
+<li><p><strong>current_slope</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The current slope that was applied to create the wind speed.</p></li>
+<li><p><strong>current_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The current offset that was applied to create the wind speed.</p></li>
+<li><p><strong>new_slope</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The new desired slope to adjust the wind speed by.</p></li>
+<li><p><strong>new_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The new desired offset to adjust the wind speed by.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The adjusted wind speed as a single value or pandas DataFrame.</p>
+</dd>
+</dl>
+<p>The new wind speed is calculated by equating the old and new y=mx+c equations around x and then solving for
+the new wind speed.</p>
+<p>y2 = m2*x + c2   and   y1 = m1*x + c1</p>
+<p>y2 = m2*(y1 - c1)/m1 + c2</p>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Spd80mS_adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">adjust_slope_offset</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd80mS</span><span class="p">,</span> <span class="mf">0.044</span><span class="p">,</span> <span class="mf">0.235</span><span class="p">,</span> <span class="mf">0.04365</span><span class="p">,</span> <span class="mf">0.236</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd80mS_adj&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

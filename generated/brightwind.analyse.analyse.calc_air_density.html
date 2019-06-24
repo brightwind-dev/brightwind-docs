@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.analyse.calc_air_density &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="brightwind-analyse-analyse-calc-air-density">
+<h1>brightwind.analyse.analyse.calc_air_density<a class="headerlink" href="#brightwind-analyse-analyse-calc-air-density" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="brightwind.analyse.analyse.calc_air_density">
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">calc_air_density</code><span class="sig-paren">(</span><em>temperature</em>, <em>pressure</em>, <em>elevation_ref=None</em>, <em>elevation_site=None</em>, <em>lapse_rate=-0.113</em>, <em>specific_gas_constant=286.9</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.calc_air_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates air density for a given temperature and pressure and extrapolates that to the site if both reference
+and site elevations are given.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Temperature values in degree Celsius</p></li>
+<li><p><strong>pressure</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Pressure values in hectopascal, hPa, (1,013.25 hPa = 101,325 Pa = 101.325 kPa =
+1 atm = 1013.25 mbar)</p></li>
+<li><p><strong>elevation_ref</strong> (<em>Floating point value</em><em> (</em><em>decimal number</em><em>)</em>) – Elevation, in meters, of the reference temperature and pressure location.</p></li>
+<li><p><strong>elevation_site</strong> (<em>Floating point values</em><em> (</em><em>decimal number</em><em>)</em>) – Elevation, in meters, of the site location to calculate air density for.</p></li>
+<li><p><strong>lapse_rate</strong> (<em>Floating point value</em><em> (</em><em>decimal number</em><em>)</em>) – Air density lapse rate kg/m^3/km, default is -0.113</p></li>
+<li><p><strong>specific_gas_constant</strong> (<em>Floating point value</em><em> (</em><em>decimal number</em><em>)</em>) – Specific gas constant, R, for humid air J/(kg.K), default is 286.9</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Air density in kg/m^3</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><p>float or pandas.Series depending on the input</p>
+<p><strong>Example usage</strong></p>
+</p>
+</dd>
+</dl>
+<dl>
+<dt>::</dt><dd><p>import brightwind as bw</p>
+<p>#For a series of air densities
+data = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)
+air_density = bw.calc_air_density(data.T2m, data.P2m)</p>
+<p>#For a single value
+bw.calc_air_density(15, 1013)</p>
+<p>#For a single value with ref and site elevation
+bw.calc_air_density(15, 1013, elevation_ref=0, elevation_site=200)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

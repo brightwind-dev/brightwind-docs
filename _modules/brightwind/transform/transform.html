@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.transform.transform &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../index.html">Home</a></li>
+                <li><a href="../../../Tutorials.html">Tutorials</a></li>
+                <li><a href="../../../API.html">API</a></li>
+                <li><a href="../../../Community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for brightwind.transform.transform</h1><div class="highlight"><pre>
+<span></span><span class="c1">#     brightwind is a library that provides wind analysts with easy to use tools for working with meteorological data.</span>
+<span class="c1">#     Copyright (C) 2018 Stephen Holleran, Inder Preet</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is free software: you can redistribute it and/or modify</span>
+<span class="c1">#     it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">#     the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">#     (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is distributed in the hope that it will be useful,</span>
+<span class="c1">#     but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">#     GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1">#     You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">#     along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">brightwind.utils</span> <span class="k">import</span> <span class="n">utils</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;average_data_by_period&#39;</span><span class="p">,</span> <span class="s1">&#39;adjust_slope_offset&#39;</span><span class="p">,</span> <span class="s1">&#39;scale_wind_speed&#39;</span><span class="p">,</span> <span class="s1">&#39;offset_wind_direction&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;offset_timestamps&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_wind_vector</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wdir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns north and east component of wind-vector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wspd</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">wdir</span><span class="p">),</span> <span class="n">wspd</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">wdir</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_days_to_hours</span><span class="p">(</span><span class="n">prd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">prd</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="mi">24</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;H&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_weeks_to_hours</span><span class="p">(</span><span class="n">prd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">prd</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">7</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;H&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_min_overlap_timestamp</span><span class="p">(</span><span class="n">df1_timestamps</span><span class="p">,</span> <span class="n">df2_timestamps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the minimum overlapping timestamp from two series</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">df1_timestamps</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">df2_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="ow">or</span> <span class="n">df1_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">df2_timestamps</span><span class="o">.</span><span class="n">max</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;No overlapping data. Ranges: </span><span class="si">{0}</span><span class="s2"> to </span><span class="si">{1}</span><span class="s2">  and </span><span class="si">{2}</span><span class="s2"> to </span><span class="si">{3}</span><span class="s2">&quot;</span>
+                         <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df1_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df1_timestamps</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                                 <span class="n">df2_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df2_timestamps</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">df1_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df2_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="_get_data_resolution"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform._get_data_resolution.html#brightwind.transform.transform._get_data_resolution">[docs]</a><span class="k">def</span> <span class="nf">_get_data_resolution</span><span class="p">(</span><span class="n">data_idx</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the frequency of data i.e. the most common time interval between timestamps.</span>
+
+<span class="sd">    The algorithm finds the most common time difference between consecutive time stamps and returns the</span>
+<span class="sd">    most common time stamp. Also checks the most common time difference and the minimum time difference. If they</span>
+<span class="sd">    do not match it shows a warning. It is suggested to manually look at the data if such a warning is shown.</span>
+
+<span class="sd">    :param data_idx: Indexes of the DataFrame or series</span>
+<span class="sd">    :type data_idx: pandas.DataFrame.index or pandas.Series.index</span>
+<span class="sd">    :return: A time delta object which represents the time difference between consecutive timestamps.</span>
+<span class="sd">    :rtype: pandas.Timedelta</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+<span class="sd">        resolution = bw._get_data_resolution(df.Spd80mS.index)</span>
+<span class="sd">        #To check the number of seconds in resolution</span>
+<span class="sd">        print(resolution.seconds)</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">warnings</span>
+    <span class="n">time_diff_btw_timestamps</span> <span class="o">=</span> <span class="n">data_idx</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+    <span class="n">most_freq_time_diff</span> <span class="o">=</span> <span class="n">time_diff_btw_timestamps</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">minimum_time_diff</span> <span class="o">=</span> <span class="n">time_diff_btw_timestamps</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">minimum_time_diff</span> <span class="o">!=</span> <span class="n">most_freq_time_diff</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Frequency of input data might not be determined correctly (most frequent time &quot;</span>
+                      <span class="s2">&quot;difference between adjacent timestamps&quot;</span>
+                      <span class="s2">&quot; does not match minimum time difference) most frequent time difference: </span><span class="si">{0}</span><span class="s2">  &quot;</span>
+                      <span class="s2">&quot;minimum time difference </span><span class="si">{1}</span><span class="s2">. Using most frequent time difference as resolution&quot;</span>
+                      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">most_freq_time_diff</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">),</span> <span class="n">minimum_time_diff</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">most_freq_time_diff</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_round_timestamp_down_to_averaging_prd</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{year}</span><span class="s1">-</span><span class="si">{month}</span><span class="s1">-</span><span class="si">{day}</span><span class="s1"> </span><span class="si">{hour}</span><span class="s1">:00:00&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                                                          <span class="n">day</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span> <span class="ow">or</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span> <span class="ow">or</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{year}</span><span class="s1">-</span><span class="si">{month}</span><span class="s1">-</span><span class="si">{day}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+                                             <span class="n">hour</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span> <span class="ow">or</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;MS&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{year}</span><span class="s1">-</span><span class="si">{month}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;AS&#39;</span> <span class="ow">or</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{year}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Averaging period not identified returning default timestamps&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{year}</span><span class="s1">-</span><span class="si">{month}</span><span class="s1">-</span><span class="si">{day}</span><span class="s1"> </span><span class="si">{hour}</span><span class="s1">:</span><span class="si">{minute}</span><span class="s1">:</span><span class="si">{second}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                                                                      <span class="n">day</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span>
+                                                                      <span class="n">minute</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="n">timestamp</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_common_idxs</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">site</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds overlapping indexes from two DataFrames.</span>
+<span class="sd">    Coverage is 1 if whole site data is covered. Also returns the number data points</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">common</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">common</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">common</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_overlapping_data</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">_round_timestamp_down_to_averaging_prd</span><span class="p">(</span><span class="n">_get_min_overlap_timestamp</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">period</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">_get_min_overlap_timestamp</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df1</span><span class="p">[</span><span class="n">start</span><span class="p">:],</span> <span class="n">df2</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+
+
+<span class="k">def</span> <span class="nf">_max_coverage_count</span><span class="p">(</span><span class="n">data_index</span><span class="p">,</span> <span class="n">averaged_data_index</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given resolution of data finds the maximum number of data points in the averaging period</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">max_pts</span> <span class="o">=</span> <span class="p">(</span><span class="n">averaged_data_index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">_get_data_resolution</span><span class="p">(</span><span class="n">data_index</span><span class="p">)</span>
+    <span class="n">max_pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">averaged_data_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">*</span><span class="n">averaged_data_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span> <span class="o">-</span> <span class="n">averaged_data_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> \
+                  <span class="n">_get_data_resolution</span><span class="p">(</span><span class="n">data_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_pts</span>
+
+
+<span class="k">def</span> <span class="nf">_get_coverage_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">grouper_obj</span><span class="p">):</span>
+    <span class="n">coverage</span> <span class="o">=</span> <span class="n">grouper_obj</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">_max_coverage_count</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">grouper_obj</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coverage</span>
+
+
+<div class="viewcode-block" id="average_data_by_period"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform.average_data_by_period.html#brightwind.transform.transform.average_data_by_period">[docs]</a><span class="k">def</span> <span class="nf">average_data_by_period</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">coverage_threshold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">return_coverage</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Averages the data by the time period specified by period.</span>
+
+<span class="sd">    Aggregates data by the aggregation_method specified, by default this function averages the data to the period </span>
+<span class="sd">    specified. Can be used to find hourly, daily, weekly, etc. averages or sums. Can also return coverage and </span>
+<span class="sd">    filter the returned data by coverage.</span>
+
+<span class="sd">    :param data: Data to find average or aggregate of</span>
+<span class="sd">    :type data: pandas.Series</span>
+<span class="sd">    :param period: Groups data by the period specified here. The following formats are supported</span>
+
+<span class="sd">            - Set period to 10min for 10 minute average, 20min for 20 minute average and so on for 4min, 15min, etc.</span>
+<span class="sd">            - Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</span>
+<span class="sd">            - Set period to 1D for a daily average, 3D for three day average, similarly 5D, 7D, 15D etc.</span>
+<span class="sd">            - Set period to 1W for a weekly average, 3W for three week average, similarly 2W, 4W etc.</span>
+<span class="sd">            - Set period to 1M for monthly average</span>
+<span class="sd">            - Set period to 1AS fo annual average</span>
+<span class="sd">            - Can be a DateOffset object too</span>
+
+<span class="sd">    :type period: str or pandas.DateOffset</span>
+<span class="sd">    :param aggregation_method: Default `mean`, returns the mean of the data for the specified period. Can also use</span>
+<span class="sd">        `median`, `prod`, `sum`, `std`,`var`, `max`, `min` which are shorthands for median, product, summation,</span>
+<span class="sd">        standard deviation, variance, maximum and minimum respectively.</span>
+<span class="sd">    :type aggregation_method: str</span>
+<span class="sd">    :param coverage_threshold: Coverage is defined as the ratio of number of data points present in the period and the </span>
+<span class="sd">        maximum number of data points that a period should have. Example, for 10 minute data resolution and a period of </span>
+<span class="sd">        1 hour, the maximum number of data points in one period is 6. But if the number if data points available is only</span>
+<span class="sd">        3 for that hour the coverage is 3/6=0.5. It should be greater than 0 and less than or equal to 1. It is set to </span>
+<span class="sd">        None by default. If it is None or 0, data is not filtered. Otherwise periods are removed where coverage is less </span>
+<span class="sd">        than the coverage_threshold are removed.</span>
+<span class="sd">    :type coverage_threshold: float</span>
+<span class="sd">    :param return_coverage: If True appends and additional column in the DataFrame returned, with coverage calculated</span>
+<span class="sd">        for each period. The columns with coverage are named as &lt;column name&gt;_Coverage</span>
+<span class="sd">    :type return_coverage: bool</span>
+<span class="sd">    :returns: A DataFrame with data aggregated with the specified aggregation_method (mean by default). Additionally it</span>
+<span class="sd">        could be filtered based on coverage and have a coverage column depending on the parameters.</span>
+<span class="sd">    :rtype: DataFrame</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        #To find hourly averages</span>
+<span class="sd">        data_hourly = bw.average_data_by_period(data.Spd80mN, period=&#39;1H&#39;)</span>
+
+<span class="sd">        #To find monthly averages</span>
+<span class="sd">        data_monthly = bw.average_data_by_period(data.Spd80mN, period=&#39;1M&#39;)</span>
+
+<span class="sd">        #To filter months where half of the data is missing</span>
+<span class="sd">        data_monthly_filtered = bw.average_data_by_period(data.Spd80mN, period=&#39;1M&#39;, coverage_threshold=0.5)</span>
+
+<span class="sd">        #To check the coverage for all months</span>
+<span class="sd">        data_monthly_filtered = bw.average_data_by_period(data.Spd80mN, period=&#39;1M&#39;, return_coverage=True)</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">coverage_threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">coverage_threshold</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">coverage_threshold</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">coverage_threshold</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid coverage_threshold, should be between 0 and 1, both ends inclusive&quot;</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="n">_convert_days_to_hours</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="n">_convert_weeks_to_hours</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
+            <span class="n">period</span> <span class="o">=</span> <span class="n">period</span><span class="o">+</span><span class="s1">&#39;S&#39;</span>
+        <span class="k">if</span> <span class="n">period</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Please use &#39;1AS&#39; for annual frequency at the start of the year.&quot;</span><span class="p">)</span>
+    <span class="n">grouper_obj</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                <span class="n">convention</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span>
+
+    <span class="n">grouped_data</span> <span class="o">=</span> <span class="n">grouper_obj</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">aggregation_method</span><span class="p">)</span>
+    <span class="n">coverage</span> <span class="o">=</span> <span class="n">_get_coverage_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">grouper_obj</span><span class="p">)</span>
+
+    <span class="n">grouped_data</span> <span class="o">=</span> <span class="n">grouped_data</span><span class="p">[</span><span class="n">coverage</span> <span class="o">&gt;=</span> <span class="n">coverage_threshold</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">return_coverage</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coverage</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">coverage</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span><span class="o">+</span><span class="s2">&quot;_Coverage&quot;</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">coverage</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coverage</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">coverage</span> <span class="o">=</span> <span class="n">coverage</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">grouped_data</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_Coverage&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Coverage not calculated correctly. Coverage&quot;</span><span class="p">,</span> <span class="n">coverage</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grouped_data</span><span class="p">,</span> <span class="n">coverage</span><span class="p">[</span><span class="n">coverage</span> <span class="o">&gt;=</span> <span class="n">coverage_threshold</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">grouped_data</span></div>
+
+
+<div class="viewcode-block" id="adjust_slope_offset"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform.adjust_slope_offset.html#brightwind.transform.transform.adjust_slope_offset">[docs]</a><span class="k">def</span> <span class="nf">adjust_slope_offset</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">current_slope</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">,</span> <span class="n">new_slope</span><span class="p">,</span> <span class="n">new_offset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adjust a wind speed that already has a slope and offset applied with a new slope and offset.</span>
+<span class="sd">    Can take either a single wind speed value or a pandas DataFrame/series.</span>
+
+<span class="sd">    :param wspd: The wind speed value or series to be adjusted.</span>
+<span class="sd">    :type wspd: float or pd.DataFrame or pd.Series</span>
+<span class="sd">    :param current_slope: The current slope that was applied to create the wind speed.</span>
+<span class="sd">    :type current_slope: float</span>
+<span class="sd">    :param current_offset: The current offset that was applied to create the wind speed.</span>
+<span class="sd">    :type current_offset: float</span>
+<span class="sd">    :param new_slope: The new desired slope to adjust the wind speed by.</span>
+<span class="sd">    :type new_slope: float</span>
+<span class="sd">    :param new_offset: The new desired offset to adjust the wind speed by.</span>
+<span class="sd">    :type new_offset: float</span>
+<span class="sd">    :return: The adjusted wind speed as a single value or pandas DataFrame.</span>
+
+<span class="sd">    The new wind speed is calculated by equating the old and new y=mx+c equations around x and then solving for</span>
+<span class="sd">    the new wind speed.</span>
+
+<span class="sd">    y2 = m2*x + c2   and   y1 = m1*x + c1</span>
+
+<span class="sd">    y2 = m2*(y1 - c1)/m1 + c2</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+<span class="sd">        df[&#39;Spd80mS_adj&#39;] = bw.adjust_slope_offset(df.Spd80mS, 0.044, 0.235, 0.04365, 0.236)</span>
+<span class="sd">        df[[&#39;Spd80mS&#39;, &#39;Spd80mS_adj&#39;]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new_slope</span> <span class="o">*</span> <span class="p">((</span><span class="n">wspd</span> <span class="o">-</span> <span class="n">current_offset</span><span class="p">)</span> <span class="o">/</span> <span class="n">current_slope</span><span class="p">)</span> <span class="o">+</span> <span class="n">new_offset</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">type_error</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">arg_value</span> <span class="ow">in</span> <span class="p">[</span><span class="n">current_slope</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">,</span> <span class="n">new_slope</span><span class="p">,</span> <span class="n">new_offset</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">is_float_or_int</span><span class="p">(</span><span class="n">arg_value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;argument &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg_value</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39; is not of data type number&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">utils</span><span class="o">.</span><span class="n">is_float_or_int</span><span class="p">(</span><span class="n">wspd</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">wspd</span><span class="p">)</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="ow">and</span> <span class="p">(</span><span class="n">wspd</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">==</span> <span class="nb">object</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;some values in the DataFrame are not of data type number&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">wspd</span><span class="p">)</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="ow">and</span> <span class="p">(</span><span class="n">wspd</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">==</span> <span class="nb">object</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;some values in the Series are not of data type number&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;wspd argument is not of data type number&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">type_error</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="scale_wind_speed"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform.scale_wind_speed.html#brightwind.transform.transform.scale_wind_speed">[docs]</a><span class="k">def</span> <span class="nf">scale_wind_speed</span><span class="p">(</span><span class="n">spd</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scales wind speed by the scale_factor</span>
+
+<span class="sd">    :param spd: Series or data frame or a single value of wind speed to scale</span>
+<span class="sd">    :param scale_factor: Scaling factor in decimal, if scaling factor is 0.8 output would be (1+0.8) times wind speed,</span>
+<span class="sd">    if it is -0.8 the output would be (1-0.8) times the wind speed</span>
+<span class="sd">    :return: Series or data frame with scaled wind speeds</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">spd</span> <span class="o">*</span> <span class="n">scale_factor</span></div>
+
+
+<div class="viewcode-block" id="offset_wind_direction"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform.offset_wind_direction.html#brightwind.transform.transform.offset_wind_direction">[docs]</a><span class="k">def</span> <span class="nf">offset_wind_direction</span><span class="p">(</span><span class="n">wdir</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add/ subtract offset from wind direction. Keeps the ranges between 0 to 360</span>
+<span class="sd">    :param wdir: Series or data frame or a single direction to offset</span>
+<span class="sd">    :param offset: Offset in degrees can be negative or positive</span>
+<span class="sd">    :return: Series or data frame with offsetted directions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wdir</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">_range_0_to_360</span><span class="p">(</span><span class="n">wdir</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wdir</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">wdir</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_range_0_to_360</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">wdir</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_range_0_to_360</span><span class="p">)</span></div>
+
+
+<span class="c1"># def selective_avg(wspd1, wspd2, wdir, boom_dir1, boom_dir2, angular_span):</span>
+
+<span class="c1">#     df = pd.Series()</span>
+<span class="c1">#     angular_span = angular_span/2</span>
+<span class="c1">#     boom1_lower = (boom_dir1 - angular_span +360)%360</span>
+<span class="c1">#     boom1_higher = (boom_dir1 + angular_span +360)%360</span>
+<span class="c1">#     boom2_lower = (boom_dir2 - angular_span+360)%360</span>
+<span class="c1">#     boom2_higher = (boom_dir2 + angular_span +360)%360</span>
+
+<span class="c1">#     for i, row in wspd1.iteritems():</span>
+<span class="c1">#         if wdir[i] &gt;= boom1_lower and wdir[i]&lt;= boom1_higher:</span>
+<span class="c1">#             if np.isnan(row) == True:</span>
+<span class="c1">#                 df[i] = wspd2[i]</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 df[i] = row</span>
+<span class="c1">#         elif wdir[i] &gt;= boom2_lower and wdir[i]&lt;=boom2_higher:</span>
+<span class="c1">#             if np.isnan(wspd2[i])==True:</span>
+<span class="c1">#                 df[i] = row</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 df[i] = wspd2[i]</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             if np.isnan(row) == True:</span>
+<span class="c1">#                 df[i] = wspd2[i]</span>
+<span class="c1">#             elif np.isnan(wspd2[i])==True:</span>
+<span class="c1">#                 df[i] = row</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 df[i] = (row +wspd2[i])/2</span>
+
+<span class="c1">#     return df</span>
+
+
+<span class="c1"># Clean_synth[&#39;Spd_120m_SelAvg&#39;] = selective_avg(Clean_synth.Vaisala_120_avg,</span>
+<span class="c1">#                                                Clean_synth.FirstClass_120_avg_Synthesized,</span>
+<span class="c1">#                                                Clean_synth.FirstClass_120_dir,</span>
+<span class="c1">#                                                boom_dir1=135, boom_dir2=315, angular_span=60)</span>
+
+
+<span class="k">def</span> <span class="nf">_preprocess_data_for_correlations</span><span class="p">(</span><span class="n">ref</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span> <span class="n">coverage_threshold</span><span class="p">,</span>
+                                      <span class="n">aggregation_method_ref</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">aggregation_method_target</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+                                      <span class="n">get_coverage</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">ref_overlap</span><span class="p">,</span> <span class="n">target_overlap</span> <span class="o">=</span> <span class="n">_get_overlapping_data</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">target</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span>
+                                                        <span class="n">averaging_prd</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">pandas.tseries.frequencies</span> <span class="k">import</span> <span class="n">to_offset</span>
+    <span class="n">ref_resolution</span> <span class="o">=</span> <span class="n">_get_data_resolution</span><span class="p">(</span><span class="n">ref_overlap</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">target_resolution</span> <span class="o">=</span> <span class="n">_get_data_resolution</span><span class="p">(</span><span class="n">target_overlap</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">to_offset</span><span class="p">(</span><span class="n">ref_resolution</span><span class="p">)</span> <span class="o">!=</span> <span class="n">to_offset</span><span class="p">(</span><span class="n">averaging_prd</span><span class="p">))</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">to_offset</span><span class="p">(</span><span class="n">target_resolution</span><span class="p">)</span> <span class="o">!=</span> <span class="n">to_offset</span><span class="p">(</span><span class="n">averaging_prd</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">ref_resolution</span> <span class="o">&gt;</span> <span class="n">target_resolution</span><span class="p">:</span>
+            <span class="n">target_overlap</span> <span class="o">=</span> <span class="n">average_data_by_period</span><span class="p">(</span><span class="n">target_overlap</span><span class="p">,</span> <span class="n">to_offset</span><span class="p">(</span><span class="n">ref_resolution</span><span class="p">),</span>
+                                                    <span class="n">coverage_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                    <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref_resolution</span> <span class="o">&lt;</span> <span class="n">target_resolution</span><span class="p">:</span>
+            <span class="n">ref_overlap</span> <span class="o">=</span> <span class="n">average_data_by_period</span><span class="p">(</span><span class="n">ref_overlap</span><span class="p">,</span> <span class="n">to_offset</span><span class="p">(</span><span class="n">target_resolution</span><span class="p">),</span>
+                                                 <span class="n">coverage_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                 <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_ref</span><span class="p">)</span>
+        <span class="n">common_idxs</span><span class="p">,</span> <span class="n">data_pts</span> <span class="o">=</span> <span class="n">_common_idxs</span><span class="p">(</span><span class="n">ref_overlap</span><span class="p">,</span> <span class="n">target_overlap</span><span class="p">)</span>
+        <span class="n">ref_overlap</span> <span class="o">=</span> <span class="n">ref_overlap</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">]</span>
+        <span class="n">target_overlap</span> <span class="o">=</span> <span class="n">target_overlap</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">get_coverage</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">average_data_by_period</span><span class="p">(</span><span class="n">ref_overlap</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span>
+                                                 <span class="n">coverage_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_ref</span><span class="p">)]</span> <span class="o">+</span>
+                         <span class="nb">list</span><span class="p">(</span><span class="n">average_data_by_period</span><span class="p">(</span><span class="n">target_overlap</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span>
+                                                     <span class="n">coverage_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_target</span><span class="p">,</span>
+                                                     <span class="n">return_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+                         <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ref_processed</span><span class="p">,</span> <span class="n">target_processed</span> <span class="o">=</span> <span class="n">average_data_by_period</span><span class="p">(</span><span class="n">ref_overlap</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span>
+                                                                 <span class="n">coverage_threshold</span><span class="o">=</span><span class="n">coverage_threshold</span><span class="p">,</span>
+                                                                 <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_ref</span><span class="p">),</span> \
+                                          <span class="n">average_data_by_period</span><span class="p">(</span><span class="n">target_overlap</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span>
+                                                                 <span class="n">coverage_threshold</span><span class="o">=</span><span class="n">coverage_threshold</span><span class="p">,</span>
+                                                                 <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method_target</span><span class="p">)</span>
+        <span class="n">concurrent_idxs</span><span class="p">,</span> <span class="n">data_pts</span> <span class="o">=</span> <span class="n">_common_idxs</span><span class="p">(</span><span class="n">ref_processed</span><span class="p">,</span> <span class="n">target_processed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ref_processed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">concurrent_idxs</span><span class="p">],</span> <span class="n">target_processed</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">concurrent_idxs</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_preprocess_dir_data_for_correlations</span><span class="p">(</span><span class="n">ref_spd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ref_dir</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">target_spd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+                                          <span class="n">target_dir</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span> <span class="n">coverage_threshold</span><span class="p">):</span>
+    <span class="n">ref_N</span><span class="p">,</span> <span class="n">ref_E</span><span class="o">=</span> <span class="n">_compute_wind_vector</span><span class="p">(</span><span class="n">ref_spd</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">ref_dir</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">))</span>
+    <span class="n">target_N</span><span class="p">,</span> <span class="n">target_E</span> <span class="o">=</span> <span class="n">_compute_wind_vector</span><span class="p">(</span><span class="n">target_spd</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span>
+                                              <span class="n">target_dir</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">))</span>
+    <span class="n">ref_N_avgd</span><span class="p">,</span> <span class="n">target_N_avgd</span> <span class="o">=</span> <span class="n">_preprocess_data_for_correlations</span><span class="p">(</span><span class="n">ref_N</span><span class="p">,</span> <span class="n">target_N</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="o">=</span><span class="n">averaging_prd</span><span class="p">,</span>
+                                                                  <span class="n">coverage_threshold</span><span class="o">=</span><span class="n">coverage_threshold</span><span class="p">)</span>
+    <span class="n">ref_E_avgd</span><span class="p">,</span> <span class="n">target_E_avgd</span> <span class="o">=</span> <span class="n">_preprocess_data_for_correlations</span><span class="p">(</span><span class="n">ref_E</span><span class="p">,</span> <span class="n">target_E</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="o">=</span><span class="n">averaging_prd</span><span class="p">,</span>
+                                                                  <span class="n">coverage_threshold</span><span class="o">=</span><span class="n">coverage_threshold</span><span class="p">)</span>
+    <span class="n">ref_dir_avgd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">ref_E_avgd</span><span class="p">,</span> <span class="n">ref_N_avgd</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_range_0_to_360</span><span class="p">)</span>
+    <span class="n">target_dir_avgd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">target_E_avgd</span><span class="p">,</span> <span class="n">target_N_avgd</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_range_0_to_360</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">ref_dir_avgd</span><span class="o">.</span><span class="n">loc</span><span class="p">[:]),</span> <span class="nb">round</span><span class="p">(</span><span class="n">target_dir_avgd</span><span class="o">.</span><span class="n">loc</span><span class="p">[:])</span>
+
+
+<div class="viewcode-block" id="offset_timestamps"><a class="viewcode-back" href="../../../generated/brightwind.transform.transform.offset_timestamps.html#brightwind.transform.transform.offset_timestamps">[docs]</a><span class="k">def</span> <span class="nf">offset_timestamps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Offset timestamps by a certain time period</span>
+
+<span class="sd">    :param data: DateTimeIndex or Series/DataFrame with DateTimeIndex</span>
+<span class="sd">    :type data: pandas.DateTimeIndex, pandas.Series, pandas.DataFrame</span>
+<span class="sd">    :param offset: A string specifying the time to offset the time-series.</span>
+
+<span class="sd">            - Set offset to 10min to add 10 minutes to each timestamp, -10min to subtract 10 minutes and so on</span>
+<span class="sd">                for 4min, 20min, etc.</span>
+<span class="sd">            - Set offset to 1H to add 1 hour to each timestamp and -1H to subtract and so on for 5H, 6H, etc.</span>
+<span class="sd">            - Set offset to 1D to add a day and -1D to subtract and so on for 5D, 7D, 15D, etc.</span>
+<span class="sd">            - Set offset to 1W to add a week and -1W to subtract from each timestamp and so on for 2W, 4W, etc.</span>
+<span class="sd">            - Set offset to 1M to add a month and -1M to subtract a month from each timestamp and so on for 2M, 3M, etc.</span>
+<span class="sd">            - Set offset to 1Y to add an year and -1Y to subtract an year from each timestamp and so on for 2Y, 3Y, etc.</span>
+
+<span class="sd">    :type offset: str</span>
+<span class="sd">    :param date_from: (Optional) The timestamp from input data where to start offsetting from.</span>
+<span class="sd">    :type date_from: str, datetime, dict</span>
+<span class="sd">    :param date_to: (Optional) The timestamp from input data where to end offsetting.</span>
+<span class="sd">    :type date_to: str, datetime, dict</span>
+<span class="sd">    :param overwrite: Change to True to overwrite the unadjusted timestamps if they are same outside of the slice of</span>
+<span class="sd">        data you want to offset. False by default.</span>
+<span class="sd">    :type overwrite: bool</span>
+<span class="sd">    :returns: Offsetted DateTimeIndex/Series/DataFrame, same format is input data</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_campbell_scientific(bw.datasets.demo_site_data)</span>
+
+<span class="sd">        #To decrease 10 minutes within a given date range and overwrite the original data</span>
+<span class="sd">        op1 = bw.offset_timestamps(data, offset=&#39;1H&#39;, date_from=&#39;2016-01-01 00:20:00&#39;,</span>
+<span class="sd">            date_to=&#39;2016-01-01 01:40:00&#39;, overwrite=True)</span>
+
+<span class="sd">        #To decrease 10 minutes within a given date range not overwriting the original data</span>
+<span class="sd">        op2 = bw.offset_timestamps(data, offset=&#39;-10min&#39;, date_from=&#39;2016-01-01 00:20:00&#39;,</span>
+<span class="sd">            date_to=&#39;2016-01-01 01:40:00&#39;)</span>
+
+<span class="sd">        #Can accept Series or index as input</span>
+<span class="sd">        op3 = bw.offset_timestamps(data.Spd80mS, offset=&#39;1D&#39;, date_from=&#39;2016-01-01 00:20:00&#39;)</span>
+
+<span class="sd">        op4 = bw.offset_timestamps(data.index, offset=&#39;-10min&#39;, date_from=&#39;2016-01-01 00:20:00&#39;,</span>
+<span class="sd">            date_from=&#39;2016-01-01 01:40:00&#39;)</span>
+
+<span class="sd">        #Can also except decimal values for offset, like 3.5H for 3 hours and 30 minutes</span>
+
+<span class="sd">        op5 = bw.offset_timestamps(data.index, offset=&#39;3.5H&#39;, date_from=&#39;2016-01-01 00:20:00&#39;,</span>
+<span class="sd">            date_from=&#39;2016-01-01 01:40:00&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">datetime</span>
+    <span class="n">date_from</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date_from</span><span class="p">)</span>
+    <span class="n">date_to</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">date_to</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>\
+            <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>\
+            <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">data</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">):</span>
+        <span class="n">original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">date_from</span><span class="p">):</span>
+            <span class="n">date_from</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">date_to</span><span class="p">):</span>
+            <span class="n">date_to</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">shifted_slice</span> <span class="o">=</span> <span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&gt;=</span> <span class="n">date_from</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">original</span> <span class="o">&lt;=</span> <span class="n">date_to</span><span class="p">)]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">shifted</span> <span class="o">=</span> <span class="n">original</span><span class="p">[</span><span class="n">original</span> <span class="o">&lt;</span> <span class="n">date_from</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted_slice</span><span class="p">)</span>
+        <span class="n">shifted</span> <span class="o">=</span> <span class="n">shifted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">original</span><span class="p">[</span><span class="n">original</span> <span class="o">&gt;</span> <span class="n">date_to</span><span class="p">])</span>
+        <span class="n">shifted</span> <span class="o">=</span> <span class="n">shifted</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">shifted</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Input must have datetime index&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">df_copy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">date_from</span><span class="p">):</span>
+                <span class="n">date_from</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">date_to</span><span class="p">):</span>
+                <span class="n">date_to</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">shifted_slice</span> <span class="o">=</span> <span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&gt;=</span> <span class="n">date_from</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">original</span> <span class="o">&lt;=</span> <span class="n">date_to</span><span class="p">)]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+            <span class="n">intersection_front</span> <span class="o">=</span> <span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&lt;</span> <span class="n">date_from</span><span class="p">)]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">shifted_slice</span><span class="p">)</span>
+            <span class="n">intersection_back</span> <span class="o">=</span> <span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&gt;</span> <span class="n">date_to</span><span class="p">)]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">shifted_slice</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+                <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_front</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_back</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">sec1</span> <span class="o">=</span> <span class="n">original</span><span class="p">[</span><span class="n">original</span> <span class="o">&lt;</span> <span class="n">date_from</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_front</span><span class="p">)</span>
+                <span class="n">sec2</span> <span class="o">=</span> <span class="n">original</span><span class="p">[</span><span class="n">original</span> <span class="o">&gt;</span> <span class="n">date_to</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_back</span><span class="p">)</span>
+                <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">sec1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted_slice</span><span class="p">))</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sec2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_front</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_back</span> <span class="o">-</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">sec_mid</span> <span class="o">=</span> <span class="n">shifted_slice</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_front</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">intersection_back</span><span class="p">)</span>
+                <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&lt;</span> <span class="n">date_from</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sec_mid</span><span class="p">))</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">original</span><span class="p">[(</span><span class="n">original</span> <span class="o">&gt;</span> <span class="n">date_to</span><span class="p">)])</span>
+            <span class="n">df_copy</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">shifted</span>
+            <span class="k">return</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

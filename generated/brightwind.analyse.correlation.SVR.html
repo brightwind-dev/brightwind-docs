@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.correlation.SVR &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="brightwind-analyse-correlation-svr">
+<h1>brightwind.analyse.correlation.SVR<a class="headerlink" href="#brightwind-analyse-correlation-svr" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="brightwind.analyse.correlation.SVR">
+<em class="property">class </em><code class="descclassname">brightwind.analyse.correlation.</code><code class="descname">SVR</code><span class="sig-paren">(</span><em>ref_spd</em>, <em>target_spd</em>, <em>averaging_prd</em>, <em>coverage_threshold</em>, <em>bw_model=0</em>, <em>preprocess=True</em>, <em>**sklearn_args</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.correlation.SVR" title="Permalink to this definition">¶</a></dt>
+<dd><table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.__init__.html#brightwind.analyse.correlation.SVR.__init__" title="brightwind.analyse.correlation.SVR.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.__init__</span></code></a>(ref_spd, target_spd, …[, …])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.get_error_metrics.html#brightwind.analyse.correlation.SVR.get_error_metrics" title="brightwind.analyse.correlation.SVR.get_error_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.get_error_metrics</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.get_r2.html#brightwind.analyse.correlation.SVR.get_r2" title="brightwind.analyse.correlation.SVR.get_r2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.get_r2</span></code></a>()</p></td>
+<td><p>Returns the r2 score of the model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.plot.html#brightwind.analyse.correlation.SVR.plot" title="brightwind.analyse.correlation.SVR.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.plot</span></code></a>([title])</p></td>
+<td><p>For plotting</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.run.html#brightwind.analyse.correlation.SVR.run" title="brightwind.analyse.correlation.SVR.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.run</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.show_params.html#brightwind.analyse.correlation.SVR.show_params" title="brightwind.analyse.correlation.SVR.show_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.show_params</span></code></a>()</p></td>
+<td><p>Show the dictionary of parameters</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="SVR/brightwind.analyse.correlation.SVR.synthesize.html#brightwind.analyse.correlation.SVR.synthesize" title="brightwind.analyse.correlation.SVR.synthesize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVR.synthesize</span></code></a>([ext_input])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

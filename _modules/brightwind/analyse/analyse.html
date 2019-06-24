@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.analyse &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../index.html">Home</a></li>
+                <li><a href="../../../Tutorials.html">Tutorials</a></li>
+                <li><a href="../../../API.html">API</a></li>
+                <li><a href="../../../Community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for brightwind.analyse.analyse</h1><div class="highlight"><pre>
+<span></span><span class="c1">#     brightwind is a library that provides wind analysts with easy to use tools for working with meteorological data.</span>
+<span class="c1">#     Copyright (C) 2018 Stephen Holleran, Inder Preet</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is free software: you can redistribute it and/or modify</span>
+<span class="c1">#     it under the terms of the GNU Lesser General Public License as published by</span>
+<span class="c1">#     the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">#     (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#     This program is distributed in the hope that it will be useful,</span>
+<span class="c1">#     but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">#     GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1">#     You should have received a copy of the GNU Lesser General Public License</span>
+<span class="c1">#     along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">brightwind.transform</span> <span class="k">import</span> <span class="n">transform</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="nn">brightwind.utils</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">brightwind.analyse</span> <span class="k">import</span> <span class="n">plot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;concurrent_coverage&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_means&#39;</span><span class="p">,</span> <span class="s1">&#39;momm&#39;</span><span class="p">,</span> <span class="s1">&#39;distribution&#39;</span><span class="p">,</span> <span class="s1">&#39;distribution_by_wind_speed&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;distribution_by_dir_sector&#39;</span><span class="p">,</span> <span class="s1">&#39;freq_table&#39;</span><span class="p">,</span> <span class="s1">&#39;time_continuity_gaps&#39;</span><span class="p">,</span> <span class="s1">&#39;coverage&#39;</span><span class="p">,</span> <span class="s1">&#39;basic_stats&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;twelve_by_24&#39;</span><span class="p">,</span> <span class="s1">&#39;TI&#39;</span><span class="p">,</span> <span class="s1">&#39;wspd_ratio_by_dir_sector&#39;</span><span class="p">,</span> <span class="s1">&#39;Shear&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_air_density&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="concurrent_coverage"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.concurrent_coverage.html#brightwind.analyse.analyse.concurrent_coverage">[docs]</a><span class="k">def</span> <span class="nf">concurrent_coverage</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="p">,</span> <span class="n">aggregation_method_target</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts ref and target data and returns the coverage of concurrent data.</span>
+
+<span class="sd">    :param ref: Reference data</span>
+<span class="sd">    :type ref: pandas.Series</span>
+<span class="sd">    :param target: Target data</span>
+<span class="sd">    :type target: pandas.Series</span>
+<span class="sd">    :param averaging_prd: Groups data by the period specified by period.</span>
+
+<span class="sd">            * 2T, 2 min for minutely average</span>
+<span class="sd">            * Set period to 1D for a daily average, 3D for three hourly average, similarly 5D, 7D, 15D etc.</span>
+<span class="sd">            * Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</span>
+<span class="sd">            * Set period to 1M for monthly average</span>
+<span class="sd">            * Set period to 1AS fo annual average</span>
+
+<span class="sd">    :type averaging_prd: str</span>
+<span class="sd">    :param aggregation_method_target: (Optional) Calculates mean of the data for the given averaging_prd by default.</span>
+<span class="sd">            Can be changed to &#39;sum&#39;, &#39;std&#39;, &#39;max&#39;, &#39;min&#39;, etc. or a user defined function</span>
+<span class="sd">    :return: A DataFrame with concurrent coverage and resolution of the new data. The columns with coverage are named as</span>
+<span class="sd">            &lt;column name&gt;_Coverage</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coverage_df</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">_preprocess_data_for_correlations</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="n">ref</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">averaging_prd</span><span class="o">=</span><span class="n">averaging_prd</span><span class="p">,</span>
+                                                       <span class="n">coverage_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                                       <span class="n">aggregation_method_target</span><span class="o">=</span><span class="n">aggregation_method_target</span><span class="p">,</span>
+                                                       <span class="n">get_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">coverage_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Coverage&quot;</span> <span class="k">if</span> <span class="s2">&quot;_Coverage&quot;</span> <span class="ow">in</span> <span class="n">col</span> <span class="k">else</span> <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">coverage_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">coverage_df</span></div>
+
+
+<span class="k">def</span> <span class="nf">calc_target_value_by_linear_model</span><span class="p">(</span><span class="n">ref_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">slope</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :rtype: np.float64</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ref_value</span><span class="o">*</span><span class="n">slope</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
+
+
+<div class="viewcode-block" id="monthly_means"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.monthly_means.html#brightwind.analyse.analyse.monthly_means">[docs]</a><span class="k">def</span> <span class="nf">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_coverage</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Wind speed [m/s]&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots means for calendar months in a timeseries plot. Input can be a series or a DataFrame. Can</span>
+<span class="sd">    also return data of monthly means with a plot.</span>
+
+<span class="sd">    :param data: A timeseries to find monthly means of. Can have multiple columns</span>
+<span class="sd">    :type data: Series or DataFrame</span>
+<span class="sd">    :param return_data: To return data of monthly means along with the plot.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :param return_coverage: To return monthly coverage along with the data and plot. Also plots the coverage on the</span>
+<span class="sd">        same graph if only a single series was passed to data.</span>
+<span class="sd">    :type return_coverage: bool</span>
+<span class="sd">    :param ylabel: Label for the y-axis, Wind speed [m/s] by default</span>
+<span class="sd">    :type   ylabel: str</span>
+<span class="sd">    :return: A plot of monthly means for the input data. If return data is true it returns a tuple where</span>
+<span class="sd">        the first element is plot and second is data pertaining to monthly means.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_csv(bw.shell_flats_80m_csv)</span>
+
+<span class="sd">        monthly_means_plot, monthly_means = bw.monthly_means(data, return_data=True)</span>
+<span class="sd">        print(&quot;Monthly means data for all the columns:&quot;)</span>
+<span class="sd">        print(monthly_means)</span>
+<span class="sd">        print(&quot;Monthly means plot for all the columns:&quot;)</span>
+<span class="sd">        monthly_means_plot</span>
+
+<span class="sd">        # For a single column only</span>
+<span class="sd">        bw.monthly_means(data.WS80mWS425NW_Avg)</span>
+
+<span class="sd">        # Return coverage</span>
+<span class="sd">        monthly_means_plot, monthly_means = bw.monthly_means(data.WS80mWS425NW_Avg, return_coverage=True)</span>
+<span class="sd">        monthly_means_plot</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df</span><span class="p">,</span> <span class="n">covrg</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">average_data_by_period</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1MS&#39;</span><span class="p">,</span> <span class="n">return_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">return_data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">return_coverage</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ylbl</span><span class="o">=</span><span class="n">ylabel</span><span class="p">),</span> <span class="n">df</span>
+    <span class="k">if</span> <span class="n">return_coverage</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">covrg</span><span class="p">,</span> <span class="n">ylbl</span><span class="o">=</span><span class="n">ylabel</span><span class="p">),</span>  <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">covrg</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_monthly_means</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ylbl</span><span class="o">=</span><span class="n">ylabel</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_mean_of_monthly_means_basic_method</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a DataFrame of mean of monthly means for each column in the DataFrame with timestamp as the index.</span>
+<span class="sd">    Calculate the monthly mean for each calendar month and then average the resulting 12 months.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">monthly_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">month</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+    <span class="n">monthly_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MOMM&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">monthly_df</span>
+
+
+<div class="viewcode-block" id="momm"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.momm.html#brightwind.analyse.analyse.momm">[docs]</a><span class="k">def</span> <span class="nf">momm</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">date_from</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">date_to</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates and returns long term reference speed. Accepts a DataFrame</span>
+<span class="sd">    with timestamps as index column and another column with wind-speed. You can also specify</span>
+<span class="sd">    date_from and date_to to calculate the long term reference speed for only that period.</span>
+
+<span class="sd">    :param data: Pandas DataFrame with timestamp as index and a column with wind-speed</span>
+<span class="sd">    :param date_from: Start date as string in format YYYY-MM-DD</span>
+<span class="sd">    :param date_to: End date as string in format YYYY-MM-DD</span>
+<span class="sd">    :returns: Long term reference speed</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="n">momm_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">momm_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">sliced_data</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">slice_data</span><span class="p">(</span><span class="n">momm_data</span><span class="p">,</span> <span class="n">date_from</span><span class="p">,</span> <span class="n">date_to</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">_mean_of_monthly_means_basic_method</span><span class="p">(</span><span class="n">sliced_data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_direction_bin_labels</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bins</span><span class="p">,</span> <span class="n">zero_centred</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">mapper</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">lower_bound</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">direction_bins</span><span class="p">[:</span><span class="n">sectors</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">zero_centred</span><span class="p">:</span>
+            <span class="n">mapper</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">-</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction_bins</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">direction_bins</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mapper</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">-</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">direction_bins</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">mapper</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_map_direction_bin</span><span class="p">(</span><span class="n">wdir</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">sectors</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">wdir</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">bin_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">([</span><span class="n">wdir</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">bin_num</span> <span class="o">==</span> <span class="n">sectors</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">bin_num</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">bin_num</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_df_to_series</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a pd.DataFrame to a pd.Series.</span>
+<span class="sd">    If more than 1 column is in the DataFrame then it will raise a TypeError.</span>
+<span class="sd">    If the sent argument is not a DataFrame it will return itself.</span>
+<span class="sd">    :param df:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;DataFrame cannot be converted to a Series as it contains more than 1 column.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="distribution"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.distribution.html#brightwind.analyse.analyse.distribution">[docs]</a><span class="k">def</span> <span class="nf">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">max_y_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a variable and computes the distribution of the variable with itself as per the bins specified. Can</span>
+<span class="sd">    also pass another variable for finding distribution with respect to another variable.</span>
+
+<span class="sd">    :param var_series: Time-series of the variable whose distribution we need to find</span>
+<span class="sd">    :type var_series: pandas.Series</span>
+<span class="sd">    :param var_to_bin_against: (optional) Times-series of the variable which we want to bin against if required</span>
+<span class="sd">           to bin against another variable.</span>
+<span class="sd">    :type var_to_bin_against: pandas.Series, None</span>
+<span class="sd">    :param bins: Array of numbers where adjacent elements of array form a bin</span>
+<span class="sd">    :type bins: list, array</span>
+<span class="sd">    :param bin_labels: Labels of bins to be used, uses (bin-start, bin-end] format by default</span>
+<span class="sd">    :type bin_labels: list, array, None</span>
+<span class="sd">    :param max_y_value: Max value for the y-axis of the plot to be set. Default will be relative to max calculated</span>
+<span class="sd">                        data value.</span>
+<span class="sd">    :type max_y_value: float, int</span>
+<span class="sd">    :param aggregation_method: Statistical method used to find distribution. It can be mean, max, min, std, count,</span>
+<span class="sd">           %frequency or a custom function. Computes frequency in percentages by default.</span>
+<span class="sd">    :type aggregation_method: str or function</span>
+<span class="sd">    :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :returns: A distribution plot and, if requested, a pandas.Series with bins as row indexes and column with</span>
+<span class="sd">              statistics chosen by aggregation_method.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df= bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        #For distribution of %frequency of wind speeds</span>
+<span class="sd">        dist = bw.distribution(df.Spd40mN, bins=[0, 8, 12, 21], bin_labels=[&#39;normal&#39;, &#39;gale&#39;, &#39;storm&#39;])</span>
+
+<span class="sd">        #For distribution of mean temperature</span>
+<span class="sd">        temp_dist = bw.distribution(df.T2m, bins=[-10, 4, 12, 18, 30], aggregation_method=&#39;mean&#39;)</span>
+
+<span class="sd">        #For custom aggregation function</span>
+<span class="sd">        def custom_agg(x):</span>
+<span class="sd">            return x.mean()+(2*x.std())</span>
+<span class="sd">        temp_dist = bw.distribution(df.T2m, bins=[-10, 4, 12, 18, 30], aggregation_method=custom_agg)</span>
+
+<span class="sd">        #For distribution of mean wind speeds with respect to temperature</span>
+<span class="sd">        spd_dist = bw.distribution(df.Spd40mN, var_to_bin_against=df.T2m,</span>
+<span class="sd">            bins=[-10, 4, 12, 18, 30],</span>
+<span class="sd">            bin_labels=[&#39;freezing&#39;, &#39;cold&#39;, &#39;mild&#39;, &#39;hot&#39;], aggregation_method=&#39;mean&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">var_to_bin_against</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">var_to_bin_against</span> <span class="o">=</span> <span class="n">var_series</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">var_series</span><span class="p">)</span>
+    <span class="n">var_to_bin_against</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">var_to_bin_against</span><span class="p">)</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">var_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">var_to_bin_against</span> <span class="o">=</span> <span class="n">var_to_bin_against</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">var_binned_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">var_to_bin_against</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;variable_bin&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_series</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="n">var_binned_series</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">aggregation_method</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;variable_bin&#39;</span><span class="p">])[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;variable_bin&#39;</span><span class="p">])[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">aggregation_method</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aggregation_method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">aggregation_method</span> <span class="o">=</span> <span class="n">aggregation_method</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_freq_distribution</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">NAN</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">max_y_value</span><span class="o">=</span><span class="n">max_y_value</span><span class="p">,</span>
+                                       <span class="n">labels</span><span class="o">=</span><span class="n">bin_labels</span><span class="p">,</span> <span class="n">y_label</span><span class="o">=</span><span class="n">aggregation_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bin_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">bin_labels</span>
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">graph</span><span class="p">,</span> <span class="n">dist</span>
+    <span class="k">return</span> <span class="n">graph</span></div>
+
+
+<div class="viewcode-block" id="distribution_by_wind_speed"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.distribution_by_wind_speed.html#brightwind.analyse.analyse.distribution_by_wind_speed">[docs]</a><span class="k">def</span> <span class="nf">distribution_by_wind_speed</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">max_speed</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">max_y_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a wind speed time series and computes it&#39;s frequency distribution. That is, how often does the wind</span>
+<span class="sd">    blow within each wind speed bin.</span>
+
+<span class="sd">    :param wspd: Time series of the wind speed variable whose distribution we need to find.</span>
+<span class="sd">    :type wspd: pd.Series</span>
+<span class="sd">    :param max_speed: Max wind speed to consider, default is 30 m/s.</span>
+<span class="sd">    :type max_speed: int</span>
+<span class="sd">    :param max_y_value: Max value for the y-axis of the plot to be set. Default will be relative to max calculated</span>
+<span class="sd">                        data value.</span>
+<span class="sd">    :type max_y_value: float, int</span>
+<span class="sd">    :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">    :type return_data: bool</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        freq_dist_plot, freq_dist = bw.distribution_by_wind_speed(df.Spd80mN, return_data=True)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">freq_dist</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_speed</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">max_y_value</span><span class="o">=</span><span class="n">max_y_value</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">freq_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">freq_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">freq_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_binned_direction_series</span><span class="p">(</span><span class="n">direction_series</span><span class="p">,</span> <span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a series with wind directions and number of sectors  you want to divide.</span>
+
+<span class="sd">    :param  direction_series: Series of directions to bin</span>
+<span class="sd">    :param  sectors: number of direction sectors</span>
+<span class="sd">    :param direction_bin_array: An optional parameter, if you want custom direction bins pass an array</span>
+<span class="sd">                        of the bins. If nto specified direction_bins will be centered around 0</span>
+<span class="sd">    :returns: A series with direction-bins, bins centered around 0 degree by default if direction_bin_array</span>
+<span class="sd">    is not specified</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">direction_bin_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">direction_bin_array</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_direction_bin_array</span><span class="p">(</span><span class="n">sectors</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">direction_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_map_direction_bin</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_direction_binned_series</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_series</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">direction_bin_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">direction_bin_array</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_direction_bin_array</span><span class="p">(</span><span class="n">sectors</span><span class="p">)</span>
+        <span class="n">zero_centered</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sectors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">direction_bin_array</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">zero_centered</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">direction_bin_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">direction_bin_labels</span> <span class="o">=</span> <span class="n">_get_direction_bin_labels</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">zero_centered</span><span class="p">)</span>
+    <span class="n">direction_binned_series</span> <span class="o">=</span> <span class="n">_binned_direction_series</span><span class="p">(</span><span class="n">direction_series</span><span class="p">,</span> <span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">)</span>\
+        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;direction_bin&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">direction_binned_series</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="p">,</span> <span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">zero_centered</span>
+
+
+<div class="viewcode-block" id="distribution_by_dir_sector"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.distribution_by_dir_sector.html#brightwind.analyse.analyse.distribution_by_dir_sector">[docs]</a><span class="k">def</span> <span class="nf">distribution_by_dir_sector</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">direction_series</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">,</span>
+                               <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Derive the distribution of a time series variable with respect to wind direction sectors. For example, if time</span>
+<span class="sd">    series of wind speeds is sent, it produces a wind rose.</span>
+
+<span class="sd">    :param var_series: Time series of the variable whose distribution we need to find.</span>
+<span class="sd">    :type var_series:  pd.Series</span>
+<span class="sd">    :param direction_series: Time series of wind directions between [0-360].</span>
+<span class="sd">    :type direction_series:  pd.Series</span>
+<span class="sd">    :param sectors: Number of direction sectors to bin in to. The first sector is centered at 0 by default. To change</span>
+<span class="sd">                    that behaviour specify direction_bin_array, which overwrites sectors.</span>
+<span class="sd">    :type sectors: int</span>
+<span class="sd">    :param aggregation_method: Statistical method used to find distribution it can be mean, max, min, std, count,</span>
+<span class="sd">            %frequency or a custom function. Computes frequency in percentages by default.</span>
+<span class="sd">    :type aggregation_method: str</span>
+<span class="sd">    :param direction_bin_array: Optional, to change default behaviour of first sector centered at 0 assign an array of</span>
+<span class="sd">            bins to this.</span>
+<span class="sd">    :type direction_bin_array: list, array, None</span>
+<span class="sd">    :param direction_bin_labels: Optional, you can specify an array of labels to be used for the bins. Uses string</span>
+<span class="sd">            labels of the format &#39;30-90&#39; by default. Overwrites sectors.</span>
+<span class="sd">    :type direction_bin_labels: list, array, None</span>
+<span class="sd">    :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :returns: A plot of a rose and a DataFrame/Series with wind direction sector as row indexes and columns with</span>
+<span class="sd">                statistics chosen by aggregation_method.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        rose, distribution = bw.distribution_by_dir_sector(df.Spd40mN, df.Dir38mS, return_data=True)</span>
+
+<span class="sd">        #For using custom bins</span>
+<span class="sd">        rose, distribution = bw.distribution_by_dir_sector(df.Spd40mN, df.Dir38mS,</span>
+<span class="sd">                                direction_bin_array=[0,90,130,200,360],</span>
+<span class="sd">                                direction_bin_labels=[&#39;northerly&#39;,&#39;easterly&#39;,&#39;southerly&#39;,&#39;westerly&#39;],</span>
+<span class="sd">                                return_data=True)</span>
+
+<span class="sd">        #For measuring standard deviation in a sector rather than frequency in percentage (default)</span>
+<span class="sd">        rose, distribution = bw.distribution_by_dir_sector(df.Spd40mN, df.Dir38mS, aggregation_method=&#39;std&#39;,</span>
+<span class="sd">            return_data=True)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">var_series</span><span class="p">)</span>
+    <span class="n">direction_series</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">direction_series</span><span class="p">)</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">var_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">direction_series</span> <span class="o">=</span> <span class="n">direction_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">direction_binned_series</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="p">,</span> <span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">zero_centered</span> <span class="o">=</span> \
+        <span class="n">_get_direction_binned_series</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_series</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_series</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="n">direction_binned_series</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">aggregation_method</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;direction_bin&#39;</span><span class="p">])[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%f</span><span class="s1">requency&#39;</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;direction_bin&#39;</span><span class="p">])[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">aggregation_method</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sectors</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">direction_bin_labels</span>
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_rose</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="n">result</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_rose</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="freq_table"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.freq_table.html#brightwind.analyse.analyse.freq_table">[docs]</a><span class="k">def</span> <span class="nf">freq_table</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">direction_series</span><span class="p">,</span> <span class="n">var_bin_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">var_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+               <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">freq_as_percentage</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+               <span class="n">plot_bins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a variable series and direction series and computes a frequency table of percentages. Both variable and</span>
+<span class="sd">    direction are binned</span>
+
+<span class="sd">    :param var_series: Series of variable to be binned</span>
+<span class="sd">    :type var_series: pandas.Series</span>
+<span class="sd">    :param direction_series: Series of wind directions between [0-360]</span>
+<span class="sd">    :type direction_series: pandas.Series</span>
+<span class="sd">    :param var_bin_array: List of numbers where adjacent elements of array form a bin. For instance, for bins</span>
+<span class="sd">        [0,3),[3,8),[8,10) the list will be [0, 3, 8, 10]</span>
+<span class="sd">    :type var_bin_array: list</span>
+<span class="sd">    :param var_bin_labels: Optional, an array of labels to use for variable bins</span>
+<span class="sd">    :type var_bin_labels: list</span>
+<span class="sd">    :param sectors: Number of sectors to bin direction to. The first sector is centered at 0 by default. To change that</span>
+<span class="sd">            behaviour specify direction_bin_array, it overwrites sectors</span>
+<span class="sd">    :type sectors: int</span>
+<span class="sd">    :param direction_bin_array: To add custom bins for direction sectors, overwrites sectors. For instance,</span>
+<span class="sd">        for direction bins [0,120), [120, 215), [215, 360) the list would be [0, 120, 215, 360]</span>
+<span class="sd">    :type direction_bin_array: list</span>
+<span class="sd">    :param direction_bin_labels: Optional, you can specify an array of labels to be used for the bins. uses string</span>
+<span class="sd">        labels of the format &#39;30-90&#39; by default</span>
+<span class="sd">    :type direction_bin_labels: list(float), list(str)</span>
+<span class="sd">    :param freq_as_percentage: Optional, True by default. Returns the frequency as percentages. To return just the</span>
+<span class="sd">        count, set to False</span>
+<span class="sd">    :type freq_as_percentage: bool</span>
+<span class="sd">    :param return_data:  Set to True if you want to return the frequency table too.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :param plot_bins: (Optional) Bins to use for gradient in the rose. Different bins will be plotted with different</span>
+<span class="sd">        color. Chooses six bins to plot by default.</span>
+<span class="sd">    :type plot_bins: list</span>
+<span class="sd">    :param plot_labels: (Optional) Labels to use for different colors in the rose. By default chooses the end points of</span>
+<span class="sd">        bin</span>
+<span class="sd">    :type plot_labels: list(str), list(float)</span>
+<span class="sd">    :returns: A wind rose plot with gradients in the rose. Also returns a frequency table if return_data is True</span>
+<span class="sd">    :rtype: plot or tuple(plot, pandas.DataFrame)</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        #Simple use</span>
+<span class="sd">        rose, freq_table = bw.freq_table(df.Spd40mN, df.Dir38mS, return_data=True)</span>
+
+<span class="sd">        #To use 3 bins for wind speed [0,8), [8, 14), [14, 41) and label them as [&#39;low&#39;, &#39;mid&#39;, &#39;high&#39;]. Can be used for</span>
+<span class="sd">        #variabes other than wind speed too</span>
+<span class="sd">        rose, freq_table = bw.freq_table(df.Spd40mN, df.Dir38mS, var_bin_array=[0,8,14,41],</span>
+<span class="sd">            var_bin_labels=[&#39;low&#39;, &#39;mid&#39;, &#39;high&#39;], return_data=True)</span>
+
+
+<span class="sd">        #Use custom direction bins</span>
+<span class="sd">        rose, freq_table = bw.freq_table(df.Spd40mN, df.Dir38mS, direction_bin_array=[0,90,130,200,360],</span>
+<span class="sd">                           direction_bin_labels=[&#39;northerly&#39;,&#39;easterly&#39;,&#39;southerly&#39;,&#39;westerly&#39;], return_data=True)</span>
+
+
+<span class="sd">        #Can also combine custom direction and variable_bins</span>
+<span class="sd">        rose, tab = bw.freq_table(df.Spd40mN, df.Dir38mS, direction_bin_array=[0,90,130,200,360],</span>
+<span class="sd">                           direction_bin_labels=[&#39;northerly&#39;,&#39;easterly&#39;,&#39;southerly&#39;,&#39;westerly&#39;], plot_bins=None,</span>
+<span class="sd">                           plot_labels=None, return_data=True)</span>
+
+<span class="sd">        #For classic wind rose plot use the following plot_bins and plot_labels</span>
+<span class="sd">        tab = bw.freq_table(df.Spd40mN, df.Dir38mS, plot_bins=[0,3,6,9,12,15,41],</span>
+<span class="sd">            plot_labels=[&#39;0-3 m/s&#39;, &#39;4-6 m/s&#39;, &#39;7-9 m/s&#39;, &#39;10-12 m/s&#39;, &#39;13-15 m/s&#39;, &#39;15+ m/s&#39;], plot_bins=None,</span>
+<span class="sd">            plot_labels=None, return_data=True)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">var_series</span><span class="p">)</span>
+    <span class="n">direction_series</span> <span class="o">=</span> <span class="n">_convert_df_to_series</span><span class="p">(</span><span class="n">direction_series</span><span class="p">)</span>
+    <span class="n">var_series</span> <span class="o">=</span> <span class="n">var_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">direction_series</span> <span class="o">=</span> <span class="n">direction_series</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">direction_binned_series</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="p">,</span> <span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">zero_centered</span> <span class="o">=</span> \
+        <span class="n">_get_direction_binned_series</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_series</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="p">)</span>
+
+    <span class="n">var_binned_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">var_bin_array</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;variable_bin&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_series</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;var_data&#39;</span><span class="p">),</span> <span class="n">var_binned_series</span><span class="p">,</span> <span class="n">direction_binned_series</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">freq_as_percentage</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;variable_bin&#39;</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;direction_bin&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;variable_bin&#39;</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;direction_bin&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sectors</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">_get_direction_bin_labels</span><span class="p">(</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="p">,</span> <span class="n">zero_centered</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+    <span class="c1"># Creating a graph before renaming the direction labels, to help identify sectors while plotting</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_rose_with_gradient</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">plot_bins</span><span class="o">=</span><span class="n">plot_bins</span><span class="p">,</span> <span class="n">plot_labels</span><span class="o">=</span><span class="n">plot_labels</span><span class="p">,</span>
+                                        <span class="n">percent_symbol</span><span class="o">=</span><span class="n">freq_as_percentage</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">direction_bin_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">direction_bin_labels</span>
+    <span class="k">if</span> <span class="n">var_bin_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">var_bin_labels</span>
+
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">graph</span><span class="p">,</span> <span class="n">result</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">graph</span></div>
+
+
+<div class="viewcode-block" id="time_continuity_gaps"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.time_continuity_gaps.html#brightwind.analyse.analyse.time_continuity_gaps">[docs]</a><span class="k">def</span> <span class="nf">time_continuity_gaps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the start and end timestamps of missing data periods. Also days lost.</span>
+
+<span class="sd">    A missing data period is one where data is not available for some consecutive timestamps. This breaks</span>
+<span class="sd">    time continuity of the data. The function calculates the sampling period (resolution) of the data by</span>
+<span class="sd">    finding the most common time difference between consecutive timestamps. Then it searches where the time</span>
+<span class="sd">    difference between consecutive timestamps does not match the sampling period, this is the missing data period.</span>
+<span class="sd">    It returns a DataFrame where the first column is the starting timestamp of the missing period and the second</span>
+<span class="sd">    column is the end date of the missing period. An additional column also shows how many days of data were lost</span>
+<span class="sd">    in a missing period.</span>
+
+
+<span class="sd">    :param data: Data for checking continuity, timestamp must be the index</span>
+<span class="sd">    :type data: pandas.Series or pandas.DataFrame</span>
+<span class="sd">    :return: A DataFrame with the start and end timestamps of missing gaps in the data along with the size of the gap</span>
+<span class="sd">        in days lost.</span>
+<span class="sd">    :rtype: pandas.DataFrame</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_csv(bw.shell_flats_80m_csv)</span>
+<span class="sd">        bw.time_continuity_gaps(data[&#39;WS70mA100NW_Avg&#39;])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">indexes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">continuity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Date From&#39;</span><span class="p">:</span> <span class="n">indexes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Date To&#39;</span><span class="p">:</span> <span class="n">indexes</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]})</span>
+    <span class="n">continuity</span><span class="p">[</span><span class="s1">&#39;Days Lost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">continuity</span><span class="p">[</span><span class="s1">&#39;Date To&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">continuity</span><span class="p">[</span><span class="s1">&#39;Date From&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;1 days&#39;</span><span class="p">)</span>
+    <span class="c1">#Remove indexes where no days are lost before returning</span>
+    <span class="k">return</span> <span class="n">continuity</span><span class="p">[</span><span class="n">continuity</span><span class="p">[</span><span class="s1">&#39;Days Lost&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">_get_data_resolution</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span> <span class="o">/</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;1 days&#39;</span><span class="p">))]</span></div>
+
+
+<div class="viewcode-block" id="coverage"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.coverage.html#brightwind.analyse.analyse.coverage">[docs]</a><span class="k">def</span> <span class="nf">coverage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the data coverage over the period specified.</span>
+
+<span class="sd">    Coverage is defined as the ratio of number of data points present in the period and the maximum number of</span>
+<span class="sd">    data points that a period should have. Example, for 10 minute data resolution and a period of 1 hour the</span>
+<span class="sd">    maximum number of data points in one period is 6. But if the number if data points available is only 3 for that</span>
+<span class="sd">    hour the coverage is 3/6=0.5 . For more details see average_data_by_period as this function is a wrapper around it.</span>
+
+<span class="sd">    :param data: Data to find average or aggregate of</span>
+<span class="sd">    :type data: pandas.Series or pandas.DataFrame</span>
+<span class="sd">    :param period: Groups data by the period specified here. The following formats are supported</span>
+
+<span class="sd">            - Set period to 10min for 10 minute average, 20min for 20 minute average and so on for 4min, 15min, etc.</span>
+<span class="sd">            - Set period to 1H for hourly average, 3H for three hourly average and so on for 5H, 6H etc.</span>
+<span class="sd">            - Set period to 1D for a daily average, 3D for three day average, similarly 5D, 7D, 15D etc.</span>
+<span class="sd">            - Set period to 1W for a weekly average, 3W for three week average, similarly 2W, 4W etc.</span>
+<span class="sd">            - Set period to 1M for monthly average</span>
+<span class="sd">            - Set period to 1AS fo annual average</span>
+<span class="sd">            - Can be a DateOffset object too</span>
+
+<span class="sd">    :type period: str or pandas.DateOffset</span>
+<span class="sd">    :param aggregation_method: Default `mean`, returns the mean of the data for the specified period. Can also use</span>
+<span class="sd">        `median`, `prod`, `sum`, `std`,`var`, `max`, `min` which are shorthands for median, product, summation,</span>
+<span class="sd">        standard deviation, variance, maximum and minimum respectively.</span>
+<span class="sd">    :type aggregation_method: str</span>
+<span class="sd">    :return: A DataFrame with data aggregated with the specified aggregation_method (mean by default) and coverage.</span>
+<span class="sd">            The columns with coverage are named as &lt;column name&gt;_Coverage</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        #To find hourly coverage</span>
+<span class="sd">        data_hourly = bw.coverage(data.Spd80mN, period=&#39;1H&#39;)</span>
+
+<span class="sd">        #To find hourly coverage for multiple columns</span>
+<span class="sd">        data_hourly_multiple = bw.coverage(data[[&#39;Spd80mS&#39;,&#39;Spd60mN&#39;]], period=&#39;1H&#39;)</span>
+
+<span class="sd">        #To find monthly_coverage</span>
+<span class="sd">        data_monthly = bw.coverage(data.Spd80mN, period=&#39;1M&#39;)</span>
+
+<span class="sd">        #To find monthly_coverage of variance</span>
+<span class="sd">        data_monthly_var = bw.coverage(data.Spd80mN, period=&#39;1M&#39;, aggregation_method=&#39;var&#39;)</span>
+
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    bw.average_data_by_period</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">average_data_by_period</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="n">aggregation_method</span><span class="p">,</span>
+                                     <span class="n">return_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="basic_stats"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.basic_stats.html#brightwind.analyse.analyse.basic_stats">[docs]</a><span class="k">def</span> <span class="nf">basic_stats</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gives basic statistical measures of the data, the DataFrame returned includes the following columns</span>
+
+<span class="sd">    - count, number of data points available for each column of the data</span>
+<span class="sd">    - mean, mean of each column of data</span>
+<span class="sd">    - std, standard deviation of each column of data</span>
+<span class="sd">    - min, minimum value of each column of data</span>
+<span class="sd">    - max, maximum value of each column of data</span>
+
+<span class="sd">    :param data: It can be a DataFrame containing meteorological data or a series of some variable like wind speed,</span>
+<span class="sd">        direction, temperature, etc.</span>
+<span class="sd">    :type data: pandas.Series or pandas.DataFrame</span>
+<span class="sd">    :rtype: A DataFrame with columns count, mean, std, min amd max.</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+<span class="sd">        bw.basic_stats(data)</span>
+<span class="sd">        bw.basic_stats(data[&#39;Gust_Max_1&#39;])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;50%&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;50%&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="twelve_by_24"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.twelve_by_24.html#brightwind.analyse.analyse.twelve_by_24">[docs]</a><span class="k">def</span> <span class="nf">twelve_by_24</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accepts a variable series and returns a plot of 12x24 (12 months x 24 hours) for the &#39;mean&#39; of the variable with</span>
+<span class="sd">    the table of data as an optional return. The aggregation_method &#39;mean&#39; can be can be changed as outlined below.</span>
+<span class="sd">    :param var_series: Variable to compute 12x24 for</span>
+<span class="sd">    :type var_series: pandas.Series</span>
+<span class="sd">    :param aggregation_method: &#39;mean&#39; by default, calculates mean of the variable passed. Can change it to</span>
+<span class="sd">            &#39;sum&#39;, &#39;std&#39;, &#39;min&#39;, &#39;max&#39;, for sum, standard deviation, minimum, maximum. Can also pass a function.</span>
+<span class="sd">    :type aggregation_method: str or function</span>
+<span class="sd">    :param var_name_label: (Optional) Label to appear on the plot, can be name and unit of the variable</span>
+<span class="sd">    :type var_name_label: str</span>
+<span class="sd">    :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :return: A plot with gradients showing , also a 12x24 table with hours as row labels and months as column labels</span>
+<span class="sd">        when return_data is True</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        df = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+
+<span class="sd">        # For 12x24 table of means</span>
+<span class="sd">        graph, table12x24 = bw.twelve_by_24(df.Spd40mN, var_name_label=&#39;wind speed [m/s]&#39;, return_data = True)</span>
+
+<span class="sd">        # For 12x24 table of sums</span>
+<span class="sd">        graph, table12x24 = bw.twelve_by_24(df.PrcpTot, aggregation_method=&#39;sum&#39;)</span>
+
+<span class="sd">        #For a custom aggregation_method</span>
+<span class="sd">        def custom_agg(x):</span>
+<span class="sd">            return x.mean()+(2*x.std())</span>
+
+<span class="sd">        graph, table12x24 = bw.twelve_by_24(df.PrcpTot, aggregation_method=custom_agg, return_data=True)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">var_series</span> <span class="o">=</span> <span class="n">var_series</span><span class="p">[</span><span class="n">var_series</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var_series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="ow">and</span> <span class="n">var_name_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">var_name_label</span> <span class="o">=</span> <span class="n">var_series</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">table_12x24</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_series</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Variable&#39;</span><span class="p">),</span> <span class="n">var_series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Month&#39;</span><span class="p">),</span>
+                             <span class="n">var_series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Hour&#39;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+    <span class="n">pvt_tbl</span> <span class="o">=</span> <span class="n">table_12x24</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Hour&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Month&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Variable&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">aggregation_method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aggregation_method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">aggregation_method</span> <span class="o">=</span> <span class="n">aggregation_method</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_12x24_contours</span><span class="p">(</span><span class="n">pvt_tbl</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">(</span><span class="n">var_name_label</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="p">)),</span>\
+               <span class="n">pvt_tbl</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_12x24_contours</span><span class="p">(</span><span class="n">pvt_tbl</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">(</span><span class="n">var_name_label</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TI"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.TI.html#brightwind.analyse.analyse.TI">[docs]</a><span class="k">class</span> <span class="nc">TI</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TI.calc"><a class="viewcode-back" href="../../../generated/TI/brightwind.analyse.analyse.TI.calc.html#brightwind.analyse.analyse.TI.calc">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">):</span>
+        <span class="n">ti</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">wspd</span><span class="p">[</span><span class="n">wspd</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd&#39;</span><span class="p">),</span> <span class="n">wspd_std</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TI.by_speed"><a class="viewcode-back" href="../../../generated/TI/brightwind.analyse.analyse.TI.by_speed.html#brightwind.analyse.analyse.TI.by_speed">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">by_speed</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">,</span> <span class="n">speed_bin_array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">speed_bin_labels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">41</span><span class="p">),</span>
+                 <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">IEC_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accepts a wind speed series and its standard deviation, calculates turbulence intensity (TI) and returns the</span>
+<span class="sd">        distribution by of TI by speed bins</span>
+
+<span class="sd">        :param wspd: Wind speed data series</span>
+<span class="sd">        :type wspd: pandas.Series</span>
+<span class="sd">        :param wspd_std: Wind speed standard deviation data series</span>
+<span class="sd">        :type wspd_std: pandas.Series</span>
+<span class="sd">        :param speed_bin_array: (Optional) Array of wind speeds where adjacent elements of array form a bin</span>
+<span class="sd">        :type speed_bin_array: List or array</span>
+<span class="sd">        :param speed_bin_labels: (Optional) Labels to use for speed bins, 0, 1, 2, 3 .. and so on by default</span>
+<span class="sd">        :type speed_bin_labels: List, range or array</span>
+<span class="sd">        :param percentile: The percentile representative of TI (see return for more information)</span>
+<span class="sd">        :type percentile: float, int</span>
+<span class="sd">        :param IEC_class: By default IEC class 2005 is used for custom class pass a DataFrame. Note we have removed</span>
+<span class="sd">                option to include IEC Class 1999 as no longer appropriate.</span>
+<span class="sd">                This may need to be placed in a separate function when updated IEC standard is released</span>
+<span class="sd">        :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">        :type return_data: bool</span>
+<span class="sd">        :return: TI distribution with columns names as:</span>
+
+<span class="sd">                * Mean_TI (average TI for a speed bin),</span>
+<span class="sd">                * TI_Count ( number of data points in the bin),</span>
+<span class="sd">                * Rep_TI (Representative TI set at 90 percentile by default,</span>
+<span class="sd">                * TI_2Sigma (2 sigma TI),</span>
+<span class="sd">                * Char_TI (characteristic TI)</span>
+
+<span class="sd">        :rtype: pandas.DataFrame</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ti</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">wspd</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd&#39;</span><span class="p">),</span> <span class="n">wspd_std</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+        <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TI</span><span class="o">.</span><span class="n">calc</span><span class="p">(</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">])</span>
+        <span class="n">ti_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+            <span class="n">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span>
+                         <span class="n">bins</span><span class="o">=</span><span class="n">speed_bin_array</span><span class="p">,</span> <span class="n">bin_labels</span><span class="o">=</span><span class="n">speed_bin_labels</span><span class="p">,</span>
+                         <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Mean_TI&quot;</span><span class="p">),</span>
+            <span class="n">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span>
+                         <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span>
+                         <span class="n">bins</span><span class="o">=</span><span class="n">speed_bin_array</span><span class="p">,</span>
+                         <span class="n">bin_labels</span><span class="o">=</span><span class="n">speed_bin_labels</span><span class="p">,</span>
+                         <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;TI_Count&quot;</span><span class="p">),</span>
+            <span class="n">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span>
+                         <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span>
+                         <span class="n">bins</span><span class="o">=</span><span class="n">speed_bin_array</span><span class="p">,</span>
+                         <span class="n">bin_labels</span><span class="o">=</span><span class="n">speed_bin_labels</span><span class="p">,</span>
+                         <span class="n">aggregation_method</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">percentile</span><span class="p">),</span>
+                         <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Rep_TI&quot;</span><span class="p">),</span>
+            <span class="n">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span>
+                         <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span>
+                         <span class="n">bins</span><span class="o">=</span><span class="n">speed_bin_array</span><span class="p">,</span>
+                         <span class="n">bin_labels</span><span class="o">=</span><span class="n">speed_bin_labels</span><span class="p">,</span>
+                         <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;TI_2Sigma&quot;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+        <span class="n">categ_index</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span>
+                         <span class="n">bins</span><span class="o">=</span><span class="n">speed_bin_array</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">num_index</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">mid</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">categ_index</span><span class="p">]</span>
+        <span class="n">ti_dist</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Char_TI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ti_dist</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Mean_TI&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">ti_dist</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;TI_2Sigma&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_index</span><span class="p">)</span>
+        <span class="c1"># ti_dist.loc[0, &#39;Char_TI&#39;] = 0</span>
+        <span class="n">ti_dist</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Speed Bin&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># return ti_dist</span>
+        <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_TI_by_speed</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">,</span> <span class="n">ti_dist</span><span class="p">,</span> <span class="n">IEC_class</span><span class="o">=</span><span class="n">IEC_class</span><span class="p">),</span> <span class="n">ti_dist</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_TI_by_speed</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">,</span> <span class="n">ti_dist</span><span class="p">,</span> <span class="n">IEC_class</span><span class="o">=</span><span class="n">IEC_class</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TI.by_sector"><a class="viewcode-back" href="../../../generated/TI/brightwind.analyse.analyse.TI.by_sector.html#brightwind.analyse.analyse.TI.by_sector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">by_sector</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">,</span> <span class="n">wdir</span><span class="p">,</span> <span class="n">min_speed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accepts a wind speed series, its standard deviation and a direction series, calculates turbulence intensity (TI)</span>
+<span class="sd">        and returns the distribution by of TI by sector</span>
+
+<span class="sd">        :param wspd: Wind speed data series</span>
+<span class="sd">        :type wspd: pandas.Series</span>
+<span class="sd">        :param wspd_std: Wind speed standard deviation data series</span>
+<span class="sd">        :type wspd_std: pandas.Series</span>
+<span class="sd">        :param wdir: Wind direction series</span>
+<span class="sd">        :type wdir: pandas.Series</span>
+<span class="sd">        :param min_speed: Set the minimum wind speed.</span>
+<span class="sd">        :type min_speed: float</span>
+<span class="sd">        :param sectors: Set the number of direction sectors. Usually 12, 16, 24, 36 or 72.</span>
+<span class="sd">        :type sectors: int</span>
+<span class="sd">        :param direction_bin_array: (Optional) Array of wind speeds where adjacent elements of array form a bin</span>
+<span class="sd">        :param direction_bin_array: (Optional) To change default behaviour of first sector centered at 0 assign an</span>
+<span class="sd">            array of bins to this</span>
+<span class="sd">        :param direction_bin_labels: (Optional) you can specify an array of labels to be used for the bins. uses string</span>
+<span class="sd">                labels of the format &#39;30-90&#39; by default</span>
+<span class="sd">        :param return_data: Set to True if you want the data returned.</span>
+<span class="sd">        :type return_data: bool</span>
+<span class="sd">        :return: TI distribution with columns names as:</span>
+
+<span class="sd">                * Mean_TI (average TI for a speed bin),</span>
+<span class="sd">                * TI_Count ( number of data points in the bin)</span>
+
+<span class="sd">        :rtype: pandas.DataFrame</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ti</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">wspd</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd&#39;</span><span class="p">),</span> <span class="n">wspd_std</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">),</span> <span class="n">wdir</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;wdir&#39;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+        <span class="n">ti</span> <span class="o">=</span> <span class="n">ti</span><span class="p">[</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_speed</span><span class="p">]</span>
+        <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TI</span><span class="o">.</span><span class="n">calc</span><span class="p">(</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd&#39;</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wspd_std&#39;</span><span class="p">])</span>
+        <span class="n">ti_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+            <span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span>
+                                       <span class="n">direction_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wdir&#39;</span><span class="p">],</span>
+                                       <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span>
+                                       <span class="n">direction_bin_labels</span><span class="o">=</span><span class="n">direction_bin_labels</span><span class="p">,</span>
+                                       <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Mean_TI&quot;</span><span class="p">),</span>
+            <span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span>
+                                       <span class="n">direction_series</span><span class="o">=</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wdir&#39;</span><span class="p">],</span>
+                                       <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span>
+                                       <span class="n">direction_bin_labels</span><span class="o">=</span><span class="n">direction_bin_labels</span><span class="p">,</span>
+                                       <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;TI_Count&quot;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+
+        <span class="n">ti_dist</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Direction Bin&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_TI_by_sector</span><span class="p">(</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wdir&#39;</span><span class="p">],</span> <span class="n">ti_dist</span><span class="p">),</span> <span class="n">ti_dist</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_TI_by_sector</span><span class="p">(</span><span class="n">ti</span><span class="p">[</span><span class="s1">&#39;Turbulence_Intensity&#39;</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="s1">&#39;wdir&#39;</span><span class="p">],</span> <span class="n">ti_dist</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TI.twelve_by_24"><a class="viewcode-back" href="../../../generated/TI/brightwind.analyse.analyse.TI.twelve_by_24.html#brightwind.analyse.analyse.TI.twelve_by_24">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">twelve_by_24</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="s1">&#39;Turbulence Intensity&#39;</span><span class="p">):</span>
+        <span class="n">tab_12x24</span><span class="p">,</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">twelve_by_24</span><span class="p">(</span><span class="n">TI</span><span class="o">.</span><span class="n">calc</span><span class="p">(</span><span class="n">wspd</span><span class="p">,</span> <span class="n">wspd_std</span><span class="p">),</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="n">var_name_label</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tab_12x24</span><span class="p">,</span> <span class="n">graph</span>
+        <span class="k">return</span> <span class="n">graph</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_calc_ratio</span><span class="p">(</span><span class="n">var_1</span><span class="p">,</span> <span class="n">var_2</span><span class="p">,</span> <span class="n">min_var</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_var</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+
+    <span class="n">var_1_bounded</span> <span class="o">=</span> <span class="n">var_1</span><span class="p">[(</span><span class="n">var_1</span> <span class="o">&gt;=</span> <span class="n">min_var</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">var_1</span> <span class="o">&lt;</span> <span class="n">max_var</span><span class="p">)]</span>
+    <span class="n">var_2_bounded</span> <span class="o">=</span> <span class="n">var_2</span><span class="p">[(</span><span class="n">var_2</span> <span class="o">&gt;=</span> <span class="n">min_var</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">var_2</span> <span class="o">&lt;</span> <span class="n">max_var</span><span class="p">)]</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_1_bounded</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;var_1&#39;</span><span class="p">),</span> <span class="n">var_2_bounded</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;var_2&#39;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ratio</span><span class="p">[</span><span class="s1">&#39;var_2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">ratio</span><span class="p">[</span><span class="s1">&#39;var_1&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="wspd_ratio_by_dir_sector"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.wspd_ratio_by_dir_sector.html#brightwind.analyse.analyse.wspd_ratio_by_dir_sector">[docs]</a><span class="k">def</span> <span class="nf">wspd_ratio_by_dir_sector</span><span class="p">(</span><span class="n">wspd_1</span><span class="p">,</span> <span class="n">wspd_2</span><span class="p">,</span> <span class="n">wdir</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="mi">72</span><span class="p">,</span> <span class="n">min_wspd</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">boom_dir_1</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                             <span class="n">boom_dir_2</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the wind speed ratio of two wind speed time series and plots this ratio, averaged by direction sector,</span>
+<span class="sd">    in a polar plot using a wind direction time series. The averaged ratio by sector can be optionally returned</span>
+<span class="sd">    in a pd.DataFrame.</span>
+<span class="sd">    </span>
+<span class="sd">    If boom directions are specified, these will be overlayed on the plot. A boom direction of &#39;-1&#39; assumes top</span>
+<span class="sd">    mounted and so doesn&#39;t plot.</span>
+
+<span class="sd">    :param wspd_1: First wind speed time series. This is divisor.</span>
+<span class="sd">    :type: wspd_1: pandas.Series</span>
+<span class="sd">    :param wspd_2: Second wind speed time series, dividend.</span>
+<span class="sd">    :type: wspd_2: pandas.Series</span>
+<span class="sd">    :param wdir: Series of wind directions</span>
+<span class="sd">    :type wdir: pandas.Series</span>
+<span class="sd">    :param sectors: Set the number of direction sectors. Usually 12, 16, 24, 36 or 72.</span>
+<span class="sd">    :type sectors: int</span>
+<span class="sd">    :param min_wspd: Minimum wind speed to be used.</span>
+<span class="sd">    :type: min_wpd: float</span>
+<span class="sd">    :param direction_bin_array: (Optional) Array of numbers where adjacent elements of array form a bin. This</span>
+<span class="sd">                                 overwrites the sectors.</span>
+<span class="sd">    :param boom_dir_1: Boom direction in degrees of wspd_1. If top mounted leave default as -1.</span>
+<span class="sd">    :type boom_dir_1: float</span>
+<span class="sd">    :param boom_dir_2: Boom direction in degrees of wspd_2. If top mounted leave default as -1.</span>
+<span class="sd">    :type boom_dir_2: float</span>
+<span class="sd">    :param return_data:  Set to True if you want the data returned.</span>
+<span class="sd">    :type return_data: bool</span>
+<span class="sd">    :returns: A wind speed ratio plot showing the average ratio by sector and scatter of individual data points.</span>
+<span class="sd">    :rtype: plot, pandas.DataFrame</span>
+
+<span class="sd">    **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+<span class="sd">        data = bw.load_csv(bw.datasets.demo_data)</span>
+
+<span class="sd">        #For plotting both booms</span>
+<span class="sd">        bw.wspd_ratio_by_dir_sector(data.Spd80mN, data.Spd80mS, wdir=data.Dir78mS, boom_dir_1=0, boom_dir_2=180)</span>
+
+<span class="sd">        #For plotting no booms</span>
+<span class="sd">        bw.wspd_ratio_by_dir_sector(data.Spd80mN, data.Spd80mS, wdir=data.Dir78mS)</span>
+
+<span class="sd">        #If one boom is top mounted, say Spd80mS</span>
+<span class="sd">        bw.wspd_ratio_by_dir_sector(data.Spd80mN, data.Spd80mS, wdir=data.Dir78mS, boom_dir_2=180)</span>
+
+<span class="sd">        #To use your custom direction bins, for example (0-45), (45-135), (135-180), (180-220), (220-360)</span>
+<span class="sd">        bw.wspd_ratio_by_dir_sector(data.Spd80mN, data.Spd80mS, wdir=data.Dir78mS,</span>
+<span class="sd">                                    direction_bin_array=[0, 45, 135, 180, 220, 360], boom_dir_1=0, boom_dir_2=180)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sec_rat</span> <span class="o">=</span> <span class="n">_calc_ratio</span><span class="p">(</span><span class="n">wspd_1</span><span class="p">,</span> <span class="n">wspd_2</span><span class="p">,</span> <span class="n">min_wspd</span><span class="p">)</span>
+    <span class="n">common_idxs</span> <span class="o">=</span> <span class="n">sec_rat</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">wdir</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">sec_rat_plot</span><span class="p">,</span> <span class="n">sec_rat_dist</span> <span class="o">=</span> <span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">sec_rat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span> <span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span> <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span>
+                                              <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span>
+                                              <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">sec_rat_dist</span> <span class="o">=</span> <span class="n">sec_rat_dist</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Mean_Sector_Ratio&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_sector_ratio</span><span class="p">(</span><span class="n">sec_rat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span> <span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span>
+                                     <span class="n">sec_rat_dist</span><span class="p">,</span> <span class="p">[</span><span class="n">wspd_1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">wspd_2</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                                     <span class="n">boom_dir_1</span><span class="o">=</span><span class="n">boom_dir_1</span><span class="p">,</span> <span class="n">boom_dir_2</span><span class="o">=</span><span class="n">boom_dir_2</span><span class="p">),</span> <span class="n">sec_rat_dist</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_sector_ratio</span><span class="p">(</span><span class="n">sec_rat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span> <span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span> <span class="n">sec_rat_dist</span><span class="p">,</span>
+                                 <span class="p">[</span><span class="n">wspd_1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">wspd_2</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                                 <span class="n">boom_dir_1</span><span class="o">=</span><span class="n">boom_dir_1</span><span class="p">,</span> <span class="n">boom_dir_2</span><span class="o">=</span><span class="n">boom_dir_2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Shear"><a class="viewcode-back" href="../../../generated/brightwind.analyse.analyse.Shear.html#brightwind.analyse.analyse.Shear">[docs]</a><span class="k">class</span> <span class="nc">Shear</span><span class="p">:</span>
+<div class="viewcode-block" id="Shear.power_law"><a class="viewcode-back" href="../../../generated/Shear/brightwind.analyse.analyse.Shear.power_law.html#brightwind.analyse.analyse.Shear.power_law">[docs]</a>    <span class="k">def</span> <span class="nf">power_law</span><span class="p">(</span><span class="n">wspds</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">min_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">return_alpha</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">wspds</span> <span class="o">=</span> <span class="n">wspds</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="n">mean_wspds</span> <span class="o">=</span> <span class="n">wspds</span><span class="p">[(</span><span class="n">wspds</span> <span class="o">&gt;</span> <span class="n">min_speed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">_calc_shear</span><span class="p">(</span><span class="n">mean_wspds</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">return_coeff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_alpha</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_shear</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mean_wspds</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">heights</span><span class="p">),</span> <span class="n">alpha</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_shear</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mean_wspds</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">heights</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Shear.by_sector"><a class="viewcode-back" href="../../../generated/Shear/brightwind.analyse.analyse.Shear.by_sector.html#brightwind.analyse.analyse.Shear.by_sector">[docs]</a>    <span class="k">def</span> <span class="nf">by_sector</span><span class="p">(</span><span class="n">wspds</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">wdir</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">min_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">direction_bin_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">common_idxs</span> <span class="o">=</span> <span class="n">wspds</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">wdir</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">shear</span> <span class="o">=</span> <span class="n">wspds</span><span class="p">[(</span><span class="n">wspds</span> <span class="o">&gt;</span> <span class="n">min_speed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_calc_shear</span><span class="p">,</span> <span class="n">heights</span><span class="o">=</span><span class="n">heights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">]</span>
+        <span class="n">shear_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+            <span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">shear</span><span class="p">,</span>
+                                       <span class="n">direction_series</span><span class="o">=</span><span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span>
+                                       <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span>
+                                       <span class="n">direction_bin_labels</span><span class="o">=</span><span class="n">direction_bin_labels</span><span class="p">,</span>
+                                       <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Mean_Shear&quot;</span><span class="p">),</span>
+            <span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">var_series</span><span class="o">=</span><span class="n">shear</span><span class="p">,</span>
+                                       <span class="n">direction_series</span><span class="o">=</span><span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_idxs</span><span class="p">],</span>
+                                       <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">direction_bin_array</span><span class="p">,</span>
+                                       <span class="n">direction_bin_labels</span><span class="o">=</span><span class="n">direction_bin_labels</span><span class="p">,</span>
+                                       <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Shear_Count&quot;</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+        <span class="n">shear_dist</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Direction Bin&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_shear_by_sector</span><span class="p">(</span><span class="n">shear</span><span class="p">,</span> <span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">shear</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">wdir</span><span class="o">.</span><span class="n">index</span><span class="p">)],</span> <span class="n">shear_dist</span><span class="p">),</span> \
+                   <span class="n">shear_dist</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_shear_by_sector</span><span class="p">(</span><span class="n">shear</span><span class="p">,</span> <span class="n">wdir</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">shear</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">wdir</span><span class="o">.</span><span class="n">index</span><span class="p">)],</span> <span class="n">shear_dist</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Shear.twelve_by_24"><a class="viewcode-back" href="../../../generated/Shear/brightwind.analyse.analyse.Shear.twelve_by_24.html#brightwind.analyse.analyse.Shear.twelve_by_24">[docs]</a>    <span class="k">def</span> <span class="nf">twelve_by_24</span><span class="p">(</span><span class="n">wspds</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">min_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="s1">&#39;Shear&#39;</span><span class="p">):</span>
+        <span class="n">tab_12x24</span> <span class="o">=</span> <span class="n">twelve_by_24</span><span class="p">(</span><span class="n">wspds</span><span class="p">[(</span><span class="n">wspds</span> <span class="o">&gt;</span> <span class="n">min_speed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_calc_shear</span><span class="p">,</span> <span class="n">heights</span><span class="o">=</span><span class="n">heights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                 <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_12x24_contours</span><span class="p">(</span><span class="n">tab_12x24</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="n">var_name_label</span><span class="p">),</span> <span class="n">tab_12x24</span>
+        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot_12x24_contours</span><span class="p">(</span><span class="n">tab_12x24</span><span class="p">,</span> <span class="n">var_name_label</span><span class="o">=</span><span class="n">var_name_label</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Shear.scale"><a class="viewcode-back" href="../../../generated/Shear/brightwind.analyse.analyse.Shear.scale.html#brightwind.analyse.analyse.Shear.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">wspd</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">height_to_scale_to</span><span class="p">):</span>
+        <span class="n">scale_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">height_to_scale_to</span> <span class="o">/</span> <span class="n">height</span><span class="p">)</span><span class="o">**</span><span class="n">alpha</span>
+        <span class="k">return</span> <span class="n">wspd</span><span class="o">*</span><span class="n">scale_factor</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_calc_shear</span><span class="p">(</span><span class="n">wspds</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">return_coeff</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Derive the best fit power law exponent (as 1/alpha) from a given time-step of speed data at 2 or more elevations</span>
+
+<span class="sd">    :param wspds: List of wind speeds [m/s]</span>
+<span class="sd">    :param heights: List of heights [m above ground]. The position of the height in the list must be the same position</span>
+<span class="sd">        in the list as its</span>
+<span class="sd">    corresponding wind speed value.</span>
+<span class="sd">    :return: The shear value (alpha), as the inverse exponent of the best fit power law, based on the form:</span>
+<span class="sd">        (v1/v2) = (z1/z2)^(1/alpha)</span>
+
+<span class="sd">    METHODOLOGY:</span>
+<span class="sd">        Derive natural log of elevation and speed data sets</span>
+<span class="sd">        Derive coefficients of linear best fit along log-log distribution</span>
+<span class="sd">        Characterise new distribution of speed values based on linear best fit</span>
+<span class="sd">        Derive &#39;alpha&#39; based on gradient of first and last best fit points (function works for 2 or more points)</span>
+<span class="sd">        Return alpha value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logheights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>  <span class="c1"># take log of elevations</span>
+    <span class="n">logwspds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">wspds</span><span class="p">)</span>  <span class="c1"># take log of speeds</span>
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">logheights</span><span class="p">,</span> <span class="n">logwspds</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># get coefficients of linear best fit to log distribution</span>
+    <span class="k">if</span> <span class="n">return_coeff</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">calc_air_density</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">elevation_ref</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">elevation_site</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lapse_rate</span><span class="o">=-</span><span class="mf">0.113</span><span class="p">,</span>
+                     <span class="n">specific_gas_constant</span><span class="o">=</span><span class="mf">286.9</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates air density for a given temperature and pressure and extrapolates that to the site if both reference</span>
+<span class="sd">    and site elevations are given.</span>
+
+<span class="sd">    :param temperature: Temperature values in degree Celsius</span>
+<span class="sd">    :type temperature: float or pandas.Series or pandas.DataFrame</span>
+<span class="sd">    :param pressure: Pressure values in hectopascal, hPa, (1,013.25 hPa = 101,325 Pa = 101.325 kPa =</span>
+<span class="sd">                    1 atm = 1013.25 mbar)</span>
+<span class="sd">    :type pressure: float or pandas.Series or pandas.DataFrame</span>
+<span class="sd">    :param elevation_ref: Elevation, in meters, of the reference temperature and pressure location.</span>
+<span class="sd">    :type elevation_ref: Floating point value (decimal number)</span>
+<span class="sd">    :param elevation_site: Elevation, in meters, of the site location to calculate air density for.</span>
+<span class="sd">    :type elevation_site: Floating point values (decimal number)</span>
+<span class="sd">    :param lapse_rate: Air density lapse rate kg/m^3/km, default is -0.113</span>
+<span class="sd">    :type lapse_rate: Floating point value (decimal number)</span>
+<span class="sd">    :param specific_gas_constant: Specific gas constant, R, for humid air J/(kg.K), default is 286.9</span>
+<span class="sd">    :type specific_gas_constant:  Floating point value (decimal number)</span>
+<span class="sd">    :return: Air density in kg/m^3</span>
+<span class="sd">    :rtype: float or pandas.Series depending on the input</span>
+
+<span class="sd">        **Example usage**</span>
+<span class="sd">    ::</span>
+<span class="sd">        import brightwind as bw</span>
+
+<span class="sd">        #For a series of air densities</span>
+<span class="sd">        data = bw.load_campbell_scientific(bw.datasets.demo_campbell_scientific_site_data)</span>
+<span class="sd">        air_density = bw.calc_air_density(data.T2m, data.P2m)</span>
+
+<span class="sd">        #For a single value</span>
+<span class="sd">        bw.calc_air_density(15, 1013)</span>
+
+<span class="sd">        #For a single value with ref and site elevation</span>
+<span class="sd">        bw.calc_air_density(15, 1013, elevation_ref=0, elevation_site=200)</span>
+
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">temperature</span>
+    <span class="n">temp_kelvin</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="mf">273.15</span>     <span class="c1"># to convert deg C to Kelvin.</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="n">pressure</span> <span class="o">*</span> <span class="mi">100</span>       <span class="c1"># to convert hPa to Pa</span>
+    <span class="n">ref_air_density</span> <span class="o">=</span> <span class="n">pressure</span> <span class="o">/</span> <span class="p">(</span><span class="n">specific_gas_constant</span> <span class="o">*</span> <span class="n">temp_kelvin</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">elevation_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">elevation_site</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">site_air_density</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">ref_air_density</span> <span class="o">+</span> <span class="p">(((</span><span class="n">elevation_site</span> <span class="o">-</span> <span class="n">elevation_ref</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">*</span> <span class="n">lapse_rate</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">site_air_density</span>
+    <span class="k">elif</span> <span class="n">elevation_site</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">elevation_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;elevation_site should be a number&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">elevation_site</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">elevation_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;elevation_ref should be a number&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ref_air_density</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

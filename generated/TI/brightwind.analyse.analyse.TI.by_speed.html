@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.analyse.TI.by_speed &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../tutorials.html">Tutorials</a></li>
+                <li><a href="../../api.html">API</a></li>
+                <li><a href="../../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="brightwind-analyse-analyse-ti-by-speed">
+<h1>brightwind.analyse.analyse.TI.by_speed<a class="headerlink" href="#brightwind-analyse-analyse-ti-by-speed" title="Permalink to this headline">¶</a></h1>
+<dl class="staticmethod">
+<dt id="brightwind.analyse.analyse.TI.by_speed">
+<em class="property">static </em><code class="descclassname">TI.</code><code class="descname">by_speed</code><span class="sig-paren">(</span><em>wspd</em>, <em>wspd_std</em>, <em>speed_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>speed_bin_labels=range(0</em>, <em>41)</em>, <em>percentile=90</em>, <em>IEC_class=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.TI.by_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a wind speed series and its standard deviation, calculates turbulence intensity (TI) and returns the
+distribution by of TI by speed bins</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wspd</strong> (<em>pandas.Series</em>) – Wind speed data series</p></li>
+<li><p><strong>wspd_std</strong> (<em>pandas.Series</em>) – Wind speed standard deviation data series</p></li>
+<li><p><strong>speed_bin_array</strong> (<em>List</em><em> or </em><em>array</em>) – (Optional) Array of wind speeds where adjacent elements of array form a bin</p></li>
+<li><p><strong>speed_bin_labels</strong> (<em>List</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#range" title="(in Python v3.7)"><em>range</em></a><em> or </em><em>array</em>) – (Optional) Labels to use for speed bins, 0, 1, 2, 3 .. and so on by default</p></li>
+<li><p><strong>percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The percentile representative of TI (see return for more information)</p></li>
+<li><p><strong>IEC_class</strong> – By default IEC class 2005 is used for custom class pass a DataFrame. Note we have removed
+option to include IEC Class 1999 as no longer appropriate.
+This may need to be placed in a separate function when updated IEC standard is released</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>TI distribution with columns names as:</p>
+<ul class="simple">
+<li><p>Mean_TI (average TI for a speed bin),</p></li>
+<li><p>TI_Count ( number of data points in the bin),</p></li>
+<li><p>Rep_TI (Representative TI set at 90 percentile by default,</p></li>
+<li><p>TI_2Sigma (2 sigma TI),</p></li>
+<li><p>Char_TI (characteristic TI)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

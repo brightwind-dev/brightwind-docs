@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.analyse.freq_table &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="brightwind-analyse-analyse-freq-table">
+<h1>brightwind.analyse.analyse.freq_table<a class="headerlink" href="#brightwind-analyse-analyse-freq-table" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="brightwind.analyse.analyse.freq_table">
+<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">freq_table</code><span class="sig-paren">(</span><em>var_series</em>, <em>direction_series</em>, <em>var_bin_array=array([-0.5</em>, <em>0.5</em>, <em>1.5</em>, <em>2.5</em>, <em>3.5</em>, <em>4.5</em>, <em>5.5</em>, <em>6.5</em>, <em>7.5</em>, <em>8.5</em>, <em>9.5</em>, <em>10.5</em>, <em>11.5</em>, <em>12.5</em>, <em>13.5</em>, <em>14.5</em>, <em>15.5</em>, <em>16.5</em>, <em>17.5</em>, <em>18.5</em>, <em>19.5</em>, <em>20.5</em>, <em>21.5</em>, <em>22.5</em>, <em>23.5</em>, <em>24.5</em>, <em>25.5</em>, <em>26.5</em>, <em>27.5</em>, <em>28.5</em>, <em>29.5</em>, <em>30.5</em>, <em>31.5</em>, <em>32.5</em>, <em>33.5</em>, <em>34.5</em>, <em>35.5</em>, <em>36.5</em>, <em>37.5</em>, <em>38.5</em>, <em>39.5</em>, <em>40.5])</em>, <em>var_bin_labels=None</em>, <em>sectors=12</em>, <em>direction_bin_array=None</em>, <em>direction_bin_labels=None</em>, <em>freq_as_percentage=True</em>, <em>plot_bins=None</em>, <em>plot_labels=None</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.freq_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a variable series and direction series and computes a frequency table of percentages. Both variable and
+direction are binned</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var_series</strong> (<em>pandas.Series</em>) – Series of variable to be binned</p></li>
+<li><p><strong>direction_series</strong> (<em>pandas.Series</em>) – Series of wind directions between [0-360]</p></li>
+<li><p><strong>var_bin_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of numbers where adjacent elements of array form a bin. For instance, for bins
+[0,3),[3,8),[8,10) the list will be [0, 3, 8, 10]</p></li>
+<li><p><strong>var_bin_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Optional, an array of labels to use for variable bins</p></li>
+<li><p><strong>sectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of sectors to bin direction to. The first sector is centered at 0 by default. To change that
+behaviour specify direction_bin_array, it overwrites sectors</p></li>
+<li><p><strong>direction_bin_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – To add custom bins for direction sectors, overwrites sectors. For instance,
+for direction bins [0,120), [120, 215), [215, 360) the list would be [0, 120, 215, 360]</p></li>
+<li><p><strong>direction_bin_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>)</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>)</em>) – Optional, you can specify an array of labels to be used for the bins. uses string
+labels of the format ‘30-90’ by default</p></li>
+<li><p><strong>freq_as_percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Optional, True by default. Returns the frequency as percentages. To return just the
+count, set to False</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want to return the frequency table too.</p></li>
+<li><p><strong>plot_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – (Optional) Bins to use for gradient in the rose. Different bins will be plotted with different
+color. Chooses six bins to plot by default.</p></li>
+<li><p><strong>plot_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>)</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>)</em>) – (Optional) Labels to use for different colors in the rose. By default chooses the end points of
+bin</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A wind rose plot with gradients in the rose. Also returns a frequency table if return_data is True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>plot or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a>(plot, pandas.DataFrame)</p>
+</dd>
+</dl>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
+
+<span class="c1">#Simple use</span>
+<span class="n">rose</span><span class="p">,</span> <span class="n">freq_table</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#To use 3 bins for wind speed [0,8), [8, 14), [14, 41) and label them as [&#39;low&#39;, &#39;mid&#39;, &#39;high&#39;]. Can be used for</span>
+<span class="c1">#variabes other than wind speed too</span>
+<span class="n">rose</span><span class="p">,</span> <span class="n">freq_table</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">var_bin_array</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">41</span><span class="p">],</span>
+    <span class="n">var_bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;mid&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">],</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="c1">#Use custom direction bins</span>
+<span class="n">rose</span><span class="p">,</span> <span class="n">freq_table</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">130</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">360</span><span class="p">],</span>
+                   <span class="n">direction_bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;northerly&#39;</span><span class="p">,</span><span class="s1">&#39;easterly&#39;</span><span class="p">,</span><span class="s1">&#39;southerly&#39;</span><span class="p">,</span><span class="s1">&#39;westerly&#39;</span><span class="p">],</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="c1">#Can also combine custom direction and variable_bins</span>
+<span class="n">rose</span><span class="p">,</span> <span class="n">tab</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">direction_bin_array</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">130</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">360</span><span class="p">],</span>
+                   <span class="n">direction_bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;northerly&#39;</span><span class="p">,</span><span class="s1">&#39;easterly&#39;</span><span class="p">,</span><span class="s1">&#39;southerly&#39;</span><span class="p">,</span><span class="s1">&#39;westerly&#39;</span><span class="p">],</span> <span class="n">plot_bins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">plot_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#For classic wind rose plot use the following plot_bins and plot_labels</span>
+<span class="n">tab</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">plot_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">41</span><span class="p">],</span>
+    <span class="n">plot_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0-3 m/s&#39;</span><span class="p">,</span> <span class="s1">&#39;4-6 m/s&#39;</span><span class="p">,</span> <span class="s1">&#39;7-9 m/s&#39;</span><span class="p">,</span> <span class="s1">&#39;10-12 m/s&#39;</span><span class="p">,</span> <span class="s1">&#39;13-15 m/s&#39;</span><span class="p">,</span> <span class="s1">&#39;15+ m/s&#39;</span><span class="p">],</span> <span class="n">plot_bins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">plot_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
