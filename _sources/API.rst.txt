@@ -5,28 +5,22 @@
 API reference
 =============
 
-Datasets
----------
-
-.. currentmodule:: brightwind.datasets
-
-.. autosummary::
-    :toctree:
-
-    datasets_available
-
 Load
 -----
 
 .. currentmodule:: brightwind.load.load
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
     load_csv
     load_campbell_scientific
     load_excel
+    load_windographer_txt
     load_brightdata
+    load_cleaning_file
+    apply_cleaning
+    apply_cleaning_windographer
 
 Analyse
 ---------
@@ -34,29 +28,34 @@ Analyse
 .. currentmodule:: brightwind.analyse.analyse
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
+    time_continuity_gaps
+    basic_stats
+    coverage
     concurrent_coverage
     monthly_means
     momm
-    distribution
-    distribution_by_wind_speed
+    sector_ratio
+    dist
+    dist_of_wind_speed
     distribution_by_dir_sector
+    dist_12x24
+    freq_distribution
     freq_table
-    time_continuity_gaps
-    coverage
-    basic_stats
-    twelve_by_24
     TI
-    SectorRatio
     Shear
+    calc_air_density
 
 .. currentmodule:: brightwind.analyse.plot
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
     plot_timeseries
+    plot_scatter
+    plot_scatter_wspd
+    plot_scatter_wdir
 
 
 Correlation
@@ -65,7 +64,7 @@ Correlation
 .. currentmodule:: brightwind.analyse.correlation
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
     OrdinaryLeastSquares
     OrthogonalLeastSquares
@@ -80,13 +79,12 @@ Transform
 .. currentmodule:: brightwind.transform.transform
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
     average_data_by_period
     adjust_slope_offset
     scale_wind_speed
     offset_wind_direction
-    _get_data_resolution
     offset_timestamps
 
 
@@ -96,6 +94,18 @@ Export
 .. currentmodule:: brightwind.export.export
 
 .. autosummary::
-    :toctree:
+    :toctree: generated
 
+    export_csv
     export_tab_file
+
+
+Datasets
+---------
+
+.. currentmodule:: brightwind.datasets
+
+.. autosummary::
+    :toctree: generated
+
+    datasets_available

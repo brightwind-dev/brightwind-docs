@@ -1,6 +1,0 @@
-brightwind
-==========
-
-.. currentmodule:: 
-
-.. autosummary:: brightwind

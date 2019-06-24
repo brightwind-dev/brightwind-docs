@@ -1,11 +1,8 @@
 Tutorials
 ============================
 
+.. toctree::
+    :maxdepth: 1
 
-
-
-:ref:`how_to_get_started`
-
-:ref:`general_analysis`
-
-:ref:`correlations`
+    Getting started on Windows<tutorials/getting_started_on_windows.ipynb>
+    Basic analysis<tutorials/Basic_Analysis_Stable_Development.ipynb>
