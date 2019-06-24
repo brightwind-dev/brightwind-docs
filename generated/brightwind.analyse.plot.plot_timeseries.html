@@ -87,37 +87,47 @@
 <h1>brightwind.analyse.plot.plot_timeseries<a class="headerlink" href="#brightwind-analyse-plot-plot-timeseries" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.plot.plot_timeseries">
-<code class="descclassname">brightwind.analyse.plot.</code><code class="descname">plot_timeseries</code><span class="sig-paren">(</span><em>data</em>, <em>date_from=''</em>, <em>date_to=''</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.plot.plot_timeseries" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots timeseries data</p>
+<code class="descclassname">brightwind.analyse.plot.</code><code class="descname">plot_timeseries</code><span class="sig-paren">(</span><em>data</em>, <em>date_from=''</em>, <em>date_to=''</em>, <em>y_limits=(None</em>, <em>None)</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.plot.plot_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a timeseries of data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – DataFrame to plot</p></li>
+<li><p><strong>data</strong> (<em>pd.DataFrame</em><em>, </em><em>pd.Series</em>) – Data in the form of a Pandas DataFrame/Series to plot.</p></li>
 <li><p><strong>date_from</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Start date used for plotting, if not specified the first timestamp of data is considered. Should
 be in yyyy-mm-dd format</p></li>
 <li><p><strong>date_to</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – End date used for plotting, if not specified last timestamp of data is considered. Should
 be in yyyy-mm-dd format</p></li>
+<li><p><strong>y_limits</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – y-axis min and max limits. Default is (None, None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Timeseries plot</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+</dd>
 </dl>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_site_data</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_data</span><span class="p">)</span>
 
-<span class="c1">#To plot few variables</span>
-<span class="n">figure</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd40mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span> <span class="s1">&#39;T2m&#39;</span><span class="p">]])</span>
+<span class="c1"># To plot few variables</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd40mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span> <span class="s1">&#39;T2m&#39;</span><span class="p">]])</span>
 
-<span class="c1">#To set a start date</span>
-<span class="n">figure</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2016-01-14&#39;</span><span class="p">)</span>
+<span class="c1"># To set a start date</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">)</span>
 
-<span class="c1">#To set an end date</span>
-<span class="n">figure</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2016-01-21&#39;</span><span class="p">)</span>
+<span class="c1"># To set an end date</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2017-10-01&#39;</span><span class="p">)</span>
 
-<span class="c1">#For specifying a slice</span>
-<span class="n">figure</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2016-01-21&#39;</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2016-02-28&#39;</span><span class="p">)</span>
+<span class="c1"># For specifying a slice</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2017-10-01&#39;</span><span class="p">)</span>
+
+<span class="c1"># To set the y-axis minimum to 0</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2017-10-01&#39;</span><span class="p">,</span> <span class="n">y_limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+<span class="c1"># To set the y-axis maximum to 25</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">plot_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">date_from</span><span class="o">=</span><span class="s1">&#39;2017-09-01&#39;</span><span class="p">,</span> <span class="n">date_to</span><span class="o">=</span><span class="s1">&#39;2017-10-01&#39;</span><span class="p">,</span> <span class="n">y_limits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
