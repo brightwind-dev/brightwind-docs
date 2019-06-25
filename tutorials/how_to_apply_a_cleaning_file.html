@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>How to apply a cleaning file &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">How to apply a cleaning file</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a></li>
+<li><a class="reference internal" href="#1.-apply_cleaning-with-a-simple-csv:">1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning</span></code> with a simple csv:</a><ul>
+<li><a class="reference internal" href="#Import-the-brightwind-library-and-some-sample-data:">Import the brightwind library and some sample data:</a></li>
+<li><a class="reference internal" href="#Plot-monthly-means-of-raw-data:">Plot monthly means of raw data:</a></li>
+<li><a class="reference internal" href="#Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:">Apply cleaning to data based on a pre-existing cleaning file:</a></li>
+<li><a class="reference internal" href="#Plot-monthly-means-of-cleaned-wind-speed:">Plot monthly means of cleaned wind speed:</a></li>
+<li><a class="reference internal" href="#Overview-of-cleaning-file-structure:">Overview of cleaning file structure:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2.-apply_cleaning_windographer-with-a-windographer-file:">2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer</span></code> with a windographer file:</a><ul>
+<li><a class="reference internal" href="#Import-some-sample-data:">Import some sample data:</a></li>
+<li><a class="reference internal" href="#Plot-monthly-means-of-raw-wind-speed:">Plot monthly means of raw wind speed:</a></li>
+<li><a class="reference internal" href="#Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:">Apply cleaning to data based on a pre-existing windographer cleaning file:</a></li>
+<li><a class="reference internal" href="#Plot-monthly-means-of-cleaned-wind-speed:">Plot monthly means of cleaned wind speed:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<p></p><center><div class="section" id="How-to-apply-a-cleaning-file">
+<h1>How to apply a cleaning file<a class="headerlink" href="#How-to-apply-a-cleaning-file" title="Permalink to this headline">¶</a></h1>
+</center><hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># This cell is just used to record the date of this tutorial and is not part of the tutorial.</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Last updated: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> %B, %Y&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 25 June, 2019
+</pre></div></div>
+</div>
+<div class="section" id="Outline:">
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
+<p>This guide will demonstrate how to use the ‘apply_cleaning’ and ‘apply_cleaning_windographer’ functions to clean data using pre-existing file which denote the cleaning to be applied. The tutorial includes the following steps:</p>
+<p><strong>1. ‘apply_cleaning’ with a simple csv:</strong></p>
+<ul class="simple">
+<li><p>import the brightwind library and some sample data</p></li>
+<li><p>plot monthly means of raw wind speed</p></li>
+<li><p>apply cleaning to data based on a pre-existing .csv cleaning file:</p></li>
+<li><p>plot monthly means of cleaned wind speed</p></li>
+<li><p>overview of cleaning file structure</p></li>
+</ul>
+<p><strong>2. ‘apply_cleaning_windographer’ with a windographer file:</strong></p>
+<ul class="simple">
+<li><p>import some sample data</p></li>
+<li><p>plot monthly means of raw wind speed</p></li>
+<li><p>apply cleaning to data based on a pre-existing windographer cleaning file:</p></li>
+<li><p>plot monthly means of cleaned wind speed</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="1.-apply_cleaning-with-a-simple-csv:">
+<h2>1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning</span></code> with a simple csv:<a class="headerlink" href="#1.-apply_cleaning-with-a-simple-csv:" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Import-the-brightwind-library-and-some-sample-data:">
+<h3>Import the brightwind library and some sample data:<a class="headerlink" href="#Import-the-brightwind-library-and-some-sample-data:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of existing sample dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\demo_data.csv&#39;</span>
+<span class="c1">#data_file_path = r&#39;C:\..\brightwind\datasets\demo\demo_data.csv&#39;</span>
+
+<span class="c1"># load data as dataframe</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># show first few rows of dataframe</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir78mSStd</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>8.370</td>
+      <td>7.911</td>
+      <td>8.160</td>
+      <td>7.849</td>
+      <td>7.857</td>
+      <td>7.626</td>
+      <td>1.240</td>
+      <td>1.075</td>
+      <td>1.060</td>
+      <td>0.947</td>
+      <td>...</td>
+      <td>6.100</td>
+      <td>110.1</td>
+      <td>6.009</td>
+      <td>112.2</td>
+      <td>5.724</td>
+      <td>0.711</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.94</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>8.250</td>
+      <td>7.961</td>
+      <td>8.100</td>
+      <td>7.884</td>
+      <td>7.952</td>
+      <td>7.840</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>0.900</td>
+      <td>0.855</td>
+      <td>...</td>
+      <td>5.114</td>
+      <td>110.9</td>
+      <td>4.702</td>
+      <td>109.8</td>
+      <td>5.628</td>
+      <td>0.630</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.95</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>7.652</td>
+      <td>7.545</td>
+      <td>7.671</td>
+      <td>7.551</td>
+      <td>7.531</td>
+      <td>7.457</td>
+      <td>0.756</td>
+      <td>0.703</td>
+      <td>0.797</td>
+      <td>0.749</td>
+      <td>...</td>
+      <td>4.172</td>
+      <td>113.1</td>
+      <td>3.447</td>
+      <td>111.8</td>
+      <td>4.016</td>
+      <td>1.126</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.75</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>4.680</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>3.123</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Plot-monthly-means-of-raw-data:">
+<h3>Plot monthly means of raw data:<a class="headerlink" href="#Plot-monthly-means-of-raw-data:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># create list of columns which include anemometer wind speed data</span>
+<span class="n">anemometers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd40mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd40mS&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot monthly means of wind speed for each anemometer</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">anemometers</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_apply_a_cleaning_file_9_0.png" src="../_images/tutorials_how_to_apply_a_cleaning_file_9_0.png" />
+</div>
+</div>
+<p>Note the spurious ‘Spd80mS’ monthly mean values which can be seen for the last few months.</p>
+</div>
+<div class="section" id="Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:">
+<h3>Apply cleaning to data based on a pre-existing cleaning file:<a class="headerlink" href="#Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of associated cleaning file</span>
+<span class="n">cleaning_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\demo_cleaning_file.csv&#39;</span>
+<span class="c1">#cleaning_file_path = r&#39;C:\..\brightwind\datasets\demo\demo_cleaning_file.csv&#39;</span>
+
+<span class="c1"># apply cleaning</span>
+<span class="n">clean_data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cleaning_file_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Plot-monthly-means-of-cleaned-wind-speed:">
+<h3>Plot monthly means of cleaned wind speed:<a class="headerlink" href="#Plot-monthly-means-of-cleaned-wind-speed:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot monthly means of wind speed for each anemometer</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">clean_data</span><span class="p">[</span><span class="n">anemometers</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_apply_a_cleaning_file_14_0.png" src="../_images/tutorials_how_to_apply_a_cleaning_file_14_0.png" />
+</div>
+</div>
+<p>Note that the spurious ‘Spd80mS’ values have been removed.</p>
+</div>
+<div class="section" id="Overview-of-cleaning-file-structure:">
+<h3>Overview of cleaning file structure:<a class="headerlink" href="#Overview-of-cleaning-file-structure:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load cleaning file as dataframe</span>
+<span class="n">cleaning_file</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">cleaning_file_path</span><span class="p">)</span>
+
+<span class="c1"># show cleaning file</span>
+<span class="n">cleaning_file</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Start</th>
+      <th>Stop</th>
+      <th>Reason</th>
+    </tr>
+    <tr>
+      <th>Sensor</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>All</th>
+      <td>2016-01-09 15:30:00</td>
+      <td>2016-01-09 17:10:00</td>
+      <td>Installation</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2016-03-09 06:20</td>
+      <td>2016-03-09 10:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2016-03-09 06:20</td>
+      <td>2016-03-09 10:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2016-03-29 23:50</td>
+      <td>2016-03-30 07:10</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2016-03-29 23:50</td>
+      <td>2016-03-30 07:10</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2016-11-08 02:30</td>
+      <td>2016-11-08 10:50</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2016-11-08 02:30</td>
+      <td>2016-11-08 10:50</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2016-11-18 15:50</td>
+      <td>2016-11-19 10:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2016-11-18 15:50</td>
+      <td>2016-11-19 10:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2016-11-20 16:40</td>
+      <td>2016-11-21 12:40</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2016-11-20 16:40</td>
+      <td>2016-11-21 12:40</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2017-01-21 00:00</td>
+      <td>2017-01-21 07:10</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2017-01-21 00:00</td>
+      <td>2017-01-21 07:10</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2017-01-28 14:10</td>
+      <td>2017-01-28 17:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2017-01-28 14:10</td>
+      <td>2017-01-28 17:30</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Spd</th>
+      <td>2017-10-30 01:40</td>
+      <td>2017-10-30 07:00</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir</th>
+      <td>2017-10-30 01:40</td>
+      <td>2017-10-30 07:00</td>
+      <td>Icing</td>
+    </tr>
+    <tr>
+      <th>Dir58mS</th>
+      <td>2016-12-26 07:00:00</td>
+      <td>2018-02-09 21:30</td>
+      <td>Invalid</td>
+    </tr>
+    <tr>
+      <th>Dir78mS</th>
+      <td>2017-08-11 02:10:00</td>
+      <td>2018-02-09 21:30</td>
+      <td>Invalid</td>
+    </tr>
+    <tr>
+      <th>Spd80mS</th>
+      <td>2017-09-04 00:30:00</td>
+      <td>2018-02-09 21:30</td>
+      <td>Invalid</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<ul class="simple">
+<li><p>Each row of the cleaning file relates to a portion of the time series which has been flagged for quality reasons.</p></li>
+<li><p>The ‘Sensor’ column specifies which variables are affected by the issue.</p>
+<ul>
+<li><p>The function looks for all column names in your data that contain the sensor name. Therefore, when the sensor name is just ‘Spd’ it will find ALL column names that contain ‘Spd’ and clean out the data.</p></li>
+<li><p>The sensor name ‘All’ is a special name which cleans ALL the data for that period.</p></li>
+</ul>
+</li>
+<li><p>The ‘Start’ and ‘Stop’ dates specify the length the time period to be removed. The flagged data is inclusive of the ‘start’ time, and ends before the ‘stop’ time.</p></li>
+<li><p>The ‘Reason’ field justifies why the data should be removed.</p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="2.-apply_cleaning_windographer-with-a-windographer-file:">
+<h2>2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer</span></code> with a windographer file:<a class="headerlink" href="#2.-apply_cleaning_windographer-with-a-windographer-file:" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Import-some-sample-data:">
+<h3>Import some sample data:<a class="headerlink" href="#Import-some-sample-data:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of existing sample dataset</span>
+<span class="n">campbell_data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\campbell_scientific_demo_data.csv&#39;</span>
+<span class="c1">#campbell_data_file_path = r&#39;C:\..\brightwind\datasets\demo\campbell_scientific_demo_data.csv&#39;</span>
+
+<span class="c1"># load data as dataframe</span>
+<span class="n">campbell_data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">campbell_data_file_path</span><span class="p">)</span>
+
+<span class="c1"># show first few rows of dataframe</span>
+<span class="n">campbell_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RECORD</th>
+      <th>Site</th>
+      <th>LoggerID</th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>...</th>
+      <th>Dir78mSStd</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>0</td>
+      <td>demo_mast</td>
+      <td>7000</td>
+      <td>8.370</td>
+      <td>7.911</td>
+      <td>8.160</td>
+      <td>7.849</td>
+      <td>7.857</td>
+      <td>7.626</td>
+      <td>1.240</td>
+      <td>...</td>
+      <td>6.100</td>
+      <td>110.1</td>
+      <td>6.009</td>
+      <td>112.2</td>
+      <td>5.724</td>
+      <td>0.711</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.94</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>1</td>
+      <td>demo_mast</td>
+      <td>7000</td>
+      <td>8.250</td>
+      <td>7.961</td>
+      <td>8.100</td>
+      <td>7.884</td>
+      <td>7.952</td>
+      <td>7.840</td>
+      <td>0.897</td>
+      <td>...</td>
+      <td>5.114</td>
+      <td>110.9</td>
+      <td>4.702</td>
+      <td>109.8</td>
+      <td>5.628</td>
+      <td>0.630</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.95</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>2</td>
+      <td>demo_mast</td>
+      <td>7000</td>
+      <td>7.652</td>
+      <td>7.545</td>
+      <td>7.671</td>
+      <td>7.551</td>
+      <td>7.531</td>
+      <td>7.457</td>
+      <td>0.756</td>
+      <td>...</td>
+      <td>4.172</td>
+      <td>113.1</td>
+      <td>3.447</td>
+      <td>111.8</td>
+      <td>4.016</td>
+      <td>1.126</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.75</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>3</td>
+      <td>demo_mast</td>
+      <td>7000</td>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>...</td>
+      <td>4.680</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>4</td>
+      <td>demo_mast</td>
+      <td>7000</td>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>...</td>
+      <td>3.123</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 32 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Plot-monthly-means-of-raw-wind-speed:">
+<h3>Plot monthly means of raw wind speed:<a class="headerlink" href="#Plot-monthly-means-of-raw-wind-speed:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot monthly means of wind speed for each anemometer</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">campbell_data</span><span class="p">[</span><span class="n">anemometers</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_apply_a_cleaning_file_23_0.png" src="../_images/tutorials_how_to_apply_a_cleaning_file_23_0.png" />
+</div>
+</div>
+<p>You can see here that the data is the same as example 1, just loaded in a different format.</p>
+</div>
+<div class="section" id="Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:">
+<h3>Apply cleaning to data based on a pre-existing windographer cleaning file:<a class="headerlink" href="#Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of associated cleaning file</span>
+<span class="n">windog_log_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\windographer_flagging_log.txt&#39;</span>
+<span class="c1">#windog_log_file_path = r&#39;C:\..\brightwind\datasets\demo\windographer_flagging_log.txt&#39;</span>
+
+<span class="c1"># apply cleaning</span>
+<span class="n">campbell_data_clean</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning_windographer</span><span class="p">(</span><span class="n">campbell_data</span><span class="p">,</span> <span class="n">windog_log_file_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Plot-monthly-means-of-cleaned-wind-speed:">
+<h3>Plot monthly means of cleaned wind speed:<a class="headerlink" href="#Plot-monthly-means-of-cleaned-wind-speed:" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot monthly means of wind speed for each anemometer</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">campbell_data_clean</span><span class="p">[</span><span class="n">anemometers</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_apply_a_cleaning_file_28_0.png" src="../_images/tutorials_how_to_apply_a_cleaning_file_28_0.png" />
+</div>
+</div>
+<p>As with example 1, the spurious data has been removed.</p>
+<hr class="docutils" />
+<p>This tutorial can be downloaded as a Jupyter Notebook from the following link: <a class="reference external" href="https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_to_apply_a_cleaning_file.ipynb">https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_to_apply_a_cleaning_file.ipynb</a></p>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

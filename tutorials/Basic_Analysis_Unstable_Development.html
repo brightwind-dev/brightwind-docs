@@ -81,7 +81,18 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Basic Analysis</a><ul>
+<li><a class="reference internal" href="#Using-the-brightwind-library-in-Jupyter-Notebook">Using the brightwind library in Jupyter Notebook</a></li>
+<li><a class="reference internal" href="#Importing-Data">Importing Data</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
       
   
 <style>
@@ -307,7 +318,7 @@ div.rendered_html tbody tr:hover {
 </li>
 <li><p>To view the list of necessary inputs for this function, press ‘Shift’ and ‘Tab’ simultaneously.</p></li>
 </ul>
-<p><img alt="image0" src="../_images/Unstable_Basic_Analysis_2.png" /></p>
+<p><img alt="image0" src="tutorials\Unstable_Basic_Analysis_2.png" /></p>
 </div>
 <hr class="docutils" />
 <div class="section" id="Importing-Data">
@@ -323,7 +334,7 @@ div.rendered_html tbody tr:hover {
 <ul class="simple">
 <li><p>This will load the data form the excel spreadsheet into a pandas DataFrame, mydata, shown below:</p></li>
 </ul>
-<p><img alt="image0" src="../_images/Unstable_Basic_Analysis_2.png" /></p>
+<p><img alt="image0" src="tutorials\Unstable_Basic_Analysis_2.png" /></p>
 <ul>
 <li><p>Once this data is loaded into the brightwind environment, it can be used within different functions. For example, to calculate the monthly mean wind speeds from the first column of mydata, i.e the WS50m_m/s column, for the first six months of the year, type:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">mydata</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="s1">&#39;2000-06-30 23:00:00&#39;</span><span class="p">,</span><span class="s1">&#39;WS50m_m/s&#39;</span><span class="p">])</span>

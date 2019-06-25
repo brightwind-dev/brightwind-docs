@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Getting Started &#8212; brightwind  documentation</title>
+    <title>Getting started with the brightwind library on Windows 10 &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -81,68 +81,87 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
-      
-  <div class="section" id="Getting-Started">
-<h1>Getting Started<a class="headerlink" href="#Getting-Started" title="Permalink to this headline">¶</a></h1>
-<hr class="docutils" />
-<p>This guide will lead you through all the steps and installations required to start using the brightwind library, assuming a basic level of computer knowledge. These steps will include:</p>
-<ul class="simple">
-<li><p>Installing Anaconda Python Distribution</p></li>
-<li><p>Installing the brightwind library</p></li>
-<li><p>Opening the brightwind library in Jupyter notebooks</p></li>
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Getting started with the brightwind library on Windows 10</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
+<li><a class="reference internal" href="#Installing-the-Anaconda-Python-distribution">Installing the Anaconda Python distribution</a></li>
+<li><a class="reference internal" href="#Installing-the-brightwind-library">Installing the brightwind library</a></li>
+<li><a class="reference internal" href="#Using-the-brightwind-library-in-Jupyter-notebooks">Using the brightwind library in Jupyter notebooks</a></li>
 </ul>
-<p>If you are familiar with Python environments, Git and would like to use the development verison of the brightwind library, you may prefer to follow the instructions for downloading the development (unstable) code.</p>
-<div class="section" id="Setup">
-<h2>Setup<a class="headerlink" href="#Setup" title="Permalink to this headline">¶</a></h2>
-<hr class="docutils" />
-<div class="section" id="Step-1:">
-<h3>Step 1:<a class="headerlink" href="#Step-1:" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>First, we need to download the Anaconda Python distribution, found here: <a class="reference external" href="https://www.anaconda.com/distribution/">https://www.anaconda.com/distribution/</a>. Please ensure you download the current version of the installer for your machine, as if not this will cause problems.</p></li>
-<li><p>Once the installation has completed, open ‘Search’ and search ‘Anaconda’. You should see two applications appear, the Anaconda Prompt and the Anaconda Navigator, as shown in the image below:</p></li>
-</ul>
-<center><p><img alt="image1" src="../_images/Stable_Getting_Started_1.png" /></p>
-</center><ul class="simple">
-<li><p>If you cannot see both applications, it is likely that Anaconda did not install properly, as this has been known to occur. Please uninstall and reinstall the program and try again. Instructions on how to install Anaconda can be found here: <a class="reference external" href="https://docs.anaconda.com/anaconda/install/">https://docs.anaconda.com/anaconda/install/</a></p></li>
-</ul>
-</div>
-<hr class="docutils" />
-<div class="section" id="Step-2">
-<h3>Step 2<a class="headerlink" href="#Step-2" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Click on Anaconda prompt in your computer’s search bar and open it. Navigate to the root folder of your folder of choice, i.e. the folder brightwind_demo in this case, and type:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">...</span>\<span class="n">brightwind_demo</span><span class="o">&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">brightwind</span>
-</pre></div>
-</div>
-<center><p><img alt="image2" src="../_images/Stable_Getting_Started_5.png" /></p>
-</center><ul class="simple">
-<li><p>If you receive errors stating that the command pip does not exist, it is likely that Anaconda did not install properly, as this has been known to occur. Please uninstall and reinstall the program and try again.</p></li>
-</ul>
-</div>
-<hr class="docutils" />
-<div class="section" id="Step-3:">
-<h3>Step 3:<a class="headerlink" href="#Step-3:" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>To begin using brightwind for data analysis, first open Anaconda Navigator, which you should have downloaded and installed in Steps 1 and 2.</p></li>
-<li><p>On the Anaconda Navigator start-up page, open up the Jupyter Notebook (not Jupyter Lab). This will open a window in your default web browser. This web browser window should display a directory of all files on your computer. Navigate to the folder in which you installed brightwind in Step 2 above, or whichever other folder you would like to work in. Jupyter will be able to find brightwind no matter which folder you work in.</p></li>
-</ul>
-<center><p><img alt="image3" src="../_images/Stable_Getting_Started_3.png" /></p>
-</center><ul class="simple">
-<li><p>Now, in the top right-hand corner of the screen, click ‘New’ and then ‘Python 3’ to open a new Python kernel.</p></li>
-</ul>
-<center><p><img alt="image4" src="../_images/Stable_Getting_Started_4.png" /></p>
-</center><ul>
-<li><p>To import the brightwind code and start using the functions, type:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-</pre></div>
-</div>
-<p>into the cell and press ‘Shift’ and ‘Enter’ to import the code.</p>
 </li>
 </ul>
-<center><p><img alt="image2" src="../_images/Stable_Getting_Started_5.png" /></p>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <center><div class="section" id="Getting-started-with-the-brightwind-library-on-Windows-10">
+<h1>Getting started with the brightwind library on Windows 10<a class="headerlink" href="#Getting-started-with-the-brightwind-library-on-Windows-10" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
+<div align="right"><p>Last updated: 24 June, 2019</p>
+</div><div class="section" id="Outline:">
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
+<p>This guide will lead you through all the steps and installations required to start using the brightwind library, assuming a basic level of computer knowledge. These steps will include:</p>
+<ul class="simple">
+<li><p>Installing the Anaconda Python Distribution</p></li>
+<li><p>Installing the brightwind library</p></li>
+<li><p>Using the brightwind library in Jupyter notebooks</p></li>
+</ul>
+<hr class="docutils" />
+<div class="section" id="Installing-the-Anaconda-Python-distribution">
+<h3>Installing the Anaconda Python distribution<a class="headerlink" href="#Installing-the-Anaconda-Python-distribution" title="Permalink to this headline">¶</a></h3>
+<p>Anaconda is a free and open-source distribution of the Python and R programming languages for scientific computing that aims to simplify package management and deployment. Anaconda is the easiest way to install Python and all the associated packages for a Windows environment.</p>
+<ol class="arabic simple">
+<li><p>Open up the Anaconda download page in a seperate window by clicking <a class="reference external" href="https://www.anaconda.com/distribution/">https://www.anaconda.com/distribution/</a>.</p></li>
+<li><p>Make sure you select the Windows icon as Mac OS is selected by default.</p></li>
+<li><p>Click the download button under the Python 3.7 version. This will download the entire package so may take a while.</p></li>
+</ol>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image1" src="../_images/getting_started_on_windows_1.png" /></p>
+</center></div><ol start="4"><li><p>Depending on browser you may need to run the downloaded .exe file to install Anaconda and follow the usual prompts. You can find more detailed instructions here <a class="reference external" href="https://docs.anaconda.com/anaconda/install/windows/">https://docs.anaconda.com/anaconda/install/windows/</a></p>
+</li></ol><div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image2" src="../_images/getting_started_on_windows_2.png" /></p>
+</center></div></div>
+<div class="section" id="Installing-the-brightwind-library">
+<h3>Installing the brightwind library<a class="headerlink" href="#Installing-the-brightwind-library" title="Permalink to this headline">¶</a></h3>
+<ol start="5"><li><p>Once the installation has completed, go to the Start menu and search ‘Anaconda’. Make sure two applications appear, the ‘Anaconda Prompt’ and the ‘Anaconda Navigator’, as shown in the image below. If you cannot see both applications, it is likely that Anaconda did not install properly, as this has been known to occur. Please uninstall and try again.</p>
+</li></ol><div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image4" src="../_images/getting_started_on_windows_4.png" /></p>
+</center></div><ol start="6"><li><p>With the ‘Anaconda Prompt’ highlighted, open this command line interface in administrator mode by clicking ‘Run as Administrator’.</p>
+</li></ol><ol start="7"><li><p>Once opened you can now install the brightwind library using pip. Simply type:</p>
+</li></ol><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">brightwind</span>
+</pre></div>
+</div>
+<p>        If you receive errors stating that the command <strong>pip</strong> does not exist, it is likely that Anaconda did not install properly. Please uninstall and try again.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image5" src="../_images/getting_started_on_windows_5.png" /></p>
+</center></div></div>
+<hr class="docutils" />
+<div class="section" id="Using-the-brightwind-library-in-Jupyter-notebooks">
+<h3>Using the brightwind library in Jupyter notebooks<a class="headerlink" href="#Using-the-brightwind-library-in-Jupyter-notebooks" title="Permalink to this headline">¶</a></h3>
+<ol start="8"><li><p>The easiest way to use the brightwind library is through Jupyter Notebooks. First open Anaconda Navigator, which you should have installed previously, from the Windows start menu.</p>
+</li><li><p>Once opened, launch a Jupyter Notebook by clicking the button as shown in the image below. This will open a window in your default web browser.</p>
+</li></ol><div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image6" src="../_images/getting_started_on_windows_6.png" /></p>
+</center></div><p>        First page of Jupyter Notebooks is a file explorer.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image7" src="../_images/getting_started_on_windows_7.png" /></p>
+</center></div><ol start="10"><li><p>Navigate to a folder where you want to work in. In this case <code class="docutils literal notranslate"><span class="pre">../Documents/Analysis</span></code></p>
+</li><li><p>When in this folder you can now create a new Notebook. In the top right-hand corner of the screen, click ‘New’ and then ‘Python 3’ to open a new Python kernel. This will open in a new tab.</p>
+</li></ol><div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image8" src="../_images/getting_started_on_windows_8.png" /></p>
+</center></div><p>        Opens a new tab where you can use Python and the brightwind library.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image9" src="../_images/getting_started_on_windows_9.png" /></p>
+</center></div><ol start="12"><li><p>In the green highlighted cell type <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">brightwind</span> <span class="pre">as</span> <span class="pre">bw</span></code> to import the brightwind library.</p>
+</li><li><p>To run this cell you can either click the play button in the menu bar as shown in the image below or use ‘<strong>shift</strong>’ + ‘<strong>Enter</strong>’ on your keyboard.</p>
+</li></ol><div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image10" src="../_images/getting_started_on_windows_10.png" /></p>
+</center></div><ol start="14"><li><p>You can now use all the functionaly of the library. The first step of loading some data into memory can be done by typing the following:</p>
+</li></ol><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image11" src="../_images/getting_started_on_windows_11.png" /></p>
+</center></div><p>        To use the brightwind library, please see the next tutorial.</p>
+<hr class="docutils" />
+<hr class="docutils" />
+<p>This tutorial can be downloaded as a Jupyter Notebook from the following link: <a class="reference external" href="https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/getting_started_on_windows.ipynb">https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/getting_started_on_windows.ipynb</a></p>
+<hr class="docutils" />
 </div>
 </div>
 </div>
