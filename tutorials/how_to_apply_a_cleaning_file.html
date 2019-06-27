@@ -42,7 +42,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="tutorial_welcome.html">Tutorials</a></li>
                 <li><a href="../api.html">API</a></li>
                 <li><a href="../community.html">Community</a></li>
             
@@ -85,7 +85,7 @@
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">How to apply a cleaning file</a><ul>
 <li><a class="reference internal" href="#Outline:">Outline:</a></li>
-<li><a class="reference internal" href="#1.-apply_cleaning-with-a-simple-csv:">1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning</span></code> with a simple csv:</a><ul>
+<li><a class="reference internal" href="#1.-apply_cleaning()-with-a-simple-csv:">1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning()</span></code> with a simple csv:</a><ul>
 <li><a class="reference internal" href="#Import-the-brightwind-library-and-some-sample-data:">Import the brightwind library and some sample data:</a></li>
 <li><a class="reference internal" href="#Plot-monthly-means-of-raw-data:">Plot monthly means of raw data:</a></li>
 <li><a class="reference internal" href="#Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:">Apply cleaning to data based on a pre-existing cleaning file:</a></li>
@@ -93,7 +93,7 @@
 <li><a class="reference internal" href="#Overview-of-cleaning-file-structure:">Overview of cleaning file structure:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#2.-apply_cleaning_windographer-with-a-windographer-file:">2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer</span></code> with a windographer file:</a><ul>
+<li><a class="reference internal" href="#2.-apply_cleaning_windographer()-with-a-windographer-file:">2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer()</span></code> with a windographer file:</a><ul>
 <li><a class="reference internal" href="#Import-some-sample-data:">Import some sample data:</a></li>
 <li><a class="reference internal" href="#Plot-monthly-means-of-raw-wind-speed:">Plot monthly means of raw wind speed:</a></li>
 <li><a class="reference internal" href="#Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:">Apply cleaning to data based on a pre-existing windographer cleaning file:</a></li>
@@ -327,13 +327,13 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Last updated: 25 June, 2019
+Last updated: 26 June, 2019
 </pre></div></div>
 </div>
-<div class="section" id="Outline:">
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Outline:">
 <h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
-<p>This guide will demonstrate how to use the ‘apply_cleaning’ and ‘apply_cleaning_windographer’ functions to clean data using pre-existing file which denote the cleaning to be applied. The tutorial includes the following steps:</p>
-<p><strong>1. ‘apply_cleaning’ with a simple csv:</strong></p>
+<p>This guide will demonstrate how to use the <code class="docutils literal notranslate"><span class="pre">apply_cleaning()</span></code> and <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer()</span></code> functions to clean data using pre-existing file which denote the cleaning to be applied. The tutorial includes the following steps:</p>
+<p><strong>1. ``apply_cleaning()`` with a simple csv:</strong></p>
 <ul class="simple">
 <li><p>import the brightwind library and some sample data</p></li>
 <li><p>plot monthly means of raw wind speed</p></li>
@@ -341,17 +341,17 @@ Last updated: 25 June, 2019
 <li><p>plot monthly means of cleaned wind speed</p></li>
 <li><p>overview of cleaning file structure</p></li>
 </ul>
-<p><strong>2. ‘apply_cleaning_windographer’ with a windographer file:</strong></p>
+<p><strong>2. ``apply_cleaning_windographer()`` with a windographer file:</strong></p>
 <ul class="simple">
 <li><p>import some sample data</p></li>
 <li><p>plot monthly means of raw wind speed</p></li>
 <li><p>apply cleaning to data based on a pre-existing windographer cleaning file:</p></li>
 <li><p>plot monthly means of cleaned wind speed</p></li>
 </ul>
-</div>
 <hr class="docutils" />
-<div class="section" id="1.-apply_cleaning-with-a-simple-csv:">
-<h2>1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning</span></code> with a simple csv:<a class="headerlink" href="#1.-apply_cleaning-with-a-simple-csv:" title="Permalink to this headline">¶</a></h2>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="1.-apply_cleaning()-with-a-simple-csv:">
+<h2>1. <code class="docutils literal notranslate"><span class="pre">apply_cleaning()</span></code> with a simple csv:<a class="headerlink" href="#1.-apply_cleaning()-with-a-simple-csv:" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Import-the-brightwind-library-and-some-sample-data:">
 <h3>Import the brightwind library and some sample data:<a class="headerlink" href="#Import-the-brightwind-library-and-some-sample-data:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
@@ -369,8 +369,7 @@ Last updated: 25 June, 2019
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># specify location of existing sample dataset</span>
-<span class="n">data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\demo_data.csv&#39;</span>
-<span class="c1">#data_file_path = r&#39;C:\..\brightwind\datasets\demo\demo_data.csv&#39;</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span>
 
 <span class="c1"># load data as dataframe</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
@@ -576,7 +575,7 @@ Last updated: 25 June, 2019
 <p>5 rows × 29 columns</p>
 </div></div>
 </div>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Plot-monthly-means-of-raw-data:">
 <h3>Plot monthly means of raw data:<a class="headerlink" href="#Plot-monthly-means-of-raw-data:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
@@ -608,7 +607,7 @@ Last updated: 25 June, 2019
 </div>
 </div>
 <p>Note the spurious ‘Spd80mS’ monthly mean values which can be seen for the last few months.</p>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:">
 <h3>Apply cleaning to data based on a pre-existing cleaning file:<a class="headerlink" href="#Apply-cleaning-to-data-based-on-a-pre-existing-cleaning-file:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -617,8 +616,7 @@ Last updated: 25 June, 2019
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># specify location of associated cleaning file</span>
-<span class="n">cleaning_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\demo_cleaning_file.csv&#39;</span>
-<span class="c1">#cleaning_file_path = r&#39;C:\..\brightwind\datasets\demo\demo_cleaning_file.csv&#39;</span>
+<span class="n">cleaning_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_cleaning_file.csv&#39;</span>
 
 <span class="c1"># apply cleaning</span>
 <span class="n">clean_data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cleaning_file_path</span><span class="p">)</span>
@@ -633,7 +631,7 @@ Last updated: 25 June, 2019
 Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
 </pre></div></div>
 </div>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Plot-monthly-means-of-cleaned-wind-speed:">
 <h3>Plot monthly means of cleaned wind speed:<a class="headerlink" href="#Plot-monthly-means-of-cleaned-wind-speed:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -655,7 +653,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 </div>
 <p>Note that the spurious ‘Spd80mS’ values have been removed.</p>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Overview-of-cleaning-file-structure:">
 <h3>Overview of cleaning file structure:<a class="headerlink" href="#Overview-of-cleaning-file-structure:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -663,8 +661,8 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># load cleaning file as dataframe</span>
-<span class="n">cleaning_file</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">cleaning_file_path</span><span class="p">)</span>
+<span></span><span class="c1"># load cleaning file</span>
+<span class="n">cleaning_file</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_cleaning_file</span><span class="p">(</span><span class="n">cleaning_file_path</span><span class="p">)</span>
 
 <span class="c1"># show cleaning file</span>
 <span class="n">cleaning_file</span>
@@ -694,136 +692,151 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>Sensor</th>
       <th>Start</th>
       <th>Stop</th>
       <th>Reason</th>
     </tr>
-    <tr>
-      <th>Sensor</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
   </thead>
   <tbody>
     <tr>
-      <th>All</th>
+      <th>0</th>
+      <td>All</td>
       <td>2016-01-09 15:30:00</td>
       <td>2016-01-09 17:10:00</td>
       <td>Installation</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2016-03-09 06:20</td>
-      <td>2016-03-09 10:30</td>
+      <th>1</th>
+      <td>Spd</td>
+      <td>2016-03-09 06:20:00</td>
+      <td>2016-03-09 10:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2016-03-09 06:20</td>
-      <td>2016-03-09 10:30</td>
+      <th>2</th>
+      <td>Dir</td>
+      <td>2016-03-09 06:20:00</td>
+      <td>2016-03-09 10:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2016-03-29 23:50</td>
-      <td>2016-03-30 07:10</td>
+      <th>3</th>
+      <td>Spd</td>
+      <td>2016-03-29 23:50:00</td>
+      <td>2016-03-30 07:10:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2016-03-29 23:50</td>
-      <td>2016-03-30 07:10</td>
+      <th>4</th>
+      <td>Dir</td>
+      <td>2016-03-29 23:50:00</td>
+      <td>2016-03-30 07:10:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2016-11-08 02:30</td>
-      <td>2016-11-08 10:50</td>
+      <th>5</th>
+      <td>Spd</td>
+      <td>2016-11-08 02:30:00</td>
+      <td>2016-11-08 10:50:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2016-11-08 02:30</td>
-      <td>2016-11-08 10:50</td>
+      <th>6</th>
+      <td>Dir</td>
+      <td>2016-11-08 02:30:00</td>
+      <td>2016-11-08 10:50:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2016-11-18 15:50</td>
-      <td>2016-11-19 10:30</td>
+      <th>7</th>
+      <td>Spd</td>
+      <td>2016-11-18 15:50:00</td>
+      <td>2016-11-19 10:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2016-11-18 15:50</td>
-      <td>2016-11-19 10:30</td>
+      <th>8</th>
+      <td>Dir</td>
+      <td>2016-11-18 15:50:00</td>
+      <td>2016-11-19 10:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2016-11-20 16:40</td>
-      <td>2016-11-21 12:40</td>
+      <th>9</th>
+      <td>Spd</td>
+      <td>2016-11-20 16:40:00</td>
+      <td>2016-11-21 12:40:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2016-11-20 16:40</td>
-      <td>2016-11-21 12:40</td>
+      <th>10</th>
+      <td>Dir</td>
+      <td>2016-11-20 16:40:00</td>
+      <td>2016-11-21 12:40:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2017-01-21 00:00</td>
-      <td>2017-01-21 07:10</td>
+      <th>11</th>
+      <td>Spd</td>
+      <td>2017-01-21 00:00:00</td>
+      <td>2017-01-21 07:10:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2017-01-21 00:00</td>
-      <td>2017-01-21 07:10</td>
+      <th>12</th>
+      <td>Dir</td>
+      <td>2017-01-21 00:00:00</td>
+      <td>2017-01-21 07:10:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2017-01-28 14:10</td>
-      <td>2017-01-28 17:30</td>
+      <th>13</th>
+      <td>Spd</td>
+      <td>2017-01-28 14:10:00</td>
+      <td>2017-01-28 17:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2017-01-28 14:10</td>
-      <td>2017-01-28 17:30</td>
+      <th>14</th>
+      <td>Dir</td>
+      <td>2017-01-28 14:10:00</td>
+      <td>2017-01-28 17:30:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Spd</th>
-      <td>2017-10-30 01:40</td>
-      <td>2017-10-30 07:00</td>
+      <th>15</th>
+      <td>Spd</td>
+      <td>2017-10-30 01:40:00</td>
+      <td>2017-10-30 07:00:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir</th>
-      <td>2017-10-30 01:40</td>
-      <td>2017-10-30 07:00</td>
+      <th>16</th>
+      <td>Dir</td>
+      <td>2017-10-30 01:40:00</td>
+      <td>2017-10-30 07:00:00</td>
       <td>Icing</td>
     </tr>
     <tr>
-      <th>Dir58mS</th>
+      <th>17</th>
+      <td>Dir58mS</td>
       <td>2016-12-26 07:00:00</td>
-      <td>2018-02-09 21:30</td>
+      <td>2018-02-09 21:30:00</td>
       <td>Invalid</td>
     </tr>
     <tr>
-      <th>Dir78mS</th>
+      <th>18</th>
+      <td>Dir78mS</td>
       <td>2017-08-11 02:10:00</td>
-      <td>2018-02-09 21:30</td>
+      <td>2018-02-09 21:30:00</td>
       <td>Invalid</td>
     </tr>
     <tr>
-      <th>Spd80mS</th>
+      <th>19</th>
+      <td>Spd80mS</td>
       <td>2017-09-04 00:30:00</td>
-      <td>2018-02-09 21:30</td>
+      <td>2018-02-09 21:30:00</td>
       <td>Invalid</td>
     </tr>
   </tbody>
@@ -841,11 +854,11 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 <li><p>The ‘Start’ and ‘Stop’ dates specify the length the time period to be removed. The flagged data is inclusive of the ‘start’ time, and ends before the ‘stop’ time.</p></li>
 <li><p>The ‘Reason’ field justifies why the data should be removed.</p></li>
 </ul>
-</div>
-</div>
 <hr class="docutils" />
-<div class="section" id="2.-apply_cleaning_windographer-with-a-windographer-file:">
-<h2>2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer</span></code> with a windographer file:<a class="headerlink" href="#2.-apply_cleaning_windographer-with-a-windographer-file:" title="Permalink to this headline">¶</a></h2>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+</div>
+<div class="section" id="2.-apply_cleaning_windographer()-with-a-windographer-file:">
+<h2>2. <code class="docutils literal notranslate"><span class="pre">apply_cleaning_windographer()</span></code> with a windographer file:<a class="headerlink" href="#2.-apply_cleaning_windographer()-with-a-windographer-file:" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Import-some-sample-data:">
 <h3>Import some sample data:<a class="headerlink" href="#Import-some-sample-data:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -854,8 +867,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># specify location of existing sample dataset</span>
-<span class="n">campbell_data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\campbell_scientific_demo_data.csv&#39;</span>
-<span class="c1">#campbell_data_file_path = r&#39;C:\..\brightwind\datasets\demo\campbell_scientific_demo_data.csv&#39;</span>
+<span class="n">campbell_data_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\campbell_scientific_demo_data.csv&#39;</span>
 
 <span class="c1"># load data as dataframe</span>
 <span class="n">campbell_data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">campbell_data_file_path</span><span class="p">)</span>
@@ -1061,7 +1073,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 <p>5 rows × 32 columns</p>
 </div></div>
 </div>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Plot-monthly-means-of-raw-wind-speed:">
 <h3>Plot monthly means of raw wind speed:<a class="headerlink" href="#Plot-monthly-means-of-raw-wind-speed:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -1083,7 +1095,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 </div>
 <p>You can see here that the data is the same as example 1, just loaded in a different format.</p>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:">
 <h3>Apply cleaning to data based on a pre-existing windographer cleaning file:<a class="headerlink" href="#Apply-cleaning-to-data-based-on-a-pre-existing-windographer-cleaning-file:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -1092,8 +1104,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># specify location of associated cleaning file</span>
-<span class="n">windog_log_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\..\brightwind\datasets\demo\windographer_flagging_log.txt&#39;</span>
-<span class="c1">#windog_log_file_path = r&#39;C:\..\brightwind\datasets\demo\windographer_flagging_log.txt&#39;</span>
+<span class="n">windog_log_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\windographer_flagging_log.txt&#39;</span>
 
 <span class="c1"># apply cleaning</span>
 <span class="n">campbell_data_clean</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning_windographer</span><span class="p">(</span><span class="n">campbell_data</span><span class="p">,</span> <span class="n">windog_log_file_path</span><span class="p">)</span>
@@ -1108,7 +1119,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
 </pre></div></div>
 </div>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Plot-monthly-means-of-cleaned-wind-speed:">
 <h3>Plot monthly means of cleaned wind speed:<a class="headerlink" href="#Plot-monthly-means-of-cleaned-wind-speed:" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -1131,8 +1142,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 <p>As with example 1, the spurious data has been removed.</p>
 <hr class="docutils" />
-<p>This tutorial can be downloaded as a Jupyter Notebook from the following link: <a class="reference external" href="https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_to_apply_a_cleaning_file.ipynb">https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_to_apply_a_cleaning_file.ipynb</a></p>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 </div>
 </div>
 
@@ -1149,7 +1159,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
     </p>
   </div>
 </footer>

@@ -1,0 +1,18 @@
+Tutorials
+============================
+
+.. mdinclude:: tutorial_welcome.md
+
+.. toctree::
+    :maxdepth: 1
+
+    Getting started on Windows<tutorials/getting_started_on_windows.ipynb>
+    How to load data into brightwind<tutorials/how_to_load_data.ipynb>
+    Basic analysis<tutorials/Basic_Analysis_Stable_Development.ipynb>
+    How to transform your data<tutorials/how_to_transform_your_data.ipynb>
+    Exporting a tab file and saving your data<tutorials/exporting_a_tab_file_and_saving_your_data.ipynb>
+    How distributions work<tutorials/how_dist_function_works.ipynb>
+    How to apply a cleaning file to your data<tutorials/how_to_apply_a_cleaning_file.ipynb>
+    How to calculate air density<tutorials/how_to_calculate_air_density.ipynb>
+    Getting beta version<tutorials/getting_beta_versions.ipynb>
+

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Outline: &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="tutorial_welcome.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Outline:</a><ul>
+<li><a class="reference internal" href="#Plot-a-wind-rose-and-produce-a-frequency-distribution-table">Plot a wind rose and produce a frequency distribution table</a></li>
+<li><a class="reference internal" href="#Export-a-tab-file">Export a tab file</a></li>
+<li><a class="reference internal" href="#Export-the-site-data-to-a-csv-file">Export the site data to a csv file</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<center><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># How to export a tab file and save your data using the brightwind library</span>
+</pre></div>
+</div>
+</center><hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Last updated: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> %B, %Y&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 26 June, 2019
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Outline:">
+<h1>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h1>
+<p>This guide will demonstrate how to export data and a WAsP tab file using the following steps:</p>
+<ul class="simple">
+<li><p>Import the brightwind library and some sample data</p></li>
+<li><p>Plot a wind rose and produce a frequency table</p></li>
+<li><p>Export the frequency table to a tab file for use in WASP or Openwind</p></li>
+<li><p>Export the site data to a csv file</p></li>
+</ul>
+<hr class="docutils" />
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of existing sample dataset</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\...\brightwind\datasets\demo\demo_data.csv&#39;</span>
+<span class="c1"># load data as dataframe</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<span class="c1"># show first few rows of dataframe</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir78mSStd</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>8.370</td>
+      <td>7.911</td>
+      <td>8.160</td>
+      <td>7.849</td>
+      <td>7.857</td>
+      <td>7.626</td>
+      <td>1.240</td>
+      <td>1.075</td>
+      <td>1.060</td>
+      <td>0.947</td>
+      <td>...</td>
+      <td>6.100</td>
+      <td>110.1</td>
+      <td>6.009</td>
+      <td>112.2</td>
+      <td>5.724</td>
+      <td>0.711</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.94</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>8.250</td>
+      <td>7.961</td>
+      <td>8.100</td>
+      <td>7.884</td>
+      <td>7.952</td>
+      <td>7.840</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>0.900</td>
+      <td>0.855</td>
+      <td>...</td>
+      <td>5.114</td>
+      <td>110.9</td>
+      <td>4.702</td>
+      <td>109.8</td>
+      <td>5.628</td>
+      <td>0.630</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.95</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>7.652</td>
+      <td>7.545</td>
+      <td>7.671</td>
+      <td>7.551</td>
+      <td>7.531</td>
+      <td>7.457</td>
+      <td>0.756</td>
+      <td>0.703</td>
+      <td>0.797</td>
+      <td>0.749</td>
+      <td>...</td>
+      <td>4.172</td>
+      <td>113.1</td>
+      <td>3.447</td>
+      <td>111.8</td>
+      <td>4.016</td>
+      <td>1.126</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.75</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>4.680</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>3.123</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div></div>
+</div>
+<div class="section" id="Plot-a-wind-rose-and-produce-a-frequency-distribution-table">
+<h2>Plot a wind rose and produce a frequency distribution table<a class="headerlink" href="#Plot-a-wind-rose-and-produce-a-frequency-distribution-table" title="Permalink to this headline">¶</a></h2>
+<p>In order to export a tab file in the traditional format suitable for use in WASP or Openwind, it is first necessary to produce a frequency table using your desired anemometer and wind vane data. The brightwind library makes this simple. In the example below we pass the 80m anemometer and the 78m wind vane to the <code class="docutils literal notranslate"><span class="pre">freq_table()</span></code> function. This automatically returns a nice wind rose plot of the site.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">Dir78mS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_exporting_a_tab_file_and_saving_your_data_7_0.png" src="../_images/tutorials_exporting_a_tab_file_and_saving_your_data_7_0.png" />
+</div>
+</div>
+<p>We want to return the data underpinning the windrose, i.e. the frequency table. To do this, we have to set the return_data variable to True in the function, and then set the function equal to a variable that represents the plot (Wind_rose) and the data (freq_table). The freq_table is then called for viewing.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Wind_rose</span><span class="p">,</span> <span class="n">freq_table</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">Dir78mS</span><span class="p">,</span><span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">freq_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>345.0-15.0</th>
+      <th>15.0-45.0</th>
+      <th>45.0-75.0</th>
+      <th>75.0-105.0</th>
+      <th>105.0-135.0</th>
+      <th>135.0-165.0</th>
+      <th>165.0-195.0</th>
+      <th>195.0-225.0</th>
+      <th>225.0-255.0</th>
+      <th>255.0-285.0</th>
+      <th>285.0-315.0</th>
+      <th>315.0-345.0</th>
+    </tr>
+    <tr>
+      <th>variable_bin</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>[-0.5, 0.5)</th>
+      <td>0.041828</td>
+      <td>0.084702</td>
+      <td>0.097251</td>
+      <td>0.099342</td>
+      <td>0.126531</td>
+      <td>0.048103</td>
+      <td>0.113982</td>
+      <td>0.209142</td>
+      <td>0.126531</td>
+      <td>0.074245</td>
+      <td>0.039737</td>
+      <td>0.072154</td>
+    </tr>
+    <tr>
+      <th>[0.5, 1.5)</th>
+      <td>0.180907</td>
+      <td>0.226919</td>
+      <td>0.245741</td>
+      <td>0.270838</td>
+      <td>0.278158</td>
+      <td>0.157902</td>
+      <td>0.206004</td>
+      <td>0.566774</td>
+      <td>0.229010</td>
+      <td>0.159993</td>
+      <td>0.181953</td>
+      <td>0.170450</td>
+    </tr>
+    <tr>
+      <th>[1.5, 2.5)</th>
+      <td>0.271884</td>
+      <td>0.483117</td>
+      <td>0.531220</td>
+      <td>0.433969</td>
+      <td>0.422466</td>
+      <td>0.240513</td>
+      <td>0.421420</td>
+      <td>1.230798</td>
+      <td>0.419329</td>
+      <td>0.401552</td>
+      <td>0.363906</td>
+      <td>0.287570</td>
+    </tr>
+    <tr>
+      <th>[2.5, 3.5)</th>
+      <td>0.312667</td>
+      <td>0.615922</td>
+      <td>0.582459</td>
+      <td>0.454883</td>
+      <td>0.422466</td>
+      <td>0.220644</td>
+      <td>0.504031</td>
+      <td>1.679407</td>
+      <td>0.626379</td>
+      <td>0.667162</td>
+      <td>0.542722</td>
+      <td>0.278158</td>
+    </tr>
+    <tr>
+      <th>[3.5, 4.5)</th>
+      <td>0.330444</td>
+      <td>0.655659</td>
+      <td>0.500894</td>
+      <td>0.551088</td>
+      <td>0.479980</td>
+      <td>0.204959</td>
+      <td>0.847023</td>
+      <td>2.290100</td>
+      <td>0.690167</td>
+      <td>0.858526</td>
+      <td>0.735133</td>
+      <td>0.283387</td>
+    </tr>
+    <tr>
+      <th>[4.5, 5.5)</th>
+      <td>0.284433</td>
+      <td>0.565728</td>
+      <td>0.472660</td>
+      <td>0.527037</td>
+      <td>0.455929</td>
+      <td>0.217507</td>
+      <td>1.159690</td>
+      <td>2.806680</td>
+      <td>0.839703</td>
+      <td>0.853298</td>
+      <td>0.849115</td>
+      <td>0.277113</td>
+    </tr>
+    <tr>
+      <th>[5.5, 6.5)</th>
+      <td>0.292798</td>
+      <td>0.509260</td>
+      <td>0.413055</td>
+      <td>0.511351</td>
+      <td>0.472660</td>
+      <td>0.214370</td>
+      <td>1.303998</td>
+      <td>3.112027</td>
+      <td>1.035251</td>
+      <td>0.932771</td>
+      <td>0.971463</td>
+      <td>0.215416</td>
+    </tr>
+    <tr>
+      <th>[6.5, 7.5)</th>
+      <td>0.253061</td>
+      <td>0.378546</td>
+      <td>0.319987</td>
+      <td>0.459066</td>
+      <td>0.446517</td>
+      <td>0.238421</td>
+      <td>1.175376</td>
+      <td>3.520898</td>
+      <td>1.076033</td>
+      <td>1.040479</td>
+      <td>0.961006</td>
+      <td>0.180907</td>
+    </tr>
+    <tr>
+      <th>[7.5, 8.5)</th>
+      <td>0.155810</td>
+      <td>0.365998</td>
+      <td>0.269793</td>
+      <td>0.392140</td>
+      <td>0.495666</td>
+      <td>0.250970</td>
+      <td>1.005971</td>
+      <td>3.303391</td>
+      <td>0.974600</td>
+      <td>0.998651</td>
+      <td>0.926497</td>
+      <td>0.196593</td>
+    </tr>
+    <tr>
+      <th>[8.5, 9.5)</th>
+      <td>0.092022</td>
+      <td>0.334627</td>
+      <td>0.195547</td>
+      <td>0.299072</td>
+      <td>0.352404</td>
+      <td>0.201822</td>
+      <td>0.845978</td>
+      <td>2.926936</td>
+      <td>0.747681</td>
+      <td>0.913949</td>
+      <td>0.904537</td>
+      <td>0.166268</td>
+    </tr>
+    <tr>
+      <th>[9.5, 10.5)</th>
+      <td>0.089931</td>
+      <td>0.190319</td>
+      <td>0.164176</td>
+      <td>0.234239</td>
+      <td>0.290707</td>
+      <td>0.176725</td>
+      <td>0.682847</td>
+      <td>2.426042</td>
+      <td>0.664025</td>
+      <td>0.924406</td>
+      <td>0.669253</td>
+      <td>0.163130</td>
+    </tr>
+    <tr>
+      <th>[10.5, 11.5)</th>
+      <td>0.127576</td>
+      <td>0.157902</td>
+      <td>0.079474</td>
+      <td>0.200776</td>
+      <td>0.237376</td>
+      <td>0.099342</td>
+      <td>0.488346</td>
+      <td>1.996256</td>
+      <td>0.656705</td>
+      <td>0.836566</td>
+      <td>0.472660</td>
+      <td>0.126531</td>
+    </tr>
+    <tr>
+      <th>[11.5, 12.5)</th>
+      <td>0.143262</td>
+      <td>0.109799</td>
+      <td>0.063788</td>
+      <td>0.111891</td>
+      <td>0.161039</td>
+      <td>0.086794</td>
+      <td>0.453837</td>
+      <td>1.558105</td>
+      <td>0.525991</td>
+      <td>0.811469</td>
+      <td>0.339855</td>
+      <td>0.076337</td>
+    </tr>
+    <tr>
+      <th>[12.5, 13.5)</th>
+      <td>0.096205</td>
+      <td>0.099342</td>
+      <td>0.021960</td>
+      <td>0.086794</td>
+      <td>0.109799</td>
+      <td>0.100388</td>
+      <td>0.406780</td>
+      <td>1.197336</td>
+      <td>0.453837</td>
+      <td>0.545860</td>
+      <td>0.302210</td>
+      <td>0.046011</td>
+    </tr>
+    <tr>
+      <th>[13.5, 14.5)</th>
+      <td>0.073200</td>
+      <td>0.111891</td>
+      <td>0.011503</td>
+      <td>0.046011</td>
+      <td>0.073200</td>
+      <td>0.092022</td>
+      <td>0.368089</td>
+      <td>0.865846</td>
+      <td>0.307438</td>
+      <td>0.448609</td>
+      <td>0.281295</td>
+      <td>0.020914</td>
+    </tr>
+    <tr>
+      <th>[14.5, 15.5)</th>
+      <td>0.047057</td>
+      <td>0.084702</td>
+      <td>0.003137</td>
+      <td>0.032417</td>
+      <td>0.033463</td>
+      <td>0.078428</td>
+      <td>0.231101</td>
+      <td>0.671344</td>
+      <td>0.269793</td>
+      <td>0.406780</td>
+      <td>0.153719</td>
+      <td>0.009411</td>
+    </tr>
+    <tr>
+      <th>[15.5, 16.5)</th>
+      <td>0.011503</td>
+      <td>0.041828</td>
+      <td>0.001046</td>
+      <td>0.024051</td>
+      <td>0.021960</td>
+      <td>0.046011</td>
+      <td>0.195547</td>
+      <td>0.458020</td>
+      <td>0.204959</td>
+      <td>0.308484</td>
+      <td>0.105616</td>
+      <td>0.009411</td>
+    </tr>
+    <tr>
+      <th>[16.5, 17.5)</th>
+      <td>0.006274</td>
+      <td>0.037645</td>
+      <td>0.001046</td>
+      <td>0.016731</td>
+      <td>0.013594</td>
+      <td>0.028234</td>
+      <td>0.166268</td>
+      <td>0.268747</td>
+      <td>0.139079</td>
+      <td>0.207050</td>
+      <td>0.058560</td>
+      <td>0.002091</td>
+    </tr>
+    <tr>
+      <th>[17.5, 18.5)</th>
+      <td>0.001046</td>
+      <td>0.007320</td>
+      <td>0.000000</td>
+      <td>0.008366</td>
+      <td>0.002091</td>
+      <td>0.014640</td>
+      <td>0.089931</td>
+      <td>0.140125</td>
+      <td>0.087839</td>
+      <td>0.177770</td>
+      <td>0.029280</td>
+      <td>0.002091</td>
+    </tr>
+    <tr>
+      <th>[18.5, 19.5)</th>
+      <td>0.001046</td>
+      <td>0.002091</td>
+      <td>0.000000</td>
+      <td>0.005229</td>
+      <td>0.000000</td>
+      <td>0.014640</td>
+      <td>0.044965</td>
+      <td>0.059605</td>
+      <td>0.047057</td>
+      <td>0.105616</td>
+      <td>0.023006</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[19.5, 20.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.001046</td>
+      <td>0.000000</td>
+      <td>0.003137</td>
+      <td>0.019868</td>
+      <td>0.040783</td>
+      <td>0.034508</td>
+      <td>0.067971</td>
+      <td>0.013594</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[20.5, 21.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.009411</td>
+      <td>0.023006</td>
+      <td>0.031371</td>
+      <td>0.028234</td>
+      <td>0.018823</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[21.5, 22.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.006274</td>
+      <td>0.015686</td>
+      <td>0.032417</td>
+      <td>0.026143</td>
+      <td>0.004183</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[22.5, 23.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.003137</td>
+      <td>0.006274</td>
+      <td>0.020914</td>
+      <td>0.008366</td>
+      <td>0.006274</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[23.5, 24.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.001046</td>
+      <td>0.004183</td>
+      <td>0.007320</td>
+      <td>0.006274</td>
+      <td>0.002091</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[24.5, 25.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.003137</td>
+      <td>0.000000</td>
+      <td>0.005229</td>
+      <td>0.004183</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[25.5, 26.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.002091</td>
+      <td>0.002091</td>
+      <td>0.001046</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[26.5, 27.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.002091</td>
+      <td>0.002091</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[27.5, 28.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.001046</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>[28.5, 29.5)</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.001046</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Export-a-tab-file">
+<h2>Export a tab file<a class="headerlink" href="#Export-a-tab-file" title="Permalink to this headline">¶</a></h2>
+<p>Once a frequency table has been generated, producing a tab file is just one line of code. The <code class="docutils literal notranslate"><span class="pre">export_tab_file()</span></code> function requires the frequency table (freq_table) as an input, along with the height above ground level of the distribution (80m), and the latitude (56) and longitude (-4) coordinates of the site. The filename is specified by setting the file_name variable. The tab file will be outputted in the folder containing the jupyter notebook. The folder_path variable can be set if the
+user would like to export the tab file to another folder.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">export_tab_file</span><span class="p">(</span><span class="n">freq_table</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;Irish_Site_1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Export of tab file successful.
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Export-the-site-data-to-a-csv-file">
+<h2>Export the site data to a csv file<a class="headerlink" href="#Export-the-site-data-to-a-csv-file" title="Permalink to this headline">¶</a></h2>
+<p>To export the data to a location of your choice, simply pass the dataframe representing the site data into the <code class="docutils literal notranslate"><span class="pre">export_csv()</span></code> function and set the file_name variable to your name of choice. This will output the data into a file in the same folder as your jupyter notebook. The folder_path variable can be set if the user would like to export the data to another folder.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">export_csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;Demo_data.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Export to csv successful.
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

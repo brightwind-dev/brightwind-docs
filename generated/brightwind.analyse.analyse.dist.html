@@ -42,7 +42,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../tutorials/tutorial_welcome.html">Tutorials</a></li>
                 <li><a href="../api.html">API</a></li>
                 <li><a href="../community.html">Community</a></li>
             
@@ -94,7 +94,7 @@
 <h1>brightwind.analyse.analyse.dist<a class="headerlink" href="#brightwind-analyse-analyse-dist" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.analyse.analyse.dist">
-<code class="descclassname">brightwind.analyse.analyse.</code><code class="descname">dist</code><span class="sig-paren">(</span><em>var_series</em>, <em>var_to_bin_against=None</em>, <em>bins=None</em>, <em>bin_labels=None</em>, <em>max_y_value=None</em>, <em>aggregation_method='%frequency'</em>, <em>return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.dist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">brightwind.analyse.analyse.</code><code class="sig-name descname">dist</code><span class="sig-paren">(</span><em class="sig-param">var_series</em>, <em class="sig-param">var_to_bin_against=None</em>, <em class="sig-param">bins=None</em>, <em class="sig-param">bin_labels=None</em>, <em class="sig-param">x_label=None</em>, <em class="sig-param">max_y_value=None</em>, <em class="sig-param">aggregation_method='%frequency'</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.dist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the distribution of a variable against itself as per the bins specified. Can
 also pass another variable for finding distribution with respect to another variable.</p>
 <dl class="field-list simple">
@@ -106,6 +106,7 @@ to bin against another variable.</p></li>
 <li><p><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Array of numbers where adjacent elements of array form a bin. If set to None if derives
 the min and max from the var_to_bin_against series and creates array in steps of 1.</p></li>
 <li><p><strong>bin_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Labels of bins to be used, uses (bin-start, bin-end] format by default</p></li>
+<li><p><strong>x_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – x-axis label to be used. If None, it will take the name of the series sent.</p></li>
 <li><p><strong>max_y_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max value for the y-axis of the plot to be set. Default will be relative to max calculated
 data value.</p></li>
 <li><p><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>function</em>) – Statistical method used to find distribution. It can be mean, max, min, std, count,
@@ -129,7 +130,7 @@ statistics chosen by aggregation_method.</p>
 <span class="n">temp_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">)</span>
 
 <span class="c1">#For distribution of temperature with set bin array</span>
-<span class="n">temp_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="n">temp_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
 
 <span class="c1">#For custom aggregation function</span>
 <span class="k">def</span> <span class="nf">custom_agg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -159,7 +160,7 @@ statistics chosen by aggregation_method.</p>
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
     </p>
   </div>
 </footer>
