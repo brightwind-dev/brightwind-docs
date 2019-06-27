@@ -117,7 +117,7 @@
     "<div style='margin-top: 3em; margin-bottom: 3em;'>\n",
     "</div>\n",
     "\n",
-    "### Tutorial 8: [How to plot a wind speed frequency distribution and a distribution of anything!](https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_dist_function_works.ipynb)\n",
+    "### Tutorial 8: [How to plot a wind speed frequency distribution and a distribution of anything!](https://brightwind-dev.github.io/brightwind-docs/tutorials/how_dist_function_works.html)\n",
     "This tutorial will introduce you to plotting the wind speed frequency distribution and how to plot the distribution of any two variables using the `dist()`, `dist_of_wind_speed()` and `freq_distribution()` functions."
    ]
   },
