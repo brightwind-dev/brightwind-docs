@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Outline: &#8212; brightwind  documentation</title>
+    <title>How to get some useful plots using the brightwind library &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -83,12 +83,15 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Outline:</a><ul>
+<li><a class="reference internal" href="#">How to get some useful plots using the brightwind library</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
 <li><a class="reference internal" href="#Plot-a-time-series">Plot a time series</a></li>
 <li><a class="reference internal" href="#Scatter-plot-of-any-two-variables">Scatter plot of any two variables</a></li>
 <li><a class="reference internal" href="#Scatter-plot-of-two-anemometers">Scatter plot of two anemometers</a></li>
 <li><a class="reference internal" href="#Scatter-plot-of-two-wind-vanes">Scatter plot of two wind vanes</a></li>
 <li><a class="reference internal" href="#Sector-Ratio-Plot">Sector Ratio Plot</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -297,9 +300,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<center><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># How to get some useful plots using the brightwind library</span>
-</pre></div>
-</div>
+<center><div class="section" id="How-to-get-some-useful-plots-using-the-brightwind-library">
+<h1>How to get some useful plots using the brightwind library<a class="headerlink" href="#How-to-get-some-useful-plots-using-the-brightwind-library" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -321,7 +323,7 @@ Last updated: 26 June, 2019
 </div>
 <hr class="docutils" />
 <div class="section" id="Outline:">
-<h1>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h1>
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
 <p>This guide will demonstrate how to use some of the plotting functions using the following steps:</p>
 <ul class="simple">
 <li><p>Import the brightwind library and some sample data</p></li>
@@ -552,7 +554,7 @@ Last updated: 26 June, 2019
 </div></div>
 </div>
 <div class="section" id="Plot-a-time-series">
-<h2>Plot a time series<a class="headerlink" href="#Plot-a-time-series" title="Permalink to this headline">¶</a></h2>
+<h3>Plot a time series<a class="headerlink" href="#Plot-a-time-series" title="Permalink to this headline">¶</a></h3>
 <p>First off we would like to plot a timeseries of each of the anemometers on the mast. To do this, we need to specify a python list with the column heading names of each of the average values of the anemometers. We then call the plot_timeseries function to plot the timeseries.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -592,7 +594,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Scatter-plot-of-any-two-variables">
-<h2>Scatter plot of any two variables<a class="headerlink" href="#Scatter-plot-of-any-two-variables" title="Permalink to this headline">¶</a></h2>
+<h3>Scatter plot of any two variables<a class="headerlink" href="#Scatter-plot-of-any-two-variables" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">plot_scatter()</span></code> function allows the user to plot any two variables from a dataframe against each other. In the example below we have plotted the temperature against the precipitation.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -631,7 +633,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Scatter-plot-of-two-anemometers">
-<h2>Scatter plot of two anemometers<a class="headerlink" href="#Scatter-plot-of-two-anemometers" title="Permalink to this headline">¶</a></h2>
+<h3>Scatter plot of two anemometers<a class="headerlink" href="#Scatter-plot-of-two-anemometers" title="Permalink to this headline">¶</a></h3>
 <p>The brightwind library has been specifically designed with wind data in mind. So a special scatter plot function <code class="docutils literal notranslate"><span class="pre">plot_scatter_wspd()</span></code> for windspeed data was created to include a reference line, appropriate x and y limits and appropriate x and y labeling.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -652,7 +654,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Scatter-plot-of-two-wind-vanes">
-<h2>Scatter plot of two wind vanes<a class="headerlink" href="#Scatter-plot-of-two-wind-vanes" title="Permalink to this headline">¶</a></h2>
+<h3>Scatter plot of two wind vanes<a class="headerlink" href="#Scatter-plot-of-two-wind-vanes" title="Permalink to this headline">¶</a></h3>
 <p>In addition, as plotting wind vanes in a scatter plot is a common requirement, a simple <code class="docutils literal notranslate"><span class="pre">plot_scatter_wdir()</span></code> function is included to allow two wind vanes to be plotted with appropriate reference line and x and y axis labels and limits. A unusual horizontal line can be seen in the data which originates from one of the wind vanes failing, and the output being fixed a constant value.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -673,7 +675,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Sector-Ratio-Plot">
-<h2>Sector Ratio Plot<a class="headerlink" href="#Sector-Ratio-Plot" title="Permalink to this headline">¶</a></h2>
+<h3>Sector Ratio Plot<a class="headerlink" href="#Sector-Ratio-Plot" title="Permalink to this headline">¶</a></h3>
 <p>A ratio plot of two separate anemometers mounted at the same height by direction is useful for understanding if the mounting arrangements of two anemometers are correct. Here we use the <code class="docutils literal notranslate"><span class="pre">sector_ratio()</span></code> function to plot the two 80m anemometers versus the 78m wind vane, and include the boom directions as variables so we can see them plotted on the polar plot.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -690,6 +692,7 @@ Last updated: 26 June, 2019
 </div>
 <div class="output_area docutils container">
 <img alt="../_images/tutorials_how_to_get_some_useful_plots_23_0.png" src="../_images/tutorials_how_to_get_some_useful_plots_23_0.png" />
+</div>
 </div>
 </div>
 </div>

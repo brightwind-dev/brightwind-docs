@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Outline: &#8212; brightwind  documentation</title>
+    <title>How to get some useful statistics using the brightwind library &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -83,11 +83,14 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Outline:</a><ul>
+<li><a class="reference internal" href="#">How to get some useful statistics using the brightwind library</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
 <li><a class="reference internal" href="#Time-Continuity">Time Continuity</a></li>
 <li><a class="reference internal" href="#Basic-Statistics">Basic Statistics</a></li>
 <li><a class="reference internal" href="#Data-Coverage">Data Coverage</a></li>
 <li><a class="reference internal" href="#Mean-of-monthly-means">Mean of monthly means</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -296,9 +299,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<center><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># How to get some useful statistics using the brightwind library</span>
-</pre></div>
-</div>
+<center><div class="section" id="How-to-get-some-useful-statistics-using-the-brightwind-library">
+<h1>How to get some useful statistics using the brightwind library<a class="headerlink" href="#How-to-get-some-useful-statistics-using-the-brightwind-library" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -320,7 +322,7 @@ Last updated: 26 June, 2019
 </div>
 <hr class="docutils" />
 <div class="section" id="Outline:">
-<h1>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h1>
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
 <p>This guide will demonstrate how to get some useful statistics from a sample dataset using the following steps:</p>
 <ul class="simple">
 <li><p>Import the brightwind library and some sample data</p></li>
@@ -550,7 +552,7 @@ Last updated: 26 June, 2019
 </div></div>
 </div>
 <div class="section" id="Time-Continuity">
-<h2>Time Continuity<a class="headerlink" href="#Time-Continuity" title="Permalink to this headline">¶</a></h2>
+<h3>Time Continuity<a class="headerlink" href="#Time-Continuity" title="Permalink to this headline">¶</a></h3>
 <p>First we want to see if there are any gaps in the data. We can use the time_continuity_gap function to identify periods where there are gaps in the timestamp that are not consistent with typical gap seen between timestamps in the file(s). The function returns a pandas dataframe showing the timestamp at the start of the missing period and the timestamp at the end of the missing period. An additional column shows how many days were lost in the missing period.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -608,7 +610,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Basic-Statistics">
-<h2>Basic Statistics<a class="headerlink" href="#Basic-Statistics" title="Permalink to this headline">¶</a></h2>
+<h3>Basic Statistics<a class="headerlink" href="#Basic-Statistics" title="Permalink to this headline">¶</a></h3>
 <p>Next we may want to get some basic statistics of each of the columns found in the wind data file. The basic_stats function returns the count, mean, standard deviation, minimum and maximum of each column. This can be useful for a variety of checks, one example is confirming calibrations have been applied to the anemometers by checking if the minimum value for each anemometer matches the corresponding calibration offset.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -888,7 +890,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Data-Coverage">
-<h2>Data Coverage<a class="headerlink" href="#Data-Coverage" title="Permalink to this headline">¶</a></h2>
+<h3>Data Coverage<a class="headerlink" href="#Data-Coverage" title="Permalink to this headline">¶</a></h3>
 <p>Next we can see check the coverage of each column in the dataset. By default, the coverage function returns the monthly coverage.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -1865,7 +1867,7 @@ Last updated: 26 June, 2019
 </div>
 </div>
 <div class="section" id="Mean-of-monthly-means">
-<h2>Mean of monthly means<a class="headerlink" href="#Mean-of-monthly-means" title="Permalink to this headline">¶</a></h2>
+<h3>Mean of monthly means<a class="headerlink" href="#Mean-of-monthly-means" title="Permalink to this headline">¶</a></h3>
 <p>The mean of monthly means is a method of adjusting the average to take account of seasonal bias. For example this would remove the upward bias of having a 1.5 year dataset that covers two windier winter periods and one calm summer period. We can call the function in two ways, either by passing a specific column from the dataset which will return a value, or sending a list of column names (in this case anemometers) which will return the mean of monthly means for each column name as a dataframe.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -1948,6 +1950,7 @@ Last updated: 26 June, 2019
   </tbody>
 </table>
 </div></div>
+</div>
 </div>
 </div>
 </div>

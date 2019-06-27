@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Outline: &#8212; brightwind  documentation</title>
+    <title>How to use dist and dist_of_wind_speed functions &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -83,9 +83,12 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Outline:</a><ul>
+<li><a class="reference internal" href="#">How to use dist and dist_of_wind_speed functions</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
 <li><a class="reference internal" href="#Distribution-by-Wind-Speed">Distribution by Wind Speed</a></li>
 <li><a class="reference internal" href="#Distribution-of-anything!">Distribution of anything!</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -294,9 +297,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<center><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># How to use dist and dist_of_wind_speed functions</span>
-</pre></div>
-</div>
+<center><div class="section" id="How-to-use-dist-and-dist_of_wind_speed-functions">
+<h1>How to use dist and dist_of_wind_speed functions<a class="headerlink" href="#How-to-use-dist-and-dist_of_wind_speed-functions" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -318,7 +320,7 @@ Last updated: 25 June, 2019
 </div>
 <hr class="docutils" />
 <div class="section" id="Outline:">
-<h1>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h1>
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
 <p>This guide will demonstrate how to apply the distribtion_by_wind_speed and the distribution() functions to a sample dataset using the following steps:</p>
 <ul class="simple">
 <li><p>import the brightwind library and some sample data</p></li>
@@ -548,7 +550,7 @@ Last updated: 25 June, 2019
 </div></div>
 </div>
 <div class="section" id="Distribution-by-Wind-Speed">
-<h2>Distribution by Wind Speed<a class="headerlink" href="#Distribution-by-Wind-Speed" title="Permalink to this headline">¶</a></h2>
+<h3>Distribution by Wind Speed<a class="headerlink" href="#Distribution-by-Wind-Speed" title="Permalink to this headline">¶</a></h3>
 <p>First we look at getting the frequency distribution of the windspeed column from our demo data. This will show how frequently each windspeed occurs in the dataset that is passed into the function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -639,7 +641,7 @@ Name: %frequency, dtype: float64
 </div>
 </div>
 <div class="section" id="Distribution-of-anything!">
-<h2>Distribution of anything!<a class="headerlink" href="#Distribution-of-anything!" title="Permalink to this headline">¶</a></h2>
+<h3>Distribution of anything!<a class="headerlink" href="#Distribution-of-anything!" title="Permalink to this headline">¶</a></h3>
 <p>The dist_of_wind_speed function is a distribution function specifically designed for windspeed and is a wrapper of the dist function. The dist function can be used to plot the distribution of any variable. Here we plot the frequency of occurence of different temperatures recorded by the temperature sensor. The function automatically finds the minimum and maximum of the data series and bins in units of 1.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -721,6 +723,7 @@ speed.</p>
 <hr class="docutils" />
 <p>This tutorial can be downloaded as a Jupyter Notebook from the following link: <a class="reference external" href="https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_dist_function_works.ipynb">https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_dist_function_works.ipynb</a></p>
 <hr class="docutils" />
+</div>
 </div>
 </div>
 

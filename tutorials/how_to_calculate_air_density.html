@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Outline: &#8212; brightwind  documentation</title>
+    <title>How to calculate air density using the brightwind library &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -83,8 +83,11 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Outline:</a><ul>
+<li><a class="reference internal" href="#">How to calculate air density using the brightwind library</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
 <li><a class="reference internal" href="#Calculate-Air-Density">Calculate Air Density</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -293,9 +296,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<center><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># How to calculate air density using the brightwind library</span>
-</pre></div>
-</div>
+<center><div class="section" id="How-to-calculate-air-density-using-the-brightwind-library">
+<h1>How to calculate air density using the brightwind library<a class="headerlink" href="#How-to-calculate-air-density-using-the-brightwind-library" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -317,7 +319,7 @@ Last updated: 26 June, 2019
 </div>
 <hr class="docutils" />
 <div class="section" id="Outline:">
-<h1>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h1>
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
 <p>This guide will demonstrate how to get some useful statistics from a sample dataset using the following steps:</p>
 <ul class="simple">
 <li><p>Import the brightwind library and some sample data</p></li>
@@ -546,7 +548,7 @@ Last updated: 26 June, 2019
 </div></div>
 </div>
 <div class="section" id="Calculate-Air-Density">
-<h2>Calculate Air Density<a class="headerlink" href="#Calculate-Air-Density" title="Permalink to this headline">¶</a></h2>
+<h3>Calculate Air Density<a class="headerlink" href="#Calculate-Air-Density" title="Permalink to this headline">¶</a></h3>
 <p>The air density can be calculated for each timestamp in the timeseries by passing the temperature (in degrees Celsius) and pressure (in hPa) by passing the column relating to temperature and pressure from the site data using the <code class="docutils literal notranslate"><span class="pre">calc_air_density()</span></code> function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -664,6 +666,7 @@ Length: 95629, dtype: float64
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>1.176
 </pre></div>
+</div>
 </div>
 </div>
 </div>
