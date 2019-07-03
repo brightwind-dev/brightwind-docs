@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>How to use dist and dist_of_wind_speed functions &#8212; brightwind  documentation</title>
+    <title>How to use the distribution functions &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -11,16 +11,16 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -83,9 +83,10 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">How to use dist and dist_of_wind_speed functions</a><ul>
+<li><a class="reference internal" href="#">How to use the distribution functions</a><ul>
 <li><a class="reference internal" href="#Outline:">Outline:</a><ul>
-<li><a class="reference internal" href="#Distribution-by-Wind-Speed">Distribution by Wind Speed</a></li>
+<li><a class="reference internal" href="#Import-brightwind-and-data">Import brightwind and data</a></li>
+<li><a class="reference internal" href="#Distribution-of-the-wind-speed">Distribution of the wind speed</a></li>
 <li><a class="reference internal" href="#Distribution-of-anything!">Distribution of anything!</a></li>
 </ul>
 </li>
@@ -95,7 +96,7 @@
 
         </div>
       </div>
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   
 <style>
@@ -297,8 +298,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<center><div class="section" id="How-to-use-dist-and-dist_of_wind_speed-functions">
-<h1>How to use dist and dist_of_wind_speed functions<a class="headerlink" href="#How-to-use-dist-and-dist_of_wind_speed-functions" title="Permalink to this headline">¶</a></h1>
+<center><div class="section" id="How-to-use-the-distribution-functions">
+<h1>How to use the distribution functions<a class="headerlink" href="#How-to-use-the-distribution-functions" title="Permalink to this headline">¶</a></h1>
 </center><hr class="docutils" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -315,21 +316,23 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Last updated: 25 June, 2019
+Last updated: 03 July, 2019
 </pre></div></div>
 </div>
 <hr class="docutils" />
-<div class="section" id="Outline:">
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Outline:">
 <h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
 <p>This guide will demonstrate how to apply the distribtion_by_wind_speed and the distribution() functions to a sample dataset using the following steps:</p>
 <ul class="simple">
 <li><p>import the brightwind library and some sample data</p></li>
-<li><p>Using the distribution_by_wind_speed function to plot a frequency distribution from the sample data</p></li>
-<li><p>Using the distribution function to plot other variables such as temperature and bin appropriately</p></li>
-<li><p>Modifying the distribution function to plot two variables and bin appropriately</p></li>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">dist_of_wind_speed()</span></code> function to plot a frequency distribution from the sample data</p></li>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function to plot other variables such as temperature and bin appropriately</p></li>
+<li><p>Modifying the <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function to plot two variables and bin appropriately</p></li>
 <li><p>Using a custom aggregation function for binning in the distribution function</p></li>
 </ul>
 <hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Import-brightwind-and-data">
+<h3>Import brightwind and data<a class="headerlink" href="#Import-brightwind-and-data" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -345,13 +348,23 @@ Last updated: 25 June, 2019
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># specify location of existing sample dataset</span>
-<span class="n">filepath</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\...\brightwind\datasets\demo\demo_data.csv&#39;</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span>
 <span class="c1"># load data as dataframe</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<span class="c1"># apply cleaning</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_cleaning_file.csv&#39;</span><span class="p">)</span>
 <span class="c1"># show first few rows of dataframe</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -426,75 +439,75 @@ Last updated: 25 June, 2019
   <tbody>
     <tr>
       <th>2016-01-09 15:30:00</th>
-      <td>8.370</td>
-      <td>7.911</td>
-      <td>8.160</td>
-      <td>7.849</td>
-      <td>7.857</td>
-      <td>7.626</td>
-      <td>1.240</td>
-      <td>1.075</td>
-      <td>1.060</td>
-      <td>0.947</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>6.100</td>
-      <td>110.1</td>
-      <td>6.009</td>
-      <td>112.2</td>
-      <td>5.724</td>
-      <td>0.711</td>
-      <td>100.0</td>
-      <td>935.0</td>
-      <td>0.0</td>
-      <td>12.94</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2016-01-09 15:40:00</th>
-      <td>8.250</td>
-      <td>7.961</td>
-      <td>8.100</td>
-      <td>7.884</td>
-      <td>7.952</td>
-      <td>7.840</td>
-      <td>0.897</td>
-      <td>0.875</td>
-      <td>0.900</td>
-      <td>0.855</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>5.114</td>
-      <td>110.9</td>
-      <td>4.702</td>
-      <td>109.8</td>
-      <td>5.628</td>
-      <td>0.630</td>
-      <td>100.0</td>
-      <td>935.0</td>
-      <td>0.0</td>
-      <td>12.95</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2016-01-09 17:00:00</th>
-      <td>7.652</td>
-      <td>7.545</td>
-      <td>7.671</td>
-      <td>7.551</td>
-      <td>7.531</td>
-      <td>7.457</td>
-      <td>0.756</td>
-      <td>0.703</td>
-      <td>0.797</td>
-      <td>0.749</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>4.172</td>
-      <td>113.1</td>
-      <td>3.447</td>
-      <td>111.8</td>
-      <td>4.016</td>
-      <td>1.126</td>
-      <td>100.0</td>
-      <td>934.0</td>
-      <td>0.0</td>
-      <td>12.75</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2016-01-09 17:10:00</th>
@@ -549,8 +562,10 @@ Last updated: 25 June, 2019
 <p>5 rows × 29 columns</p>
 </div></div>
 </div>
-<div class="section" id="Distribution-by-Wind-Speed">
-<h3>Distribution by Wind Speed<a class="headerlink" href="#Distribution-by-Wind-Speed" title="Permalink to this headline">¶</a></h3>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Distribution-of-the-wind-speed">
+<h3>Distribution of the wind speed<a class="headerlink" href="#Distribution-of-the-wind-speed" title="Permalink to this headline">¶</a></h3>
 <p>First we look at getting the frequency distribution of the windspeed column from our demo data. This will show how frequently each windspeed occurs in the dataset that is passed into the function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -566,10 +581,10 @@ Last updated: 25 June, 2019
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_7_0.png" src="../_images/tutorials_how_dist_function_works_7_0.png" />
+<img alt="../_images/tutorials_how_dist_function_works_10_0.png" src="../_images/tutorials_how_dist_function_works_10_0.png" />
 </div>
 </div>
-<p>Equally we can use the freq_distribution function to return the same graph</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Equally we can use the <code class="docutils literal notranslate"><span class="pre">freq_distribution()</span></code> function to return the same graph</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -584,12 +599,12 @@ Last updated: 25 June, 2019
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_9_0.png" src="../_images/tutorials_how_dist_function_works_9_0.png" />
+<img alt="../_images/tutorials_how_dist_function_works_12_0.png" src="../_images/tutorials_how_dist_function_works_12_0.png" />
 </div>
 </div>
-<p>Next if we wish to return the data from the distribution graph we can assign a plot and a table to the function, and activate the return_data variable.This returns the table of the distribtution by windspeed as the variable table.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Next if we wish to return the data from the distribution graph we can assign a plot and a table to the function, and activate the return_data variable. This returns the table of the distribtution by wind speed as the variable table.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -599,52 +614,52 @@ Last updated: 25 June, 2019
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>variable_bin
-[-0.5, 0.5)      1.133547
-[0.5, 1.5)       2.874651
-[1.5, 2.5)       5.507743
-[2.5, 3.5)       6.906901
-[3.5, 4.5)       8.427360
-[4.5, 5.5)       9.308892
-[5.5, 6.5)       9.984419
-[6.5, 7.5)      10.050299
-[7.5, 8.5)       9.336080
-[8.5, 9.5)       7.980843
-[9.5, 10.5)      6.675799
-[10.5, 11.5)     5.479509
-[11.5, 12.5)     4.442167
-[12.5, 13.5)     3.466522
-[13.5, 14.5)     2.700018
-[14.5, 15.5)     2.021353
-[15.5, 16.5)     1.428437
-[16.5, 17.5)     0.945320
-[17.5, 18.5)     0.560499
-[18.5, 19.5)     0.303255
-[19.5, 20.5)     0.180907
-[20.5, 21.5)     0.110845
-[21.5, 22.5)     0.084702
-[22.5, 23.5)     0.044965
-[23.5, 24.5)     0.020914
-[24.5, 25.5)     0.012548
-[25.5, 26.5)     0.005229
-[26.5, 27.5)     0.004183
-[27.5, 28.5)     0.001046
-[28.5, 29.5)     0.001046
+[-0.5, 0.5)      1.082160
+[0.5, 1.5)       2.834629
+[1.5, 2.5)       5.465434
+[2.5, 3.5)       6.863837
+[3.5, 4.5)       8.366253
+[4.5, 5.5)       9.300273
+[5.5, 6.5)      10.001051
+[6.5, 7.5)      10.079849
+[7.5, 8.5)       9.366464
+[8.5, 9.5)       8.017441
+[9.5, 10.5)      6.706241
+[10.5, 11.5)     5.505358
+[11.5, 12.5)     4.463123
+[12.5, 13.5)     3.482875
+[13.5, 14.5)     2.712755
+[14.5, 15.5)     2.030889
+[15.5, 16.5)     1.435175
+[16.5, 17.5)     0.949779
+[17.5, 18.5)     0.563144
+[18.5, 19.5)     0.304686
+[19.5, 20.5)     0.181761
+[20.5, 21.5)     0.111368
+[21.5, 22.5)     0.085102
+[22.5, 23.5)     0.045178
+[23.5, 24.5)     0.021013
+[24.5, 25.5)     0.012608
+[25.5, 26.5)     0.005253
+[26.5, 27.5)     0.004203
+[27.5, 28.5)     0.001051
+[28.5, 29.5)     0.001051
 [29.5, 30.5)     0.000000
 Name: %frequency, dtype: float64
 </pre></div>
 </div>
 </div>
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Distribution-of-anything!">
 <h3>Distribution of anything!<a class="headerlink" href="#Distribution-of-anything!" title="Permalink to this headline">¶</a></h3>
-<p>The dist_of_wind_speed function is a distribution function specifically designed for windspeed and is a wrapper of the dist function. The dist function can be used to plot the distribution of any variable. Here we plot the frequency of occurence of different temperatures recorded by the temperature sensor. The function automatically finds the minimum and maximum of the data series and bins in units of 1.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dist_of_wind_speed()</span></code> function is a distribution function specifically designed for wind speed and is a wrapper of the <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function. The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function can be used to plot the distribution of any variable. Here we plot the frequency of occurence of different temperatures recorded by the temperature sensor. The function automatically finds the minimum and maximum of the data series and bins in units of 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -653,55 +668,55 @@ Name: %frequency, dtype: float64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_dist_function_works_17_0.png" src="../_images/tutorials_how_dist_function_works_17_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>If we only want to see the data binned for a certain range, we can specify the start and end of the bin values using the bins variable. Also T2m on the x-axis doesnt tell us anything meaningful about the data, so we can set the x_label variable to a useful name like Temperature.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span> <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Temperature [deg C]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_14_0.png" src="../_images/tutorials_how_dist_function_works_14_0.png" />
+<img alt="../_images/tutorials_how_dist_function_works_19_0.png" src="../_images/tutorials_how_dist_function_works_19_0.png" />
 </div>
 </div>
-<p>If we only want to see the data binned for a certain range, we can specify the start and end of the bin values using the bins variable. Also T2m on the x-axis doesnt tell us anything meaningful about the data, so we can set the x_label variable to a useful name like Temperature.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function is flexible enough to plot two separate variables, binning by one variable, and plotting against the other. As an example, we have plotted the mean 80m wind speed against temperature. This will show the mean wind speed for specific temperature ranges. The bins variable is used to specify the degrees Celcius to bin the data by, while the bin_labels variable is used to specify the names to represent these bins. The aggregation_method is set to mean to calculate the mean
+wind speed.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span><span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Temperature deg C&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_16_0.png" src="../_images/tutorials_how_dist_function_works_16_0.png" />
-</div>
-</div>
-<p>The dist function is flexible enough to plot two separate variables, binning by one variable, and plotting against the other. As an example, we have plotted the mean 80m windspeed against temperature. This will show the mean wind speed for specific temperature ranges. The bins variable is used to specify the degrees Celcius to bin the data by, while the bin_labels variable is used to specify the names to represent these bins. The aggregation_method is set to mean to calculate the mean wind
-speed.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">bw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">var_to_bin_against</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-    <span class="n">bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;freezing&#39;</span><span class="p">,</span> <span class="s1">&#39;cold&#39;</span><span class="p">,</span> <span class="s1">&#39;mild&#39;</span><span class="p">,</span> <span class="s1">&#39;hot&#39;</span><span class="p">],</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
+        <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;freezing&#39;</span><span class="p">,</span> <span class="s1">&#39;cold&#39;</span><span class="p">,</span> <span class="s1">&#39;mild&#39;</span><span class="p">,</span> <span class="s1">&#39;hot&#39;</span><span class="p">],</span>
+        <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_label</span><span class="o">=</span><span class="s1">&#39;Temperature&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_18_0.png" src="../_images/tutorials_how_dist_function_works_18_0.png" />
+<img alt="../_images/tutorials_how_dist_function_works_21_0.png" src="../_images/tutorials_how_dist_function_works_21_0.png" />
 </div>
 </div>
-<p>The dist) function also provides us with the flexibility to create a custom aggregation method. In the example below we have created a custom aggregation function which finds the mean for each bin and adds two standard deviations.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function also provides us with the flexibility to create a custom aggregation method. In the example below we have created a custom aggregation function which finds the mean for each bin and adds two standard deviations.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -713,17 +728,15 @@ speed.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_how_dist_function_works_20_0.png" src="../_images/tutorials_how_dist_function_works_20_0.png" />
+<img alt="../_images/tutorials_how_dist_function_works_23_0.png" src="../_images/tutorials_how_dist_function_works_23_0.png" />
 </div>
 </div>
-<hr class="docutils" />
-<p>This tutorial can be downloaded as a Jupyter Notebook from the following link: <a class="reference external" href="https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_dist_function_works.ipynb">https://github.com/brightwind-dev/brightwind/tree/master/docs/source/tutorials/how_dist_function_works.ipynb</a></p>
-<hr class="docutils" />
-</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 </div>
 </div>
 
@@ -740,7 +753,7 @@ speed.</p>
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
     </p>
   </div>
 </footer>
