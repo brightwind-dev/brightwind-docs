@@ -604,7 +604,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Next if we wish to return the data from the distribution graph we can assign a plot and a table to the function, and activate the return_data variable. This returns the table of the distribtution by wind speed as the variable table.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -614,7 +614,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -659,7 +659,7 @@ Name: %frequency, dtype: float64
 <h3>Distribution of anything!<a class="headerlink" href="#Distribution-of-anything!" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">dist_of_wind_speed()</span></code> function is a distribution function specifically designed for wind speed and is a wrapper of the <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function. The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function can be used to plot the distribution of any variable. Here we plot the frequency of occurence of different temperatures recorded by the temperature sensor. The function automatically finds the minimum and maximum of the data series and bins in units of 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -668,7 +668,7 @@ Name: %frequency, dtype: float64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -677,7 +677,7 @@ Name: %frequency, dtype: float64
 </div>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div><p>If we only want to see the data binned for a certain range, we can specify the start and end of the bin values using the bins variable. Also T2m on the x-axis doesnt tell us anything meaningful about the data, so we can set the x_label variable to a useful name like Temperature.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -686,7 +686,7 @@ Name: %frequency, dtype: float64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -696,7 +696,7 @@ Name: %frequency, dtype: float64
 <div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function is flexible enough to plot two separate variables, binning by one variable, and plotting against the other. As an example, we have plotted the mean 80m wind speed against temperature. This will show the mean wind speed for specific temperature ranges. The bins variable is used to specify the degrees Celcius to bin the data by, while the bin_labels variable is used to specify the names to represent these bins. The aggregation_method is set to mean to calculate the mean
 wind speed.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -707,7 +707,7 @@ wind speed.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -716,7 +716,7 @@ wind speed.</p>
 </div>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The <code class="docutils literal notranslate"><span class="pre">dist()</span></code> function also provides us with the flexibility to create a custom aggregation method. In the example below we have created a custom aggregation function which finds the mean for each bin and adds two standard deviations.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -728,7 +728,7 @@ wind speed.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
