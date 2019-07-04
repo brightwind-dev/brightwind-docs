@@ -85,6 +85,7 @@
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">How to load data into brightwind</a><ul>
 <li><a class="reference internal" href="#Outline:">Outline:</a></li>
+<li><a class="reference internal" href="#Data">Data</a><ul>
 <li><a class="reference internal" href="#1.-Importing-the-brightwind-library">1. Importing the brightwind library</a></li>
 <li><a class="reference internal" href="#2.-Loading-.csv-and-.txt-files-with-the-load_csv()-function">2. Loading .csv and .txt files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function</a></li>
 <li><a class="reference internal" href="#3.-Loading-multiple-files-with-the-load_csv()-function">3. Loading multiple files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function</a></li>
@@ -93,6 +94,8 @@
 <li><a class="reference internal" href="#6.-Loading-Windographer-text-files-with-the-load_windographer_txt()-function">6. Loading Windographer text files with the <code class="docutils literal notranslate"><span class="pre">load_windographer_txt()</span></code> function</a></li>
 <li><a class="reference internal" href="#7.-Loading-Campbell-Scientific-data-with-the-load_campbell_scientific()-function">7. Loading Campbell Scientific data with the <code class="docutils literal notranslate"><span class="pre">load_campbell_scientific()</span></code> function</a></li>
 <li><a class="reference internal" href="#8.-Some-other-considerations-when-using-file-paths">8. Some other considerations when using file paths</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -319,7 +322,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Last updated: 26 June, 2019
+Last updated: 04 July, 2019
 </pre></div></div>
 </div>
 <hr class="docutils" />
@@ -336,10 +339,13 @@ Last updated: 26 June, 2019
 <li><p>Loading Campbell Scientific data with the <code class="docutils literal notranslate"><span class="pre">load_campbell_scientific()</span></code> function</p></li>
 <li><p>Some other considerations when using file paths</p></li>
 </ol>
-<hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
-<div class="section" id="1.-Importing-the-brightwind-library">
-<h2>1. Importing the brightwind library<a class="headerlink" href="#1.-Importing-the-brightwind-library" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Data">
+<h2>Data<a class="headerlink" href="#Data" title="Permalink to this headline">¶</a></h2>
+<p>To follow along with this tutorial you can download the data from Dropbox <a class="reference external" href="https://www.dropbox.com/sh/5davq0335t6ytgk/AADKFgFrp0f3yDhhFcYzB8eia?dl=0">here</a>. Instead of using the file path <code class="docutils literal notranslate"><span class="pre">C:\Users\Stephen\Documents\Analysis</span></code> which is used in these tutorials you can replace it with the file path of the location where you downloaded the datasets to.</p>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="1.-Importing-the-brightwind-library">
+<h3>1. Importing the brightwind library<a class="headerlink" href="#1.-Importing-the-brightwind-library" title="Permalink to this headline">¶</a></h3>
 <p>The following command will import the brightwind python library assigning it to the tag ‘bw’. After this, ‘bw’ can be used to call specific functions within the library.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -353,8 +359,8 @@ Last updated: 26 June, 2019
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="2.-Loading-.csv-and-.txt-files-with-the-load_csv()-function">
-<h2>2. Loading .csv and .txt files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#2.-Loading-.csv-and-.txt-files-with-the-load_csv()-function" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned above, we can now call the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> of the brightwind library. First, we specify the name and directory of the input file.</p>
+<h3>2. Loading .csv and .txt files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#2.-Loading-.csv-and-.txt-files-with-the-load_csv()-function" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned above, we can now call the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> of the brightwind library. First, we specify the name and directory of the input file. If you downloaded the datasets from Dropbox as outlined above, then replace this path with your own path to the data.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -365,7 +371,7 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>Then we can use the following command to load the data. The text to the left of the ‘=’ sign is the variable name that the data is assigned to. This can then be used to retrieve the data from memory.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Then we can use the following command to load the data. The text to the left of the ‘=’ sign is the variable name that the data is assigned to. This can then be used to retrieve the data from memory.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -376,7 +382,7 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>The following command can then be used to view the first few rows of the loaded data.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The following command can then be used to view the first few rows of the loaded data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -583,11 +589,11 @@ Last updated: 26 June, 2019
 <p>5 rows × 29 columns</p>
 </div></div>
 </div>
-<p>The same approach can be used to load a comma separated ‘.txt’ file.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The same approach can be used to load a comma separated ‘.txt’ file.</p>
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="3.-Loading-multiple-files-with-the-load_csv()-function">
-<h2>3. Loading multiple files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#3.-Loading-multiple-files-with-the-load_csv()-function" title="Permalink to this headline">¶</a></h2>
+<h3>3. Loading multiple files with the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#3.-Loading-multiple-files-with-the-load_csv()-function" title="Permalink to this headline">¶</a></h3>
 <p>The following method can be used to load a group of files all at once, such as a long record of data which is split into numerous daily files. In this case, we can simply refer to a folder containing all the files for upload and include the following extra arguments.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -601,12 +607,12 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>In the above case, ‘search_by_file_type’ is a list of file extensions to search for. This list can include multiple items, such as <code class="docutils literal notranslate"><span class="pre">['.csv',</span> <span class="pre">'.txt']</span></code>.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>In the above case, ‘search_by_file_type’ is a list of file extensions to search for. This list can include multiple items, such as <code class="docutils literal notranslate"><span class="pre">['.csv',</span> <span class="pre">'.txt']</span></code>.</p>
 <p>The ‘print_progress’ argument simply prints out a statement below the cell showing how many files have been processed.</p>
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="4.-Ignoring-additional-header-lines-when-using-the-load_csv()-function">
-<h2>4. Ignoring additional header lines when using the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#4.-Ignoring-additional-header-lines-when-using-the-load_csv()-function" title="Permalink to this headline">¶</a></h2>
+<h3>4. Ignoring additional header lines when using the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function<a class="headerlink" href="#4.-Ignoring-additional-header-lines-when-using-the-load_csv()-function" title="Permalink to this headline">¶</a></h3>
 <p>If the input file contains extra header lines (ie. the column headers are not contained in the first row), the ‘skiprows’ argument can be used to ignore these lines when loading the data.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -620,12 +626,12 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function is a wrapper around the widely used <code class="docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code> function, and the argument ‘skiprows’ is one of many key word arguments (kwargs) which can be specified when using the function. Other key word arguments are described in the <code class="docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code> documentation, which can be found at:</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function is a wrapper around the widely used <code class="docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code> function, and the argument ‘skiprows’ is one of many key word arguments (kwargs) which can be specified when using the function. Other key word arguments are described in the <code class="docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code> documentation, which can be found at:</p>
 <p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html</a></p>
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="5.-Loading-Excel-files-with-the-load_excel()-function">
-<h2>5. Loading Excel files with the <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> function<a class="headerlink" href="#5.-Loading-Excel-files-with-the-load_excel()-function" title="Permalink to this headline">¶</a></h2>
+<h3>5. Loading Excel files with the <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> function<a class="headerlink" href="#5.-Loading-Excel-files-with-the-load_excel()-function" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> function offers similar functionality to <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> for Excel files. The following syntax can be used to load a single file. The function can be used to load both ‘.xls’ and ‘.xlsx’ files, provided the correct extension is specified with the filename.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -639,7 +645,7 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>The following command can be used to simultaneously load multiple files from a single folder.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The following command can be used to simultaneously load multiple files from a single folder.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -652,7 +658,7 @@ Last updated: 26 June, 2019
 </pre></div>
 </div>
 </div>
-<p>Finally, the ‘skiprows’ key word argument can once again be used with <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> to ignore extra header lines within an input Excel file. <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> is again a wrapper around the <code class="docutils literal notranslate"><span class="pre">pandas.read_excel()</span></code> function, the full documentation of which is available at:</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Finally, the ‘skiprows’ key word argument can once again be used with <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> to ignore extra header lines within an input Excel file. <code class="docutils literal notranslate"><span class="pre">load_excel()</span></code> is again a wrapper around the <code class="docutils literal notranslate"><span class="pre">pandas.read_excel()</span></code> function, the full documentation of which is available at:</p>
 <p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_excel.html">https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_excel.html</a></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -667,7 +673,7 @@ Last updated: 26 June, 2019
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="6.-Loading-Windographer-text-files-with-the-load_windographer_txt()-function">
-<h2>6. Loading Windographer text files with the <code class="docutils literal notranslate"><span class="pre">load_windographer_txt()</span></code> function<a class="headerlink" href="#6.-Loading-Windographer-text-files-with-the-load_windographer_txt()-function" title="Permalink to this headline">¶</a></h2>
+<h3>6. Loading Windographer text files with the <code class="docutils literal notranslate"><span class="pre">load_windographer_txt()</span></code> function<a class="headerlink" href="#6.-Loading-Windographer-text-files-with-the-load_windographer_txt()-function" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">load_windographer_txt()</span></code> function can be used to load files which have been exported from Windographer.</p>
 <div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image1" src="../_images/how_to_load_data_1.png" /></p>
 </center></div><p>In this case, the following commands are used.</p>
@@ -883,7 +889,7 @@ Last updated: 26 June, 2019
 <p>5 rows × 29 columns</p>
 </div></div>
 </div>
-<p>To load a Windographer file with a delimiter and flagged text which are different from the defaults, the following extra arguments can be used.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To load a Windographer file with a delimiter and flagged text which are different from the defaults, the following extra arguments can be used.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -897,7 +903,7 @@ Last updated: 26 June, 2019
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="7.-Loading-Campbell-Scientific-data-with-the-load_campbell_scientific()-function">
-<h2>7. Loading Campbell Scientific data with the <code class="docutils literal notranslate"><span class="pre">load_campbell_scientific()</span></code> function<a class="headerlink" href="#7.-Loading-Campbell-Scientific-data-with-the-load_campbell_scientific()-function" title="Permalink to this headline">¶</a></h2>
+<h3>7. Loading Campbell Scientific data with the <code class="docutils literal notranslate"><span class="pre">load_campbell_scientific()</span></code> function<a class="headerlink" href="#7.-Loading-Campbell-Scientific-data-with-the-load_campbell_scientific()-function" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">load_campbell_scientific()</span></code> function can be used to load files created by Campbell Scientific loggers as follows.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -1111,7 +1117,7 @@ Last updated: 26 June, 2019
 <p>5 rows × 32 columns</p>
 </div></div>
 </div>
-<p>Finally, the same function can once again be used to load in a group of files from one folder using the following syntax.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Finally, the same function can once again be used to load in a group of files from one folder using the following syntax.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -1125,7 +1131,7 @@ Last updated: 26 June, 2019
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="8.-Some-other-considerations-when-using-file-paths">
-<h2>8. Some other considerations when using file paths<a class="headerlink" href="#8.-Some-other-considerations-when-using-file-paths" title="Permalink to this headline">¶</a></h2>
+<h3>8. Some other considerations when using file paths<a class="headerlink" href="#8.-Some-other-considerations-when-using-file-paths" title="Permalink to this headline">¶</a></h3>
 <p>The local directory of the folder containing the demo datasets used in this tutorial and the following tutorials will depend on where you have download the brightwind library. An example directory has been included in the above examples in order to show how the functions are typically applied to local datasets. However these file paths will need to be updated in order to locate the demo datasets on your own computer.</p>
 <p>For ease of use, the following tutorials and doc strings within the library refer to demo datasets using the syntax shown below. This method allows Python to locate the demo data locally without the user making any updates.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_data</span><span class="o">.</span><span class="n">csv</span>
@@ -1135,7 +1141,7 @@ Last updated: 26 June, 2019
 </div>
 <p>You may have also noticed that the file paths used in the above sections include the prefix ‘r’. This is because the backslash, ‘\’, is a special character in Python and file paths which contain backslashes are not correctly interpretted by Python. Loading a csv file using a file path copied and pasted from Windows file explorer with backslashes will return the following error:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1149,16 +1155,17 @@ Last updated: 26 June, 2019
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">  File </span><span class="ansi-green-intense-fg ansi-bold">&#34;&lt;ipython-input-11-d85656ca28a3&gt;&#34;</span><span class="ansi-cyan-intense-fg ansi-bold">, line </span><span class="ansi-green-intense-fg ansi-bold">1</span>
+<span class="ansi-cyan-intense-fg ansi-bold">  File </span><span class="ansi-green-intense-fg ansi-bold">&#34;&lt;ipython-input-8-d85656ca28a3&gt;&#34;</span><span class="ansi-cyan-intense-fg ansi-bold">, line </span><span class="ansi-green-intense-fg ansi-bold">1</span>
 <span class="ansi-yellow-intense-fg ansi-bold">    data_file_path = &#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span>
 <span class="ansi-white-intense-fg ansi-bold">                    ^</span>
 <span class="ansi-red-intense-fg ansi-bold">SyntaxError</span><span class="ansi-red-intense-fg ansi-bold">:</span> (unicode error) &#39;unicodeescape&#39; codec can&#39;t decode bytes in position 2-3: truncated \UXXXXXXXX escape
 
 </pre></div></div>
 </div>
-<p>The solution to this problem is to include a prefix, ‘r’ which allows backslashes in the filepath to be correctly interpreted by Python and the intended file to be found.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The solution to this problem is to include a prefix, ‘r’ which allows backslashes in the filepath to be correctly interpreted by Python and the intended file to be found.</p>
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+</div>
 </div>
 
 
