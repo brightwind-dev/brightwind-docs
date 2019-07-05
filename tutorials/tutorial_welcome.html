@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
@@ -99,6 +101,7 @@
 <li><a class="reference internal" href="#Tutorial-11:-How-to-calculate-shear">Tutorial 11: How to calculate shear</a></li>
 <li><a class="reference internal" href="#Tutorial-12:-Becoming-a-correlation-wizard!">Tutorial 12: Becoming a correlation wizard!</a></li>
 <li><a class="reference internal" href="#Tutorial-13:-Exporting-a-tab-file-and-saving-your-data">Tutorial 13: Exporting a tab file and saving your data</a></li>
+<li><a class="reference internal" href="#Tutorial-14:-Tips-on-working-with-DataFrames">Tutorial 14: Tips on working with DataFrames</a></li>
 </ul>
 </li>
 </ul>
@@ -127,7 +130,7 @@
 <p>This tutorial shows you how to download and install the Anaconda python distribution, install the brightwind library and how to get started with the brightwind library in Jupyter notebooks.</p>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Tutorial-2:-Introduction-to-the-brightwind-library">
-<h3>Tutorial 2: <a class="reference external" href="Basic_Analysis_Stable_Development.html">Introduction to the brightwind library</a><a class="headerlink" href="#Tutorial-2:-Introduction-to-the-brightwind-library" title="Permalink to this headline">¶</a></h3>
+<h3>Tutorial 2: <a class="reference external" href="introduction.html">Introduction to the brightwind library</a><a class="headerlink" href="#Tutorial-2:-Introduction-to-the-brightwind-library" title="Permalink to this headline">¶</a></h3>
 <p>This tutorial shows you how get started with the brightwind library, load some csv data using the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> from the brightwind demo datasets and use the <code class="docutils literal notranslate"><span class="pre">monthly_means()</span></code> function to plot the monthly means.</p>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 <div class="section" id="Tutorial-3:-How-to-load-data-into-brightwind">
@@ -178,6 +181,10 @@ matrix of shear to see how shear varies diurnally throughout the year.</p>
 <div class="section" id="Tutorial-13:-Exporting-a-tab-file-and-saving-your-data">
 <h3>Tutorial 13: <a class="reference external" href="exporting_a_tab_file_and_saving_your_data.html">Exporting a tab file and saving your data</a><a class="headerlink" href="#Tutorial-13:-Exporting-a-tab-file-and-saving-your-data" title="Permalink to this headline">¶</a></h3>
 <p>This tutorial shows you how to generate a frequency table and export a tab file using the <code class="docutils literal notranslate"><span class="pre">export_tab_file()</span></code> function for use in other packages such as WASP or Openwind. Additionally you will learn how to use the <code class="docutils literal notranslate"><span class="pre">export_csv()</span></code> function to export your time series data.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Tutorial-14:-Tips-on-working-with-DataFrames">
+<h3>Tutorial 14: <a class="reference external" href="tips_on_splicing_dataframes.html">Tips on working with DataFrames</a><a class="headerlink" href="#Tutorial-14:-Tips-on-working-with-DataFrames" title="Permalink to this headline">¶</a></h3>
+<p>The brightwind library uses DataFrames from the Pandas package to work with wind data. There are many ways to work with DataFrames and so it can get a little confusing. This is a simple tutorial to show a few examples of how to select rows or columns of a DataFrame.</p>
 <hr class="docutils" />
 <div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
 </div>
