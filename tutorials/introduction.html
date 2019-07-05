@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Introduction to the brightwind library &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="tutorial_welcome.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Introduction to the brightwind library</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
+<li><a class="reference internal" href="#Using-the-brightwind-library-in-a-Jupyter-Notebook">Using the brightwind library in a Jupyter Notebook</a></li>
+<li><a class="reference internal" href="#Importing-Data">Importing Data</a></li>
+<li><a class="reference internal" href="#Applying-cleaning-to-data">Applying cleaning to data</a></li>
+<li><a class="reference internal" href="#Checking-basic-statistics-and-time-continuity">Checking basic statistics and time continuity</a></li>
+<li><a class="reference internal" href="#Plotting-monthly-means">Plotting monthly means</a></li>
+<li><a class="reference internal" href="#Plotting-sector-ratios">Plotting sector ratios</a></li>
+<li><a class="reference internal" href="#Plotting-a-‘12x24’-distribution">Plotting a ‘12x24’ distribution</a></li>
+<li><a class="reference internal" href="#Scaling-a-wind-speed">Scaling a wind speed</a></li>
+<li><a class="reference internal" href="#Plotting-a-wind-rose-and-exporting-a-.tab-file">Plotting a wind rose and exporting a .tab file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<center><div class="section" id="Introduction-to-the-brightwind-library">
+<h1>Introduction to the brightwind library<a class="headerlink" href="#Introduction-to-the-brightwind-library" title="Permalink to this headline">¶</a></h1>
+</center><hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Last updated: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> %B, %Y&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 05 July, 2019
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Outline:">
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial provides a quick summary of some of the main functionality of the brightwind library. The following topics are included, most of which are covered in more detail within subsequent tutorials:</p>
+<ol class="arabic simple">
+<li><p>Using the brightwind library in a Jupyter Notebook</p></li>
+<li><p>Importing data</p></li>
+<li><p>Applying cleaning to data</p></li>
+<li><p>Checking basic statistics and time continuity</p></li>
+<li><p>Plotting monthly means</p></li>
+<li><p>Plotting sector ratios</p></li>
+<li><p>Plotting a ‘12x24’ distribution</p></li>
+<li><p>Scaling a wind speed</p></li>
+<li><p>Plotting a wind rose and exporting a .tab file</p></li>
+</ol>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Using-the-brightwind-library-in-a-Jupyter-Notebook">
+<h3>Using the brightwind library in a Jupyter Notebook<a class="headerlink" href="#Using-the-brightwind-library-in-a-Jupyter-Notebook" title="Permalink to this headline">¶</a></h3>
+<p>This, and all the tutorials, will use Jupyter Notebooks as the interface with the library. If you don’t know how to launch a Jupyter Notebook please refer to the end of the <a class="reference external" href="getting_started_on_windows.html#Using-the-brightwind-library-in-Jupyter-notebooks">Getting started on Windows</a> tutorial. If you need to install it then look to the start of that tutorial.</p>
+<p>Once a Jupyter Notebook is opened in your browser, the first thing to do is import the brightwind library.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>With the brightwind library installed and imported in your Jupyter Notebook, you can begin to analyse data using a wide range of functions available in the library. A list of these functions is displayed when you type ‘<code class="docutils literal notranslate"><span class="pre">bw.</span></code>’ in the calculation cell and then press the ‘Tab’ key.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image1" src="../_images/Introduction_1.png" /></p>
+</center></div><div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Once you have selected a function from the list, click on the function name and insert and open parenthesis, e.g.:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To view the list of necessary inputs for this function, press the ‘Shift’ and ‘Tab’ keys simultaneously. A drop-down box containing the signature and docstring of the function will be displayed. The docstring explains the required inputs and their formats for each function. The docstring displayed also gives an example usage of the function and some other helpful information about its use. To view the docstring, click on the ‘+’ sign displayed in the pop up box:</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image2" src="../_images/Introduction_2.png" /></p>
+</center></div><p>The signature section of the docstring explains the arguments of the function. Some arguments are required for the function to run, e.g. data in <code class="docutils literal notranslate"><span class="pre">monthly_means()</span></code>, while other named arguments have default values defined and do not need to be specified, e.g. return_data in <code class="docutils literal notranslate"><span class="pre">monthly_means()</span></code> which has a default value of False.</p>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image3" src="../_images/Introduction_3.png" /></p>
+</center></div><hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Importing-Data">
+<h3>Importing Data<a class="headerlink" href="#Importing-Data" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Most wind data analysis will start with importing data from .csv files, Excel spreadsheets or similar.</p></li>
+<li><p>To follow along with this and the other tutorials you can download some demo datasets from Dropbox <a class="reference external" href="https://www.dropbox.com/sh/5davq0335t6ytgk/AADKFgFrp0f3yDhhFcYzB8eia?dl=0">here</a>, and save them locally on your computer.</p></li>
+<li><p>To import data into the workspace from a .csv file, we can use then use <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function.</p></li>
+<li><p>If the local directory of this file is ’C:<span class="math">\Users</span><span class="math">\Stephen</span><span class="math">\Documents</span><span class="math">\Analysis</span><span class="math">\demo</span>_data.csv’, we can use the following command to load it into a data frame called ‘data’.</p></li>
+<li><p>After typing it out, the command can be run by pressing ‘Shift’ and ‘Enter’.</p></li>
+<li><p>This will load the data from the .csv into a pandas DataFrame, which is essentially a spreadsheet in the Python environment.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To view the DataFrame, type <code class="docutils literal notranslate"><span class="pre">data</span></code> and press ‘Shift’ + ‘Enter’ to run the cell.</p>
+<p>To keep things concise, below we will use the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> function to only call the first 5 entries in the dataset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir78mSStd</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>8.370</td>
+      <td>7.911</td>
+      <td>8.160</td>
+      <td>7.849</td>
+      <td>7.857</td>
+      <td>7.626</td>
+      <td>1.240</td>
+      <td>1.075</td>
+      <td>1.060</td>
+      <td>0.947</td>
+      <td>...</td>
+      <td>6.100</td>
+      <td>110.1</td>
+      <td>6.009</td>
+      <td>112.2</td>
+      <td>5.724</td>
+      <td>0.711</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.94</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>8.250</td>
+      <td>7.961</td>
+      <td>8.100</td>
+      <td>7.884</td>
+      <td>7.952</td>
+      <td>7.840</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>0.900</td>
+      <td>0.855</td>
+      <td>...</td>
+      <td>5.114</td>
+      <td>110.9</td>
+      <td>4.702</td>
+      <td>109.8</td>
+      <td>5.628</td>
+      <td>0.630</td>
+      <td>100.0</td>
+      <td>935.0</td>
+      <td>0.0</td>
+      <td>12.95</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>7.652</td>
+      <td>7.545</td>
+      <td>7.671</td>
+      <td>7.551</td>
+      <td>7.531</td>
+      <td>7.457</td>
+      <td>0.756</td>
+      <td>0.703</td>
+      <td>0.797</td>
+      <td>0.749</td>
+      <td>...</td>
+      <td>4.172</td>
+      <td>113.1</td>
+      <td>3.447</td>
+      <td>111.8</td>
+      <td>4.016</td>
+      <td>1.126</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.75</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>4.680</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>3.123</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Now that data is loaded into the workspace, it can be analysed using various brightwind functions. Most of these functions require data in the form of a DataFrame or a Series (a one-dimensional DataFrame).</p>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Applying-cleaning-to-data">
+<h3>Applying cleaning to data<a class="headerlink" href="#Applying-cleaning-to-data" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">apply_cleaning()</span></code> function can be used to quickly apply an exisiting cleaning file to the data using the following commands.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify location of associated cleaning file</span>
+<span class="n">cleaning_file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_cleaning_file.csv&#39;</span>
+
+<span class="c1"># apply cleaning</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cleaning_file_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Checking-basic-statistics-and-time-continuity">
+<h3>Checking basic statistics and time continuity<a class="headerlink" href="#Checking-basic-statistics-and-time-continuity" title="Permalink to this headline">¶</a></h3>
+<p>The code below can be used to specify the names of each wind speed variable within the dataset.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># create list of columns which include each wind speed variable</span>
+<span class="n">anemometers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd40mN&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd40mS&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>This list can then be used to apply functions like <code class="docutils literal notranslate"><span class="pre">basic_stats()</span></code> to these variables only.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># show basic statistics of the anemometer variables within the clean dataset</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">basic_stats</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">anemometers</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Spd80mN</th>
+      <td>95180.0</td>
+      <td>7.518636</td>
+      <td>3.994552</td>
+      <td>0.215</td>
+      <td>29.00</td>
+    </tr>
+    <tr>
+      <th>Spd80mS</th>
+      <td>83629.0</td>
+      <td>7.390041</td>
+      <td>3.997481</td>
+      <td>0.094</td>
+      <td>29.27</td>
+    </tr>
+    <tr>
+      <th>Spd60mN</th>
+      <td>95180.0</td>
+      <td>7.052587</td>
+      <td>3.806488</td>
+      <td>0.214</td>
+      <td>28.22</td>
+    </tr>
+    <tr>
+      <th>Spd60mS</th>
+      <td>95180.0</td>
+      <td>7.135864</td>
+      <td>3.898363</td>
+      <td>0.080</td>
+      <td>29.03</td>
+    </tr>
+    <tr>
+      <th>Spd40mN</th>
+      <td>95180.0</td>
+      <td>6.761385</td>
+      <td>3.735660</td>
+      <td>0.228</td>
+      <td>27.38</td>
+    </tr>
+    <tr>
+      <th>Spd40mS</th>
+      <td>95180.0</td>
+      <td>6.820594</td>
+      <td>3.810865</td>
+      <td>0.092</td>
+      <td>28.45</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># list all gaps within the dataset</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">time_continuity_gaps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date From</th>
+      <th>Date To</th>
+      <th>Days Lost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>17747</th>
+      <td>2016-05-11 23:00:00</td>
+      <td>2016-05-31 15:20:00</td>
+      <td>19.680556</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Plotting-monthly-means">
+<h3>Plotting monthly means<a class="headerlink" href="#Plotting-monthly-means" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">monthly_means()</span></code> can be used to plot the mean monthly values of an input parameter. In the example below, the function is used to return both a plot (‘monthly_mean_plot’) and numerical values (‘monthly_means’). The ‘return_coverage’ argument is also used to show the proportion of data coverage alongside each monthly mean value.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">monthly_means_plot</span><span class="p">,</span> <span class="n">monthly_means</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">monthly_means</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">return_coverage</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">monthly_means_plot</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_introduction_25_0.png" src="../_images/tutorials_introduction_25_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Plotting-sector-ratios">
+<h3>Plotting sector ratios<a class="headerlink" href="#Plotting-sector-ratios" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sector_ratio()</span></code> function can be used to confirm reported boom orientations at a given height on the mast.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">sector_ratio</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Spd40mS</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Dir78mS</span><span class="p">,</span> <span class="n">boom_dir_1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">boom_dir_2</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_introduction_28_0.png" src="../_images/tutorials_introduction_28_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Plotting-a-‘12x24’-distribution">
+<h3>Plotting a ‘12x24’ distribution<a class="headerlink" href="#Plotting-a-‘12x24’-distribution" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">dist_12x24()</span></code> function can be used to visualise the level of diurnal and seasonal variation of a given parameter.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">dist_12x24</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T2m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_introduction_31_0.png" src="../_images/tutorials_introduction_31_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Scaling-a-wind-speed">
+<h3>Scaling a wind speed<a class="headerlink" href="#Scaling-a-wind-speed" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">scale_wind_speed()</span></code> function can be used to apply a given scale factor to a wind speed variable as follows.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify scale factor</span>
+<span class="n">scale_factor</span> <span class="o">=</span> <span class="mf">1.03</span>
+
+<span class="c1"># apply scale factor to Spd80mN variable</span>
+<span class="n">Spd80mN_scaled</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">scale_wind_speed</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">)</span>
+
+<span class="c1"># show first 5 rows of result</span>
+<span class="n">Spd80mN_scaled</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00        NaN
+2016-01-09 15:40:00        NaN
+2016-01-09 17:00:00        NaN
+2016-01-09 17:10:00    7.60346
+2016-01-09 17:20:00    8.21631
+Name: Spd80mN, dtype: float64
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Plotting-a-wind-rose-and-exporting-a-.tab-file">
+<h3>Plotting a wind rose and exporting a .tab file<a class="headerlink" href="#Plotting-a-wind-rose-and-exporting-a-.tab-file" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">freq_table()</span></code> function compiles a directional frequency distribution from a concurent speed and direction time series. In the case below, we specify two outputs: a wind rose plot (‘rose’) and its associated numerical values (‘freq_table’).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rose</span><span class="p">,</span> <span class="n">freq_table</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">freq_table</span><span class="p">(</span><span class="n">Spd80mN_scaled</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Dir78mS</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Once created, we can call the wind rose plot by typing its name.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rose</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_introduction_39_0.png" src="../_images/tutorials_introduction_39_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>And we can export the numerical data in the form of a ‘.tab’ file into the current directory as follows.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">export_tab_file</span><span class="p">(</span><span class="n">freq_table</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;name_of_file&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Export of tab file successful.
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
