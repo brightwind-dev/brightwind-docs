@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>How to become a correlation wizard with the brightwind library! &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">How to become a correlation wizard with the brightwind library!</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
+<li><a class="reference internal" href="#Import-brightwind-and-data">Import brightwind and data</a></li>
+<li><a class="reference internal" href="#Import-reference-datasets">Import reference datasets</a></li>
+<li><a class="reference internal" href="#Correlate-to-1-dataset-and-using-1-averaging-period">Correlate to 1 dataset and using 1 averaging period</a></li>
+<li><a class="reference internal" href="#Apply-a-long-term-adjustment-to-the-measured-wind-speed-time-series-based-on-the-correlation-results">Apply a long term adjustment to the measured wind speed time series based on the correlation results</a></li>
+<li><a class="reference internal" href="#Correlation-for-multiple-datasets-and-time-periods">Correlation for multiple datasets and time periods</a></li>
+<li><a class="reference internal" href="#Other-correlation-methods">Other correlation methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<center><div class="section" id="How-to-become-a-correlation-wizard-with-the-brightwind-library!">
+<h1>How to become a correlation wizard with the brightwind library!<a class="headerlink" href="#How-to-become-a-correlation-wizard-with-the-brightwind-library!" title="Permalink to this headline">¶</a></h1>
+</center><hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Last updated: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> %B, %Y&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 05 July, 2019
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Outline:">
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
+<p>This guide will demonstrate various techniques to correlate a sample site dataset to 4 separate reference datasets using the following steps:</p>
+<ul class="simple">
+<li><p>Import the brightwind library, load some sample raw data and clean it</p></li>
+<li><p>Import 4 sample reference datasets to use in the correlation</p></li>
+<li><p>Perform a ordinary least squares correlation for 1 dataset and time period</p></li>
+<li><p>Apply a long term adjustment to the measured wind speed time series based on the correlation results</p></li>
+<li><p>Perform a ordinary least squares correlation for multiple datasets and time periods</p></li>
+</ul>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Import-brightwind-and-data">
+<h3>Import brightwind and data<a class="headerlink" href="#Import-brightwind-and-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># import the brightwind library</span>
+<span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># specify the directory of the demo dataset</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span>
+<span class="c1"># load the raw data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+<span class="c1"># apply cleaning to the raw data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_cleaning_file.csv&#39;</span><span class="p">)</span>
+<span class="c1"># show the first 5 rows of the cleaned data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir78mSStd</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>4.680</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>3.123</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Import-reference-datasets">
+<h3>Import reference datasets<a class="headerlink" href="#Import-reference-datasets" title="Permalink to this headline">¶</a></h3>
+<p>For this example, we will import 4 MERRA-2 reanalysis datasets. These can be found as sample datasets within the brightwind library. We use the <code class="docutils literal notranslate"><span class="pre">load_csv()</span></code> function to load in each dataset from a csv file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load each of the 4 reanalysis datasets to its own dataframe</span>
+<span class="n">Merra2_NE</span> <span class="o">=</span>  <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\MERRA-2_NE_2000-01-01_2017-06-30.csv&#39;</span><span class="p">)</span>
+<span class="n">Merra2_NW</span> <span class="o">=</span>  <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\MERRA-2_NW_2000-01-01_2017-06-30.csv&#39;</span><span class="p">)</span>
+<span class="n">Merra2_SE</span> <span class="o">=</span>  <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\MERRA-2_SE_2000-01-01_2017-06-30.csv&#39;</span><span class="p">)</span>
+<span class="n">Merra2_SW</span> <span class="o">=</span>  <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\MERRA-2_SW_2000-01-01_2017-06-30.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># show the first 5 lines of NE dataset</span>
+<span class="n">Merra2_NE</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>WS50m_m/s</th>
+      <th>WD50m_deg</th>
+      <th>T2M_degC</th>
+      <th>PS_hPa</th>
+    </tr>
+    <tr>
+      <th>DateTime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-01 00:00:00</th>
+      <td>6.840</td>
+      <td>275</td>
+      <td>4.06</td>
+      <td>997.17</td>
+    </tr>
+    <tr>
+      <th>2000-01-01 01:00:00</th>
+      <td>6.506</td>
+      <td>264</td>
+      <td>3.44</td>
+      <td>997.64</td>
+    </tr>
+    <tr>
+      <th>2000-01-01 02:00:00</th>
+      <td>7.095</td>
+      <td>254</td>
+      <td>3.12</td>
+      <td>998.39</td>
+    </tr>
+    <tr>
+      <th>2000-01-01 03:00:00</th>
+      <td>8.088</td>
+      <td>246</td>
+      <td>3.19</td>
+      <td>999.12</td>
+    </tr>
+    <tr>
+      <th>2000-01-01 04:00:00</th>
+      <td>8.386</td>
+      <td>239</td>
+      <td>3.18</td>
+      <td>999.61</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Correlate-to-1-dataset-and-using-1-averaging-period">
+<h3>Correlate to 1 dataset and using 1 averaging period<a class="headerlink" href="#Correlate-to-1-dataset-and-using-1-averaging-period" title="Permalink to this headline">¶</a></h3>
+<p>Next we’ll perform a basic linear regression correlation using the Ordinary Least Squares method between the 80m north orientated site anemometer and the MERRA-2 dataset located to the North East. We use the ‘averaging_prd’ argument to set the averaging period for which the correlation should be carried out. This can be set to 10-min or multiples of ten minutes (10T, 30T) (depending on the interval of both datasets), hourly or multiples of 1 hour (1H, 2H, 3H, etc), daily or multiples of 1 day
+(1D, 2D, 3D, 15D, etc), monthly (1M) or yearly (1AS). Here we apply a monthly correlation. Finally we set the ‘coverage_threshold’, this is the minimum coverage of data within each averaging period from both the reference and site dataset that will be passed to the correlation. In this case we use a coverage threshold of 90%.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># set up correlation</span>
+<span class="n">ord_lst_sq</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Correl</span><span class="o">.</span><span class="n">OrdinaryLeastSquares</span><span class="p">(</span><span class="n">Merra2_NE</span><span class="p">[</span><span class="s1">&#39;WS50m_m/s&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span>
+                                            <span class="n">averaging_prd</span><span class="o">=</span><span class="s1">&#39;1M&#39;</span><span class="p">,</span> <span class="n">coverage_threshold</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The correlation function returns a python object. This has to be subsequently run and plotted using the commands <code class="docutils literal notranslate"><span class="pre">run()</span></code> and <code class="docutils literal notranslate"><span class="pre">plot()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># run correlation</span>
+<span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: -0.06161432045219376,
+ &#39;r2&#39;: 0.9407857754972966,
+ &#39;slope&#39;: 0.9955561116923611}
+</pre></div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>The correlation has now run and the main results are returned. The slope and offset of the linear regression line are displayed along with the <span class="math notranslate nohighlight">\(R^2\)</span> value. These results can be returned at any time using the <code class="docutils literal notranslate"><span class="pre">.show_params()</span></code> command.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#show parameters</span>
+<span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">show_params</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: -0.06161432045219376,
+ &#39;r2&#39;: 0.9407857754972966,
+ &#39;slope&#39;: 0.9955561116923611}
+</pre></div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To show the correlation plot along with the linear regression line we simply input:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># show plot</span>
+<span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_becoming_a_correlation_wizard_20_0.png" src="../_images/tutorials_becoming_a_correlation_wizard_20_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Now that we have a correlation we will want to adjust our data accordingly. We can synthesize monthly Spd80mN mean wind speeds from the Merra2_NE data using the <code class="docutils literal notranslate"><span class="pre">synthesize()</span></code> method. This will synthesize monthly means for months that Spd80mN doesn’t cover and splices it with months Spd80mN does cover.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># synthesize monthly means over the long term record</span>
+<span class="n">LT_monthly_means</span> <span class="o">=</span> <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">synthesize</span><span class="p">()</span>
+<span class="c1"># Show the first 5 values</span>
+<span class="n">LT_monthly_means</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN_Synthesized</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000-01-01</th>
+      <td>9.300975</td>
+    </tr>
+    <tr>
+      <th>2000-02-01</th>
+      <td>11.099150</td>
+    </tr>
+    <tr>
+      <th>2000-03-01</th>
+      <td>7.999968</td>
+    </tr>
+    <tr>
+      <th>2000-04-01</th>
+      <td>6.842368</td>
+    </tr>
+    <tr>
+      <th>2000-05-01</th>
+      <td>6.191083</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Apply-a-long-term-adjustment-to-the-measured-wind-speed-time-series-based-on-the-correlation-results">
+<h3>Apply a long term adjustment to the measured wind speed time series based on the correlation results<a class="headerlink" href="#Apply-a-long-term-adjustment-to-the-measured-wind-speed-time-series-based-on-the-correlation-results" title="Permalink to this headline">¶</a></h3>
+<p>We can use the results of the above correlation to rescale the Spd80mN wind speed time series and put it into a long term context. First we’ll use the <code class="docutils literal notranslate"><span class="pre">momm()</span></code> (mean of monthly means) function to derive the long term mean of the dataset we synthesized above. This represents our target long term mean speed.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># derive long term target mean speed</span>
+<span class="n">LT_target_speed</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">momm</span><span class="p">(</span><span class="n">LT_monthly_means</span><span class="p">)</span>
+<span class="c1"># show the value</span>
+<span class="n">LT_target_speed</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>7.623917277960366
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Next, we’ll derive a scale factor we can apply to the measurements to achieve this long term mean.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># derive scale factor as ratio of means</span>
+<span class="n">LT_scale_factor</span> <span class="o">=</span> <span class="n">LT_target_speed</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># show the value</span>
+<span class="n">LT_scale_factor</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1.0140026948884429
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Then, we can use the <code class="docutils literal notranslate"><span class="pre">scale_wind_speed()</span></code> function to rescale the measurements based on the above factor, placing them in a long term context. We’ll also allocate this a new variable within the existing dataframe.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># scale wind speed</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN_LT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">scale_wind_speed</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">LT_scale_factor</span><span class="p">)</span>
+<span class="c1"># show first 5 timestamps. The new variable can be seen in the last column of the dataframe.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir58mS</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+      <th>Spd80mN_LT</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>118.8</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+      <td>7.485368</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>115.9</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+      <td>8.088699</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Now, let’s confirm that the mean of our new variable is equal to our long term mean speed target.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># show ratio of mean values</span>
+<span class="n">data</span><span class="o">.</span><span class="n">Spd80mN_LT</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">/</span><span class="n">LT_target_speed</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1.0000000000000002
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>The resulting variable can then be used along with concurrent wind direction data (such as ‘data.Dir78mS’) to generate a tab file for wind flow modelling as shown in the tutorial for <a class="reference external" href="exporting_a_tab_file_and_saving_your_data.html">exporting a tab file</a>.</p>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Correlation-for-multiple-datasets-and-time-periods">
+<h3>Correlation for multiple datasets and time periods<a class="headerlink" href="#Correlation-for-multiple-datasets-and-time-periods" title="Permalink to this headline">¶</a></h3>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><blockquote>
+<div><p><strong>Note</strong>: in a future release we plan to create a more user-friendly wrapper to perform multiple correlations at once.</p>
+</div></blockquote>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>As well as performing one correlation with specific parameters, the brightwind library can be used to correlate to multiple reference datasets using multiple averaging periods in one cell. The code below performs two ‘for’ loops to iterate through each of the MERRA-2 datasets and a number of averaging periods, and returns the results in a dataframe. In order to allocate the results as a dataframe, we need to first import the pandas library.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>We then assign each of the datasets to a python dictionary, so we can easily loop through them later.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">merra2_nodes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;M2_NE&#39;</span><span class="p">:</span> <span class="n">Merra2_NE</span><span class="p">,</span>
+    <span class="s1">&#39;M2_NW&#39;</span><span class="p">:</span> <span class="n">Merra2_NW</span><span class="p">,</span>
+    <span class="s1">&#39;M2_SE&#39;</span><span class="p">:</span> <span class="n">Merra2_SE</span><span class="p">,</span>
+    <span class="s1">&#39;M2_SW&#39;</span><span class="p">:</span> <span class="n">Merra2_SW</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>The following code can then be used to run each for loop and add results to the new dataframe. Specific steps are explained in the comments throughout.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># set the target and reference column names</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s1">&#39;Spd80mN&#39;</span>
+<span class="n">ref_column</span> <span class="o">=</span> <span class="s1">&#39;WS50m_m/s&#39;</span>
+
+<span class="c1"># create a list to store all of the results</span>
+<span class="n">correl_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># set up first loop, which will step through the 4 reanalysis datasets</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">merra2_nodes</span><span class="p">:</span>
+    <span class="c1"># set up the second loop, nested within the first one. This one will step through a number of averaging periods.</span>
+    <span class="k">for</span> <span class="n">avg_prd</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;1D&#39;</span><span class="p">,</span><span class="s1">&#39;3D&#39;</span><span class="p">,</span><span class="s1">&#39;7D&#39;</span><span class="p">,</span><span class="s1">&#39;15D&#39;</span><span class="p">,</span><span class="s1">&#39;1M&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># set up the correlation object, as done previously</span>
+        <span class="n">ord_lst_sq</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Correl</span><span class="o">.</span><span class="n">OrdinaryLeastSquares</span><span class="p">(</span><span class="n">merra2_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ref_column</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">],</span>
+                                                    <span class="n">averaging_prd</span><span class="o">=</span><span class="n">avg_prd</span><span class="p">,</span> <span class="n">coverage_threshold</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)</span>
+        <span class="c1"># run the correlation</span>
+        <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="c1"># Append the results to the results list</span>
+        <span class="n">correl_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;1, Reanalysis dataset&#39;</span><span class="p">:</span> <span class="n">node</span><span class="p">,</span>
+            <span class="s1">&#39;2, Averaging Period&#39;</span><span class="p">:</span> <span class="n">avg_prd</span><span class="p">,</span>
+            <span class="s1">&#39;3, Num data points&#39;</span><span class="p">:</span> <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Num data points&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;4, LT Reference MOMM&#39;</span><span class="p">:</span> <span class="n">bw</span><span class="o">.</span><span class="n">momm</span><span class="p">(</span><span class="n">merra2_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">ref_column</span><span class="p">]),</span>
+            <span class="s1">&#39;5, R^2&#39;</span><span class="p">:</span> <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;6, Slope&#39;</span><span class="p">:</span> <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;slope&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;7, Offset&#39;</span><span class="p">:</span> <span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;8, LT Target wind speed&#39;</span><span class="p">:</span> <span class="n">bw</span><span class="o">.</span><span class="n">momm</span><span class="p">(</span><span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">synthesize</span><span class="p">()),</span>
+            <span class="s1">&#39;9, Adjustment of mean [%]&#39;</span><span class="p">:</span> <span class="p">((</span><span class="n">bw</span><span class="o">.</span><span class="n">momm</span><span class="p">(</span><span class="n">ord_lst_sq</span><span class="o">.</span><span class="n">synthesize</span><span class="p">())</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span>
+        <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;Num data points&#39;: 509,
+ &#39;offset&#39;: -0.42487844744002934,
+ &#39;r2&#39;: 0.8950111609239269,
+ &#39;slope&#39;: 1.040347744890449}
+{&#39;Num data points&#39;: 166,
+ &#39;offset&#39;: -0.6361907996697532,
+ &#39;r2&#39;: 0.9347172373809141,
+ &#39;slope&#39;: 1.065506067469903}
+{&#39;Num data points&#39;: 71,
+ &#39;offset&#39;: -0.5882020865023719,
+ &#39;r2&#39;: 0.9340706234081555,
+ &#39;slope&#39;: 1.0608473791176414}
+{&#39;Num data points&#39;: 34,
+ &#39;offset&#39;: -0.3469504509964136,
+ &#39;r2&#39;: 0.9580669877674568,
+ &#39;slope&#39;: 1.0312563688477243}
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: -0.06161432045219376,
+ &#39;r2&#39;: 0.9407857754972966,
+ &#39;slope&#39;: 0.9955561116923611}
+{&#39;Num data points&#39;: 509,
+ &#39;offset&#39;: -0.09566950948358079,
+ &#39;r2&#39;: 0.8467424753668483,
+ &#39;slope&#39;: 0.9513356833362564}
+{&#39;Num data points&#39;: 166,
+ &#39;offset&#39;: -0.3094075956208962,
+ &#39;r2&#39;: 0.8958363060049799,
+ &#39;slope&#39;: 0.9763981012985756}
+{&#39;Num data points&#39;: 71,
+ &#39;offset&#39;: -0.2654084062535991,
+ &#39;r2&#39;: 0.890799351069137,
+ &#39;slope&#39;: 0.9719866140592953}
+{&#39;Num data points&#39;: 34,
+ &#39;offset&#39;: 0.15682108376560136,
+ &#39;r2&#39;: 0.9206266548035889,
+ &#39;slope&#39;: 0.9202250143158889}
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: 0.6453320138995284,
+ &#39;r2&#39;: 0.8772421506713155,
+ &#39;slope&#39;: 0.860974299364037}
+{&#39;Num data points&#39;: 509,
+ &#39;offset&#39;: -0.16478996565523255,
+ &#39;r2&#39;: 0.8456645998836172,
+ &#39;slope&#39;: 0.9676742260535489}
+{&#39;Num data points&#39;: 166,
+ &#39;offset&#39;: -0.38866696097764375,
+ &#39;r2&#39;: 0.8861973972237285,
+ &#39;slope&#39;: 0.9939478232735908}
+{&#39;Num data points&#39;: 71,
+ &#39;offset&#39;: -0.3904784183852624,
+ &#39;r2&#39;: 0.8993332053612523,
+ &#39;slope&#39;: 0.9970145362591194}
+{&#39;Num data points&#39;: 34,
+ &#39;offset&#39;: -0.13824125155034708,
+ &#39;r2&#39;: 0.9311687736097964,
+ &#39;slope&#39;: 0.9642528458509261}
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: 0.21439627305515263,
+ &#39;r2&#39;: 0.9162048374395771,
+ &#39;slope&#39;: 0.9216301350074104}
+{&#39;Num data points&#39;: 509,
+ &#39;offset&#39;: 0.12359784304781836,
+ &#39;r2&#39;: 0.7800512366998469,
+ &#39;slope&#39;: 0.897860529255207}
+{&#39;Num data points&#39;: 166,
+ &#39;offset&#39;: -0.13024511222955648,
+ &#39;r2&#39;: 0.8299573609509825,
+ &#39;slope&#39;: 0.9274217939487325}
+{&#39;Num data points&#39;: 71,
+ &#39;offset&#39;: -0.17839001354473732,
+ &#39;r2&#39;: 0.8392903588116132,
+ &#39;slope&#39;: 0.9348187140549352}
+{&#39;Num data points&#39;: 34,
+ &#39;offset&#39;: 0.17384790241582168,
+ &#39;r2&#39;: 0.8834584307562071,
+ &#39;slope&#39;: 0.8907949268795059}
+{&#39;Num data points&#39;: 16,
+ &#39;offset&#39;: 0.8554505335265273,
+ &#39;r2&#39;: 0.8414235670295263,
+ &#39;slope&#39;: 0.8092854017974048}
+</pre></div></div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Each set of print results above are the result of the <code class="docutils literal notranslate"><span class="pre">obj.run()</span></code> function. We have saved a summary of the results under ‘correl_results’, so lets take a look at that now.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># put the list into a DataFrame for ease of analysis.</span>
+<span class="n">correl_results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">correl_results</span><span class="p">)</span>
+<span class="n">correl_results_df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1, Reanalysis dataset</th>
+      <th>2, Averaging Period</th>
+      <th>3, Num data points</th>
+      <th>4, LT Reference MOMM</th>
+      <th>5, R^2</th>
+      <th>6, Slope</th>
+      <th>7, Offset</th>
+      <th>8, LT Target wind speed</th>
+      <th>9, Adjustment of mean [%]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M2_NE</td>
+      <td>1D</td>
+      <td>509</td>
+      <td>7.707068</td>
+      <td>0.895011</td>
+      <td>1.040348</td>
+      <td>-0.424878</td>
+      <td>7.601000</td>
+      <td>1.095465</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M2_NE</td>
+      <td>3D</td>
+      <td>166</td>
+      <td>7.707068</td>
+      <td>0.934717</td>
+      <td>1.065506</td>
+      <td>-0.636191</td>
+      <td>7.576759</td>
+      <td>0.773044</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M2_NE</td>
+      <td>7D</td>
+      <td>71</td>
+      <td>7.707068</td>
+      <td>0.934071</td>
+      <td>1.060847</td>
+      <td>-0.588202</td>
+      <td>7.596172</td>
+      <td>1.031245</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M2_NE</td>
+      <td>15D</td>
+      <td>34</td>
+      <td>7.707068</td>
+      <td>0.958067</td>
+      <td>1.031256</td>
+      <td>-0.346950</td>
+      <td>7.600418</td>
+      <td>1.087716</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M2_NE</td>
+      <td>1M</td>
+      <td>16</td>
+      <td>7.707068</td>
+      <td>0.940786</td>
+      <td>0.995556</td>
+      <td>-0.061614</td>
+      <td>7.623917</td>
+      <td>1.400269</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M2_NW</td>
+      <td>1D</td>
+      <td>509</td>
+      <td>8.114629</td>
+      <td>0.846742</td>
+      <td>0.951336</td>
+      <td>-0.095670</td>
+      <td>7.630865</td>
+      <td>1.492676</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>M2_NW</td>
+      <td>3D</td>
+      <td>166</td>
+      <td>8.114629</td>
+      <td>0.895836</td>
+      <td>0.976398</td>
+      <td>-0.309408</td>
+      <td>7.612278</td>
+      <td>1.245460</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>M2_NW</td>
+      <td>7D</td>
+      <td>71</td>
+      <td>8.114629</td>
+      <td>0.890799</td>
+      <td>0.971987</td>
+      <td>-0.265408</td>
+      <td>7.629251</td>
+      <td>1.471205</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M2_NW</td>
+      <td>15D</td>
+      <td>34</td>
+      <td>8.114629</td>
+      <td>0.920627</td>
+      <td>0.920225</td>
+      <td>0.156821</td>
+      <td>7.624570</td>
+      <td>1.408951</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>M2_NW</td>
+      <td>1M</td>
+      <td>16</td>
+      <td>8.114629</td>
+      <td>0.877242</td>
+      <td>0.860974</td>
+      <td>0.645332</td>
+      <td>7.643720</td>
+      <td>1.663650</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>M2_SE</td>
+      <td>1D</td>
+      <td>509</td>
+      <td>8.087812</td>
+      <td>0.845665</td>
+      <td>0.967674</td>
+      <td>-0.164790</td>
+      <td>7.666124</td>
+      <td>1.961635</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M2_SE</td>
+      <td>3D</td>
+      <td>166</td>
+      <td>8.087812</td>
+      <td>0.886197</td>
+      <td>0.993948</td>
+      <td>-0.388667</td>
+      <td>7.645255</td>
+      <td>1.684067</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>M2_SE</td>
+      <td>7D</td>
+      <td>71</td>
+      <td>8.087812</td>
+      <td>0.899333</td>
+      <td>0.997015</td>
+      <td>-0.390478</td>
+      <td>7.676901</td>
+      <td>2.104962</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>M2_SE</td>
+      <td>15D</td>
+      <td>34</td>
+      <td>8.087812</td>
+      <td>0.931169</td>
+      <td>0.964253</td>
+      <td>-0.138241</td>
+      <td>7.656873</td>
+      <td>1.838585</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>M2_SE</td>
+      <td>1M</td>
+      <td>16</td>
+      <td>8.087812</td>
+      <td>0.916205</td>
+      <td>0.921630</td>
+      <td>0.214396</td>
+      <td>7.678354</td>
+      <td>2.124289</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>M2_SW</td>
+      <td>1D</td>
+      <td>509</td>
+      <td>8.409316</td>
+      <td>0.780051</td>
+      <td>0.897861</td>
+      <td>0.123598</td>
+      <td>7.677981</td>
+      <td>2.119335</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>M2_SW</td>
+      <td>3D</td>
+      <td>166</td>
+      <td>8.409316</td>
+      <td>0.829957</td>
+      <td>0.927422</td>
+      <td>-0.130245</td>
+      <td>7.662884</td>
+      <td>1.918537</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>M2_SW</td>
+      <td>7D</td>
+      <td>71</td>
+      <td>8.409316</td>
+      <td>0.839290</td>
+      <td>0.934819</td>
+      <td>-0.178390</td>
+      <td>7.686714</td>
+      <td>2.235478</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>M2_SW</td>
+      <td>15D</td>
+      <td>34</td>
+      <td>8.409316</td>
+      <td>0.883458</td>
+      <td>0.890795</td>
+      <td>0.173848</td>
+      <td>7.664287</td>
+      <td>1.937200</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>M2_SW</td>
+      <td>1M</td>
+      <td>16</td>
+      <td>8.409316</td>
+      <td>0.841424</td>
+      <td>0.809285</td>
+      <td>0.855451</td>
+      <td>7.671619</td>
+      <td>2.034711</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>We can easily scan down through the results to see the different <span class="math notranslate nohighlight">\(R^2\)</span> values for different averaging periods and reanalysis datasets, and see other key metrics such as the predicted long term wind speed and the percentage adjustment from the measured site wind speed to the long term wind speed.</p>
+<p>Now lets scale the wind speed once again, this time based on the correlation with the highest <span class="math notranslate nohighlight">\(R^2\)</span> value in our table. First, let’s show all the parameters of the correlation with the max <span class="math notranslate nohighlight">\(R^2\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># show correlation results when r2 is equal to the max r2</span>
+<span class="n">correl_results_df</span><span class="p">[</span><span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;5, R^2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;5, R^2&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1, Reanalysis dataset</th>
+      <th>2, Averaging Period</th>
+      <th>3, Num data points</th>
+      <th>4, LT Reference MOMM</th>
+      <th>5, R^2</th>
+      <th>6, Slope</th>
+      <th>7, Offset</th>
+      <th>8, LT Target wind speed</th>
+      <th>9, Adjustment of mean [%]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>M2_NE</td>
+      <td>15D</td>
+      <td>34</td>
+      <td>7.707068</td>
+      <td>0.958067</td>
+      <td>1.031256</td>
+      <td>-0.34695</td>
+      <td>7.600418</td>
+      <td>1.087716</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>We can pull out the index of this correlation from our table by adding on <code class="docutils literal notranslate"><span class="pre">.index[0]</span></code> on the end amd assigning it to a variable.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get row with the best correlation</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">correl_results_df</span><span class="p">[</span><span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;5, R^2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;5, R^2&#39;</span><span class="p">])]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># show index</span>
+<span class="n">row</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>3
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Then we can refer to the long term target speed from this correlation as follows.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;8, LT Target wind speed&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>7.600417545842798
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>This can be used to derive a scale factor in the same way we did before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># derive scale factor as ratio of means</span>
+<span class="n">LT_scale_factor</span> <span class="o">=</span> <span class="n">correl_results_df</span><span class="p">[</span><span class="s1">&#39;8, LT Target wind speed&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># show the value</span>
+<span class="n">LT_scale_factor</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1.010877163638877
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Finally, we can create a second LT adjusted time series using the same commands as before, once again add this to our existing DataFrame alongside the previous long term variable.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># scale wind speed</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN_LT_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">scale_wind_speed</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">],</span> <span class="n">LT_scale_factor</span><span class="p">)</span>
+<span class="c1"># show first 5 timestamps. The new variable can be seen to the right of the dataframe.</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Spd80mN</th>
+      <th>Spd80mS</th>
+      <th>Spd60mN</th>
+      <th>Spd60mS</th>
+      <th>Spd40mN</th>
+      <th>Spd40mS</th>
+      <th>Spd80mNStd</th>
+      <th>Spd80mSStd</th>
+      <th>Spd60mNStd</th>
+      <th>Spd60mSStd</th>
+      <th>...</th>
+      <th>Dir58mSStd</th>
+      <th>Dir38mS</th>
+      <th>Dir38mSStd</th>
+      <th>T2m</th>
+      <th>RH2m</th>
+      <th>P2m</th>
+      <th>PrcpTot</th>
+      <th>BattMin</th>
+      <th>Spd80mN_LT</th>
+      <th>Spd80mN_LT_2</th>
+    </tr>
+    <tr>
+      <th>Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-09 15:30:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 15:40:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:00:00</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:10:00</th>
+      <td>7.382</td>
+      <td>7.325</td>
+      <td>6.818</td>
+      <td>6.689</td>
+      <td>6.252</td>
+      <td>6.174</td>
+      <td>0.844</td>
+      <td>0.810</td>
+      <td>0.897</td>
+      <td>0.875</td>
+      <td>...</td>
+      <td>5.107</td>
+      <td>115.6</td>
+      <td>5.189</td>
+      <td>0.954</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.71</td>
+      <td>7.485368</td>
+      <td>7.462295</td>
+    </tr>
+    <tr>
+      <th>2016-01-09 17:20:00</th>
+      <td>7.977</td>
+      <td>7.791</td>
+      <td>8.110</td>
+      <td>7.915</td>
+      <td>8.140</td>
+      <td>7.974</td>
+      <td>0.556</td>
+      <td>0.528</td>
+      <td>0.562</td>
+      <td>0.524</td>
+      <td>...</td>
+      <td>2.960</td>
+      <td>113.6</td>
+      <td>3.540</td>
+      <td>0.863</td>
+      <td>100.0</td>
+      <td>934.0</td>
+      <td>0.0</td>
+      <td>12.69</td>
+      <td>8.088699</td>
+      <td>8.063767</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 31 columns</p>
+</div></div>
+</div>
+<div style="margin-top: 2em; margin-bottom: 2em;"></div><p>Of course, <span class="math notranslate nohighlight">\(R^2\)</span> is not the only parameter than matters when deciding on a robust correlation method, so the analyst still has an important role! Nonetheless, this shows how easy the library makes it to compare large numbers of reference datasets and get back useful results fast. Upcoming updates to the library will aim to reduce the code required to perform the looping procedure, so watch this space!</p>
+<hr class="docutils" />
+<div style="margin-top: 2em; margin-bottom: 2em;"></div></div>
+<div class="section" id="Other-correlation-methods">
+<h3>Other correlation methods<a class="headerlink" href="#Other-correlation-methods" title="Permalink to this headline">¶</a></h3>
+<p>The library also includes a host of other correlation functions such as:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SimpleSpeedRatio()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OrthogonalLeastSquares()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultipleLinearRegression()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Speedsort()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SVR()</span></code></p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">SimpleSpeedRatio()</span></code> is simply a ratio of the overlapping target and reference wind speed time series.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OrthogonalLeastSquares()</span></code> function carries out a orthogonal least squares regression correlation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultipleLinearRegression()</span></code> function allows linear regression to be carried out between multiple reference datasets and the site data.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Speedsort()</span></code> function is a directional correlation method developed by Brian Hurley and Ciaran King as outlined in the paper “The Speedsort, DynaSort and Scatter wind correlation methods”, Wind Engineering Volume 29, No.3, pp 217-241.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">SVR()</span></code> function is a support vector machine correlation method which is a type of Machine Learning alogorithim.</p>
+<p>These functions will be the subject of future tutorials relating to correlation methods.</p>
+<hr class="docutils" />
+<div style="margin-top: 2em; margin-bottom: 2em;"></div></div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
