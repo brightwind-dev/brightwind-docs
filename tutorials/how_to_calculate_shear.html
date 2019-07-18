@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>How to calculate shear &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">How to calculate shear</a><ul>
+<li><a class="reference internal" href="#Outline:">Outline:</a><ul>
+<li><a class="reference internal" href="#Step-1:-Calculate-average-shear-and-scale-a-wind-speed-timeseries">Step 1: Calculate average shear and scale a wind speed timeseries</a></li>
+<li><a class="reference internal" href="#Step-2:-Calculate-shear-by-direction-sector">Step 2: Calculate shear by direction sector</a></li>
+<li><a class="reference internal" href="#Step-3:-Calculate-shear-by-time-of-day-and-month">Step 3: Calculate shear by time of day and month</a></li>
+<li><a class="reference internal" href="#Step-4:-Calculating-shear-by-timestamp">Step 4: Calculating shear by timestamp</a></li>
+<li><a class="reference internal" href="#Step-4:-Scale-a-wind-speed-timeseries-using-a-predefined-value-of-alpha/roughness">Step 4: Scale a wind speed timeseries using a predefined value of alpha/roughness</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<center><div class="section" id="How-to-calculate-shear">
+<h1>How to calculate shear<a class="headerlink" href="#How-to-calculate-shear" title="Permalink to this headline">¶</a></h1>
+</center><hr class="docutils" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Last updated: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> %B, %Y&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Last updated: 18 July, 2019
+</pre></div></div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Outline:">
+<h2>Outline:<a class="headerlink" href="#Outline:" title="Permalink to this headline">¶</a></h2>
+<p>The brightwind library allows for shear to be calculated from wind speed measurements using either the power law or the logarithmic law, through the calculation of the shear exponent (alpha) or the roughness coefficient respectively. Alpha/roughness values can be calculated by average wind speed, time of day/month, direction sector or by individual timestamp. The calculated shear can then be applied to wind speed timeseries to scale the wind speeds from one height to another.</p>
+<p>This tutorial will cover:</p>
+<ol class="arabic simple">
+<li><p>How to calculate average shear and use it to scale a wind speed timeseries.</p></li>
+<li><p>How to calculate shear by direction sector.</p></li>
+<li><p>How to calculate shear by time of day and month.</p></li>
+<li><p>How to calculate shear by individual timestamp.</p></li>
+<li><p>How to scale a wind speed timeseries using a predefined value of alpha/roughness.</p></li>
+</ol>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Step-1:-Calculate-average-shear-and-scale-a-wind-speed-timeseries">
+<h3>Step 1: Calculate average shear and scale a wind speed timeseries<a class="headerlink" href="#Step-1:-Calculate-average-shear-and-scale-a-wind-speed-timeseries" title="Permalink to this headline">¶</a></h3>
+<p>The average shear exponent can be calculated across an entire timeseries using the <code class="docutils literal notranslate"><span class="pre">Average</span></code> class in the brightwind library.</p>
+<ul class="simple">
+<li><p>First, upload the relevant data, defining the anemometers data and heights of these anemometers.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="c1"># load data as dataframe and apply cleaning (see previous tutorials for these.)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_cleaning_file.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Specify columns in data which contain the anemometer measurements from which to calculate shear</span>
+<span class="n">anemometers</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">,</span><span class="s1">&#39;Spd60mN&#39;</span><span class="p">,</span><span class="s1">&#39;Spd40mN&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Specify the heights of these anemometers in a list</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a variable.)
+</pre></div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To calculate average shear from the data contained in <code class="docutils literal notranslate"><span class="pre">anemometers</span></code> using the power law, type the following:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">Average</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_7_0.png" src="../_images/tutorials_how_to_calculate_shear_7_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To calculate shear using the log law instead of the power law, simply add the argument <code class="docutils literal notranslate"><span class="pre">calc_method='log_law'</span></code>. This is an option for all shear calculations.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_log_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">Average</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">calc_method</span><span class="o">=</span><span class="s1">&#39;log_law&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_9_0.png" src="../_images/tutorials_how_to_calculate_shear_9_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>This function returns an object, i.e. <code class="docutils literal notranslate"><span class="pre">avg_shear_by_power_law</span></code> or <code class="docutils literal notranslate"><span class="pre">avg_shear_by_log_law</span></code>, which contains lots of information about the calculation that was carried out.</p></li>
+<li><p>To view what information is available, such as a plot and the average alpha value, type the following and press ‘Tab’:</p></li>
+</ul>
+<div style="margin-top: 3em; margin-bottom: 3em;"><center><p><img alt="image1" src="../_images/how_to_calculate_shear_1.png" /></p>
+</center></div><div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To show the average alpha calculated, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_power_law</span><span class="o">.</span><span class="n">alpha</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.1434292905861121
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To show the average roughness calculated, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_log_law</span><span class="o">.</span><span class="n">roughness</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.054854089027648524
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To show the plot, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_power_law</span><span class="o">.</span><span class="n">plot</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_17_0.png" src="../_images/tutorials_how_to_calculate_shear_17_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>Other useful information about the object can be obtained using <code class="docutils literal notranslate"><span class="pre">.info</span></code>. This is wrapped with the ‘pretty print’ library to make it more readable.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">avg_shear_by_log_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input data&#39;: {&#39;calculation_method&#39;: &#39;log_law&#39;,
+                &#39;input_wind_speeds&#39;: {&#39;column_names&#39;: [&#39;Spd80mN&#39;,
+                                                       &#39;Spd60mN&#39;,
+                                                       &#39;Spd40mN&#39;],
+                                      &#39;heights(m)&#39;: [80, 60, 40],
+                                      &#39;min_spd(m/s)&#39;: 3}},
+ &#39;output data&#39;: {&#39;concurrent_period_in_years&#39;: 1.511,
+                 &#39;roughness&#39;: 0.054854089027648524}}
+</pre></div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>Once the alpha/roughness values have been calculated, they can be applied to a wind speed timeseries to scale the wind speeds from one height to another.</p>
+<ul class="simple">
+<li><p>To scale the wind speed timeseries, i.e. <code class="docutils literal notranslate"><span class="pre">data['Spd80mN']</span></code>, from 80 m to 100 m height using the average alpha value previously calculated, use the <code class="docutils literal notranslate"><span class="pre">.apply()</span></code> function attached to the avg_shear_by_power_law object.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># .head(10) is simply used to not display so much data</span>
+<span class="n">avg_shear_by_power_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.622085
+2016-01-09 17:20:00    8.236436
+2016-01-09 17:30:00    8.611242
+2016-01-09 17:40:00    8.394412
+2016-01-09 17:50:00    7.723272
+2016-01-09 18:00:00    7.799679
+2016-01-09 18:10:00    8.487339
+Name: Spd80mN_scaled_to_100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To scale the same data, but using the roughness value calculated via the log law, use the <code class="docutils literal notranslate"><span class="pre">.apply()</span></code> function attached to the <code class="docutils literal notranslate"><span class="pre">avg_shear_by_log_law</span></code> object:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_log_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.608111
+2016-01-09 17:20:00    8.221336
+2016-01-09 17:30:00    8.595455
+2016-01-09 17:40:00    8.379023
+2016-01-09 17:50:00    7.709113
+2016-01-09 18:00:00    7.785380
+2016-01-09 18:10:00    8.471779
+Name: Spd80mN_scaled_to_100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>This sheared up wind speed timeseries can also be assigned to a new variable in your DataFrame.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd100m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_shear_by_power_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">Spd100m</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.622085
+2016-01-09 17:20:00    8.236436
+2016-01-09 17:30:00    8.611242
+2016-01-09 17:40:00    8.394412
+2016-01-09 17:50:00    7.723272
+2016-01-09 18:00:00    7.799679
+2016-01-09 18:10:00    8.487339
+Name: Spd100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>It is also possible to plot the two shear profiles using both calculation methods overlaid on each other using the argument <code class="docutils literal notranslate"><span class="pre">plot_both</span></code>. In addition, the profiles can be extended up to any height using <code class="docutils literal notranslate"><span class="pre">max_plot_height</span></code>. The apply function will only apply the resulting shear based on the <code class="docutils literal notranslate"><span class="pre">calc_method</span></code> specified, in this case ‘power_law’.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">avg_shear_by_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">Average</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">plot_both</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                          <span class="n">max_plot_height</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_27_0.png" src="../_images/tutorials_how_to_calculate_shear_27_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Step-2:-Calculate-shear-by-direction-sector">
+<h3>Step 2: Calculate shear by direction sector<a class="headerlink" href="#Step-2:-Calculate-shear-by-direction-sector" title="Permalink to this headline">¶</a></h3>
+<p>If you have direction measurements to accompany wind speed measurements, the shear can be calculated for specified direction sectors using the <code class="docutils literal notranslate"><span class="pre">BySector</span></code> class.</p>
+<ul class="simple">
+<li><p>To calculate the shear by direction sector, simply type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_sector_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">BySector</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Dir78mS&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_30_0.png" src="../_images/tutorials_how_to_calculate_shear_30_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>Again, various information such as the alpha values can be displayed from this object:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_sector_power_law</span><span class="o">.</span><span class="n">alpha</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>345.0-15.0     0.119370
+15.0-45.0      0.145463
+45.0-75.0      0.096945
+75.0-105.0     0.044056
+105.0-135.0    0.054538
+135.0-165.0    0.116558
+165.0-195.0    0.354113
+195.0-225.0    0.213977
+225.0-255.0    0.096221
+255.0-285.0    0.054575
+285.0-315.0    0.077513
+315.0-345.0    0.108680
+dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>The direction bins can be defined by the user for use in the BySector calculations.</p></li>
+<li><p>These bins must begin at 0, be listed as increasing and advise they are even sizes.</p></li>
+<li><p>For example, to use the custom bins [0,30,60,90,120,150,180,210,240,270,300,330,360], simply type the following:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">custom_bins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">210</span><span class="p">,</span><span class="mi">240</span><span class="p">,</span><span class="mi">270</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">330</span><span class="p">,</span><span class="mi">360</span><span class="p">]</span>
+<span class="n">shear_by_sector_power_law_custom_bins</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">BySector</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Dir78mS&#39;</span><span class="p">],</span>
+                                                          <span class="n">direction_bin_array</span><span class="o">=</span><span class="n">custom_bins</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_34_0.png" src="../_images/tutorials_how_to_calculate_shear_34_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_sector_power_law</span><span class="o">.</span><span class="n">alpha</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>345.0-15.0     0.119370
+15.0-45.0      0.145463
+45.0-75.0      0.096945
+75.0-105.0     0.044056
+105.0-135.0    0.054538
+135.0-165.0    0.116558
+165.0-195.0    0.354113
+195.0-225.0    0.213977
+225.0-255.0    0.096221
+255.0-285.0    0.054575
+285.0-315.0    0.077513
+315.0-345.0    0.108680
+dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To scale the same data, but using the alpha values calculated for each direction section use the <code class="docutils literal notranslate"><span class="pre">.apply()</span></code> function attached to the <code class="docutils literal notranslate"><span class="pre">shear_by_sector_by_power_law</span></code> object. Corresponding wind direction measurements for the wind speeds to be scaled must also be passed to the function.</p>
+<ul class="simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">data['Dir78mS']</span></code> as the direction measurements, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_sector_power_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Dir78mS&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 17:10:00     7.472387
+2016-01-09 17:20:00     8.074672
+2016-01-09 17:30:00     8.442117
+2016-01-09 17:40:00     8.229546
+2016-01-09 17:50:00     7.571587
+2016-01-09 18:00:00     7.646493
+2016-01-09 18:10:00     8.320648
+2016-01-09 18:20:00     9.535341
+2016-01-09 18:30:00    10.031341
+2016-01-09 18:40:00    10.517218
+Name: Spd80mN_scaled_to_100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Step-3:-Calculate-shear-by-time-of-day-and-month">
+<h3>Step 3: Calculate shear by time of day and month<a class="headerlink" href="#Step-3:-Calculate-shear-by-time-of-day-and-month" title="Permalink to this headline">¶</a></h3>
+<p>Shear can also be calculated by time of day and month using the <code class="docutils literal notranslate"><span class="pre">TimeOfDay</span></code> class. To do so, type:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeOfDay</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">segments_per_day</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                            <span class="n">plot_type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_40_0.png" src="../_images/tutorials_how_to_calculate_shear_40_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>The alpha values calculated are saved in a DataFrame and can be accessed using <code class="docutils literal notranslate"><span class="pre">.alpha()</span></code>:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span><span class="o">.</span><span class="n">alpha</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Jan</th>
+      <th>Feb</th>
+      <th>Mar</th>
+      <th>Apr</th>
+      <th>May</th>
+      <th>Jun</th>
+      <th>Jul</th>
+      <th>Aug</th>
+      <th>Sep</th>
+      <th>Oct</th>
+      <th>Nov</th>
+      <th>Dec</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>00:00:00</th>
+      <td>0.203745</td>
+      <td>0.137365</td>
+      <td>0.190512</td>
+      <td>0.156005</td>
+      <td>0.184894</td>
+      <td>0.167457</td>
+      <td>0.174981</td>
+      <td>0.177678</td>
+      <td>0.214404</td>
+      <td>0.151436</td>
+      <td>0.187305</td>
+      <td>0.184245</td>
+    </tr>
+    <tr>
+      <th>01:00:00</th>
+      <td>0.184187</td>
+      <td>0.142620</td>
+      <td>0.203802</td>
+      <td>0.149316</td>
+      <td>0.193490</td>
+      <td>0.168509</td>
+      <td>0.193434</td>
+      <td>0.147225</td>
+      <td>0.213561</td>
+      <td>0.151838</td>
+      <td>0.191275</td>
+      <td>0.191104</td>
+    </tr>
+    <tr>
+      <th>02:00:00</th>
+      <td>0.165501</td>
+      <td>0.149974</td>
+      <td>0.195065</td>
+      <td>0.144426</td>
+      <td>0.215443</td>
+      <td>0.163694</td>
+      <td>0.194465</td>
+      <td>0.156861</td>
+      <td>0.222912</td>
+      <td>0.152570</td>
+      <td>0.202989</td>
+      <td>0.189549</td>
+    </tr>
+    <tr>
+      <th>03:00:00</th>
+      <td>0.187611</td>
+      <td>0.154534</td>
+      <td>0.196334</td>
+      <td>0.150126</td>
+      <td>0.183169</td>
+      <td>0.168200</td>
+      <td>0.187914</td>
+      <td>0.137204</td>
+      <td>0.232028</td>
+      <td>0.145416</td>
+      <td>0.195471</td>
+      <td>0.183143</td>
+    </tr>
+    <tr>
+      <th>04:00:00</th>
+      <td>0.191284</td>
+      <td>0.162013</td>
+      <td>0.184757</td>
+      <td>0.147184</td>
+      <td>0.184090</td>
+      <td>0.164632</td>
+      <td>0.181813</td>
+      <td>0.128768</td>
+      <td>0.239333</td>
+      <td>0.152643</td>
+      <td>0.182418</td>
+      <td>0.187397</td>
+    </tr>
+    <tr>
+      <th>05:00:00</th>
+      <td>0.181648</td>
+      <td>0.162595</td>
+      <td>0.184140</td>
+      <td>0.136194</td>
+      <td>0.187579</td>
+      <td>0.161545</td>
+      <td>0.173963</td>
+      <td>0.145848</td>
+      <td>0.234071</td>
+      <td>0.162066</td>
+      <td>0.172788</td>
+      <td>0.187372</td>
+    </tr>
+    <tr>
+      <th>06:00:00</th>
+      <td>0.185978</td>
+      <td>0.160536</td>
+      <td>0.178574</td>
+      <td>0.133937</td>
+      <td>0.182293</td>
+      <td>0.144034</td>
+      <td>0.152627</td>
+      <td>0.154029</td>
+      <td>0.241704</td>
+      <td>0.155654</td>
+      <td>0.177581</td>
+      <td>0.190635</td>
+    </tr>
+    <tr>
+      <th>07:00:00</th>
+      <td>0.198043</td>
+      <td>0.165445</td>
+      <td>0.163970</td>
+      <td>0.126975</td>
+      <td>0.159511</td>
+      <td>0.127946</td>
+      <td>0.126003</td>
+      <td>0.155703</td>
+      <td>0.232996</td>
+      <td>0.147648</td>
+      <td>0.159044</td>
+      <td>0.192888</td>
+    </tr>
+    <tr>
+      <th>08:00:00</th>
+      <td>0.186950</td>
+      <td>0.167700</td>
+      <td>0.150501</td>
+      <td>0.101867</td>
+      <td>0.123486</td>
+      <td>0.121164</td>
+      <td>0.094774</td>
+      <td>0.135711</td>
+      <td>0.221852</td>
+      <td>0.149835</td>
+      <td>0.145703</td>
+      <td>0.190476</td>
+    </tr>
+    <tr>
+      <th>09:00:00</th>
+      <td>0.171201</td>
+      <td>0.166015</td>
+      <td>0.135286</td>
+      <td>0.082590</td>
+      <td>0.105539</td>
+      <td>0.100572</td>
+      <td>0.084312</td>
+      <td>0.116124</td>
+      <td>0.202722</td>
+      <td>0.143551</td>
+      <td>0.150881</td>
+      <td>0.190909</td>
+    </tr>
+    <tr>
+      <th>10:00:00</th>
+      <td>0.177597</td>
+      <td>0.158721</td>
+      <td>0.125386</td>
+      <td>0.061679</td>
+      <td>0.096166</td>
+      <td>0.092808</td>
+      <td>0.077888</td>
+      <td>0.098125</td>
+      <td>0.169430</td>
+      <td>0.123623</td>
+      <td>0.141777</td>
+      <td>0.200282</td>
+    </tr>
+    <tr>
+      <th>11:00:00</th>
+      <td>0.164836</td>
+      <td>0.138951</td>
+      <td>0.107230</td>
+      <td>0.053947</td>
+      <td>0.092473</td>
+      <td>0.092409</td>
+      <td>0.082909</td>
+      <td>0.088985</td>
+      <td>0.155293</td>
+      <td>0.106861</td>
+      <td>0.131293</td>
+      <td>0.180275</td>
+    </tr>
+    <tr>
+      <th>12:00:00</th>
+      <td>0.151644</td>
+      <td>0.120562</td>
+      <td>0.092782</td>
+      <td>0.051372</td>
+      <td>0.076404</td>
+      <td>0.084767</td>
+      <td>0.079848</td>
+      <td>0.087854</td>
+      <td>0.157177</td>
+      <td>0.087600</td>
+      <td>0.119419</td>
+      <td>0.163308</td>
+    </tr>
+    <tr>
+      <th>13:00:00</th>
+      <td>0.140057</td>
+      <td>0.117251</td>
+      <td>0.085993</td>
+      <td>0.049824</td>
+      <td>0.066704</td>
+      <td>0.086438</td>
+      <td>0.072589</td>
+      <td>0.086872</td>
+      <td>0.145434</td>
+      <td>0.088522</td>
+      <td>0.121974</td>
+      <td>0.171817</td>
+    </tr>
+    <tr>
+      <th>14:00:00</th>
+      <td>0.145932</td>
+      <td>0.114892</td>
+      <td>0.084063</td>
+      <td>0.046276</td>
+      <td>0.050498</td>
+      <td>0.083590</td>
+      <td>0.072407</td>
+      <td>0.081974</td>
+      <td>0.135286</td>
+      <td>0.085481</td>
+      <td>0.125986</td>
+      <td>0.160342</td>
+    </tr>
+    <tr>
+      <th>15:00:00</th>
+      <td>0.152446</td>
+      <td>0.115295</td>
+      <td>0.086244</td>
+      <td>0.051721</td>
+      <td>0.061646</td>
+      <td>0.082378</td>
+      <td>0.075099</td>
+      <td>0.082071</td>
+      <td>0.139105</td>
+      <td>0.090707</td>
+      <td>0.134735</td>
+      <td>0.153169</td>
+    </tr>
+    <tr>
+      <th>16:00:00</th>
+      <td>0.157036</td>
+      <td>0.112205</td>
+      <td>0.099400</td>
+      <td>0.053768</td>
+      <td>0.065868</td>
+      <td>0.092252</td>
+      <td>0.078187</td>
+      <td>0.092003</td>
+      <td>0.144897</td>
+      <td>0.111362</td>
+      <td>0.144801</td>
+      <td>0.149117</td>
+    </tr>
+    <tr>
+      <th>17:00:00</th>
+      <td>0.161031</td>
+      <td>0.124340</td>
+      <td>0.098825</td>
+      <td>0.061831</td>
+      <td>0.080752</td>
+      <td>0.096211</td>
+      <td>0.090054</td>
+      <td>0.109184</td>
+      <td>0.170698</td>
+      <td>0.130001</td>
+      <td>0.164673</td>
+      <td>0.165464</td>
+    </tr>
+    <tr>
+      <th>18:00:00</th>
+      <td>0.169558</td>
+      <td>0.141341</td>
+      <td>0.123993</td>
+      <td>0.086016</td>
+      <td>0.093784</td>
+      <td>0.108223</td>
+      <td>0.096958</td>
+      <td>0.132730</td>
+      <td>0.187168</td>
+      <td>0.150463</td>
+      <td>0.191138</td>
+      <td>0.154565</td>
+    </tr>
+    <tr>
+      <th>19:00:00</th>
+      <td>0.173715</td>
+      <td>0.145777</td>
+      <td>0.147756</td>
+      <td>0.091637</td>
+      <td>0.112181</td>
+      <td>0.114127</td>
+      <td>0.107774</td>
+      <td>0.156964</td>
+      <td>0.206028</td>
+      <td>0.153758</td>
+      <td>0.192586</td>
+      <td>0.163433</td>
+    </tr>
+    <tr>
+      <th>20:00:00</th>
+      <td>0.183797</td>
+      <td>0.134578</td>
+      <td>0.171624</td>
+      <td>0.121502</td>
+      <td>0.146832</td>
+      <td>0.130339</td>
+      <td>0.131146</td>
+      <td>0.170098</td>
+      <td>0.224173</td>
+      <td>0.149378</td>
+      <td>0.193729</td>
+      <td>0.175612</td>
+    </tr>
+    <tr>
+      <th>21:00:00</th>
+      <td>0.194090</td>
+      <td>0.148994</td>
+      <td>0.173208</td>
+      <td>0.141769</td>
+      <td>0.150999</td>
+      <td>0.150260</td>
+      <td>0.158142</td>
+      <td>0.185471</td>
+      <td>0.231259</td>
+      <td>0.149618</td>
+      <td>0.187084</td>
+      <td>0.182947</td>
+    </tr>
+    <tr>
+      <th>22:00:00</th>
+      <td>0.184541</td>
+      <td>0.143998</td>
+      <td>0.182543</td>
+      <td>0.154415</td>
+      <td>0.167849</td>
+      <td>0.171730</td>
+      <td>0.175511</td>
+      <td>0.196477</td>
+      <td>0.232614</td>
+      <td>0.149216</td>
+      <td>0.182953</td>
+      <td>0.199505</td>
+    </tr>
+    <tr>
+      <th>23:00:00</th>
+      <td>0.185586</td>
+      <td>0.136248</td>
+      <td>0.179588</td>
+      <td>0.156049</td>
+      <td>0.178810</td>
+      <td>0.182215</td>
+      <td>0.178807</td>
+      <td>0.176920</td>
+      <td>0.215473</td>
+      <td>0.145566</td>
+      <td>0.178858</td>
+      <td>0.201526</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>Arguments such as <code class="docutils literal notranslate"><span class="pre">segments_per_day</span></code> and <code class="docutils literal notranslate"><span class="pre">segement_start_time</span></code> can be set to specify the number of time period segments in a day and the start time of the first segment. Different plot types are also available, such as <code class="docutils literal notranslate"><span class="pre">'step'</span></code> and <code class="docutils literal notranslate"><span class="pre">'12x24'</span></code>, shown below.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeOfDay</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">segments_per_day</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                            <span class="n">segment_start_time</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">plot_type</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_44_0.png" src="../_images/tutorials_how_to_calculate_shear_44_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeOfDay</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">segments_per_day</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                            <span class="n">segment_start_time</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">plot_type</span><span class="o">=</span><span class="s1">&#39;12x24&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_45_0.png" src="../_images/tutorials_how_to_calculate_shear_45_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>By setting <code class="docutils literal notranslate"><span class="pre">by_month=False</span></code>, shear is averaged over all months for each daily segment:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeOfDay</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">segments_per_day</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                            <span class="n">segment_start_time</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">by_month</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="n">plot_type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_47_0.png" src="../_images/tutorials_how_to_calculate_shear_47_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To apply the shear values calculated, as previously:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shear_by_tod_power_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.584182
+2016-01-09 17:20:00    8.195478
+2016-01-09 17:30:00    8.568421
+2016-01-09 17:40:00    8.352669
+2016-01-09 17:50:00    7.684866
+2016-01-09 18:00:00    7.787329
+2016-01-09 18:10:00    8.473901
+Name: Spd80mN_scaled_to_100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Step-4:-Calculating-shear-by-timestamp">
+<h3>Step 4: Calculating shear by timestamp<a class="headerlink" href="#Step-4:-Calculating-shear-by-timestamp" title="Permalink to this headline">¶</a></h3>
+<p>Shear can be calculated for each individual timestamp of a wind speed data series using the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> class. This takes some time, as tens of thousands of calculations must be carried out, so try it first on a subset of the data, i.e. the first 1000 entries. To do so, type:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">anemometers_subset</span> <span class="o">=</span> <span class="n">anemometers</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">ts_by_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers_subset</span><span class="p">,</span> <span class="n">heights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_52_0.png" src="../_images/tutorials_how_to_calculate_shear_52_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>In other methods such as <code class="docutils literal notranslate"><span class="pre">Average</span></code> and <code class="docutils literal notranslate"><span class="pre">BySector</span></code>, shear is only calculated for each timestamp where an anemometer reading exists at each height. This can be problamatic when calculating shear by individual timestamps. To maximise the ammount of data used for shear calculations and increase coverage we can calculate shear for every timestamp where two or more anemometer readings exist. If you wish to do this, pass the <code class="docutils literal notranslate"><span class="pre">maximise_data=True</span></code> argument to the function. Please be aware that due
+to the nature of calculating shear for every timestamp, this function takes some time to run.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_by_power_law_max</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers_subset</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">maximise_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_how_to_calculate_shear_54_0.png" src="../_images/tutorials_how_to_calculate_shear_54_0.png" />
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>As can be seen in the <code class="docutils literal notranslate"><span class="pre">.info</span></code> of each object, the coverage increased when <code class="docutils literal notranslate"><span class="pre">maximise_data</span></code> was used.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">ts_by_power_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input data&#39;: {&#39;calculation_method&#39;: &#39;power_law&#39;,
+                &#39;input_wind_speeds&#39;: {&#39;column_names&#39;: [&#39;Spd80mN&#39;,
+                                                       &#39;Spd60mN&#39;,
+                                                       &#39;Spd40mN&#39;],
+                                      &#39;heights(m)&#39;: [80, 60, 40],
+                                      &#39;min_spd(m/s)&#39;: 3}},
+ &#39;output data&#39;: {&#39;alpha&#39;: Timestamp
+2016-01-09 17:10:00    0.237991
+2016-01-09 17:20:00   -0.027865
+2016-01-09 17:30:00    0.002393
+2016-01-09 17:40:00    0.028834
+2016-01-09 17:50:00   -0.028915
+2016-01-09 18:00:00   -0.006296
+2016-01-09 18:10:00    0.078150
+2016-01-09 18:20:00   -0.019781
+2016-01-09 18:30:00    0.150555
+2016-01-09 18:40:00    0.080081
+2016-01-09 18:50:00    0.078663
+2016-01-09 19:00:00    0.007701
+2016-01-09 19:10:00    0.060346
+2016-01-09 19:20:00    0.049886
+2016-01-09 19:30:00    0.001436
+2016-01-09 19:40:00   -0.044120
+2016-01-09 19:50:00    0.068740
+2016-01-09 20:00:00    0.376291
+2016-01-09 20:10:00    0.186492
+2016-01-09 20:20:00    0.016814
+2016-01-09 20:30:00    0.110506
+2016-01-09 20:40:00   -0.269870
+2016-01-09 21:30:00    0.415503
+2016-01-09 21:40:00    0.247307
+2016-01-09 21:50:00    0.315225
+2016-01-09 22:00:00    0.350825
+2016-01-09 22:10:00    0.115856
+2016-01-09 22:20:00    0.174466
+2016-01-09 22:30:00    0.113918
+2016-01-09 22:40:00    0.080972
+                         ...
+2016-01-15 20:20:00    0.193663
+2016-01-15 20:30:00    0.481706
+2016-01-15 20:40:00    0.528941
+2016-01-15 20:50:00    0.403534
+2016-01-15 21:00:00    0.598280
+2016-01-15 21:30:00    0.279952
+2016-01-15 21:40:00    0.327214
+2016-01-15 21:50:00    0.154754
+2016-01-15 22:10:00    0.569411
+2016-01-15 22:50:00    0.411465
+2016-01-15 23:30:00    0.043801
+2016-01-16 01:10:00    0.337463
+2016-01-16 01:20:00    0.254405
+2016-01-16 01:30:00    0.281167
+2016-01-16 12:20:00    0.177549
+2016-01-16 12:30:00   -0.005959
+2016-01-16 12:40:00   -0.022992
+2016-01-16 12:50:00    0.008555
+2016-01-16 13:00:00   -0.074354
+2016-01-16 13:10:00   -0.057605
+2016-01-16 13:20:00   -0.085991
+2016-01-16 13:30:00   -0.061083
+2016-01-16 13:40:00   -0.034184
+2016-01-16 13:50:00   -0.027718
+2016-01-16 14:00:00   -0.110180
+2016-01-16 14:10:00   -0.225709
+2016-01-16 14:20:00   -0.182183
+2016-01-16 14:30:00   -0.135083
+2016-01-16 14:40:00    0.122002
+2016-01-16 15:10:00    0.117299
+Name: 0, Length: 846, dtype: float64,
+                 &#39;concurrent_period_in_years&#39;: 0.016}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">ts_by_power_law_max</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input data&#39;: {&#39;calculation_method&#39;: &#39;power_law&#39;,
+                &#39;input_wind_speeds&#39;: {&#39;column_names&#39;: [&#39;Spd80mN&#39;,
+                                                       &#39;Spd60mN&#39;,
+                                                       &#39;Spd40mN&#39;],
+                                      &#39;heights(m)&#39;: [80, 60, 40],
+                                      &#39;min_spd(m/s)&#39;: 3}},
+ &#39;output data&#39;: {&#39;alpha&#39;: Timestamp
+2016-01-09 17:10:00    0.237991
+2016-01-09 17:20:00   -0.027865
+2016-01-09 17:30:00    0.002393
+2016-01-09 17:40:00    0.028834
+2016-01-09 17:50:00   -0.028915
+2016-01-09 18:00:00   -0.006296
+2016-01-09 18:10:00    0.078150
+2016-01-09 18:20:00   -0.019781
+2016-01-09 18:30:00    0.150555
+2016-01-09 18:40:00    0.080081
+2016-01-09 18:50:00    0.078663
+2016-01-09 19:00:00    0.007701
+2016-01-09 19:10:00    0.060346
+2016-01-09 19:20:00    0.049886
+2016-01-09 19:30:00    0.001436
+2016-01-09 19:40:00   -0.044120
+2016-01-09 19:50:00    0.068740
+2016-01-09 20:00:00    0.376291
+2016-01-09 20:10:00    0.186492
+2016-01-09 20:20:00    0.016814
+2016-01-09 20:30:00    0.110506
+2016-01-09 20:40:00   -0.269870
+2016-01-09 21:30:00    0.415503
+2016-01-09 21:40:00    0.247307
+2016-01-09 21:50:00    0.315225
+2016-01-09 22:00:00    0.350825
+2016-01-09 22:10:00    0.115856
+2016-01-09 22:20:00    0.174466
+2016-01-09 22:30:00    0.113918
+2016-01-09 22:40:00    0.080972
+                         ...
+2016-01-15 20:20:00    0.193663
+2016-01-15 20:30:00    0.481706
+2016-01-15 20:40:00    0.528941
+2016-01-15 20:50:00    0.403534
+2016-01-15 21:00:00    0.598280
+2016-01-15 21:30:00    0.279952
+2016-01-15 21:40:00    0.327214
+2016-01-15 21:50:00    0.154754
+2016-01-15 22:10:00    0.569411
+2016-01-15 22:50:00    0.411465
+2016-01-15 23:30:00    0.043801
+2016-01-16 01:10:00    0.337463
+2016-01-16 01:20:00    0.254405
+2016-01-16 01:30:00    0.281167
+2016-01-16 12:20:00    0.177549
+2016-01-16 12:30:00   -0.005959
+2016-01-16 12:40:00   -0.022992
+2016-01-16 12:50:00    0.008555
+2016-01-16 13:00:00   -0.074354
+2016-01-16 13:10:00   -0.057605
+2016-01-16 13:20:00   -0.085991
+2016-01-16 13:30:00   -0.061083
+2016-01-16 13:40:00   -0.034184
+2016-01-16 13:50:00   -0.027718
+2016-01-16 14:00:00   -0.110180
+2016-01-16 14:10:00   -0.225709
+2016-01-16 14:20:00   -0.182183
+2016-01-16 14:30:00   -0.135083
+2016-01-16 14:40:00    0.122002
+2016-01-16 15:10:00    0.117299
+Name: 0, Length: 846, dtype: float64,
+                 &#39;concurrent_period_in_years&#39;: 0.017}}
+</pre></div></div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><p>To apply the alpha values calculated to a wind series with corresponding timestamps:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_by_power_law</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 17:10:00     7.784625
+2016-01-09 17:20:00     7.927554
+2016-01-09 17:30:00     8.344454
+2016-01-09 17:40:00     8.182478
+2016-01-09 17:50:00     7.431892
+2016-01-09 18:00:00     7.543394
+2016-01-09 18:10:00     8.364604
+2016-01-09 18:20:00     9.378512
+2016-01-09 18:30:00    10.248585
+2016-01-09 18:40:00    10.577334
+Name: Spd80mN_scaled_to_100m, dtype: float64
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Step-4:-Scale-a-wind-speed-timeseries-using-a-predefined-value-of-alpha/roughness">
+<h3>Step 4: Scale a wind speed timeseries using a predefined value of alpha/roughness<a class="headerlink" href="#Step-4:-Scale-a-wind-speed-timeseries-using-a-predefined-value-of-alpha/roughness" title="Permalink to this headline">¶</a></h3>
+<p>A wind speed timeseries can also be scaled using a user-defined fixed value for alpha or roughness.</p>
+<ul class="simple">
+<li><p>For example, to scale the wind speed measurements, <code class="docutils literal notranslate"><span class="pre">data['Spd80mN']</span></code>, from 80 m to 100 m, using an alpha value of 0.2, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.718911
+2016-01-09 17:20:00    8.341067
+2016-01-09 17:30:00    8.720634
+2016-01-09 17:40:00    8.501050
+2016-01-09 17:50:00    7.821384
+2016-01-09 18:00:00    7.898761
+2016-01-09 18:10:00    8.595157
+Name: Spd80mN, dtype: float64
+</pre></div>
+</div>
+</div>
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><ul class="simple">
+<li><p>To scale the wind speed measurements, <code class="docutils literal notranslate"><span class="pre">data['Spd80mN']</span></code>, from 80 m to 100 m, using a roughness of 0.3, type:</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spd80mN&#39;</span><span class="p">],</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">roughness</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">calc_method</span><span class="o">=</span><span class="s1">&#39;log_law&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Timestamp
+2016-01-09 15:30:00         NaN
+2016-01-09 15:40:00         NaN
+2016-01-09 17:00:00         NaN
+2016-01-09 17:10:00    7.676888
+2016-01-09 17:20:00    8.295657
+2016-01-09 17:30:00    8.673157
+2016-01-09 17:40:00    8.454769
+2016-01-09 17:50:00    7.778803
+2016-01-09 18:00:00    7.855759
+2016-01-09 18:10:00    8.548364
+Name: Spd80mN, dtype: float64
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
