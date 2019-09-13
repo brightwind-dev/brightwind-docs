@@ -11,6 +11,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
@@ -85,6 +87,7 @@
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">Introduction to the brightwind library</a><ul>
 <li><a class="reference internal" href="#Outline:">Outline:</a><ul>
+<li><a class="reference internal" href="#Demo-datasets">Demo datasets</a></li>
 <li><a class="reference internal" href="#Using-the-brightwind-library-in-a-Jupyter-Notebook">Using the brightwind library in a Jupyter Notebook</a></li>
 <li><a class="reference internal" href="#Importing-Data">Importing Data</a></li>
 <li><a class="reference internal" href="#Applying-cleaning-to-data">Applying cleaning to data</a></li>
@@ -341,7 +344,12 @@ Last updated: 05 July, 2019
 <li><p>Plotting a wind rose and exporting a .tab file</p></li>
 </ol>
 <hr class="docutils" />
-<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Using-the-brightwind-library-in-a-Jupyter-Notebook">
+<div style="margin-top: 3em; margin-bottom: 3em;"></div><div class="section" id="Demo-datasets">
+<h3>Demo datasets<a class="headerlink" href="#Demo-datasets" title="Permalink to this headline">¶</a></h3>
+<p>To follow along with this and the other tutorials you can download the demo datasets from <a class="reference external" href="https://www.dropbox.com/sh/5davq0335t6ytgk/AADKFgFrp0f3yDhhFcYzB8eia?dl=0">Dropbox</a>, and save them locally on your computer.</p>
+<hr class="docutils" />
+<div style="margin-top: 3em; margin-bottom: 3em;"></div></div>
+<div class="section" id="Using-the-brightwind-library-in-a-Jupyter-Notebook">
 <h3>Using the brightwind library in a Jupyter Notebook<a class="headerlink" href="#Using-the-brightwind-library-in-a-Jupyter-Notebook" title="Permalink to this headline">¶</a></h3>
 <p>This, and all the tutorials, will use Jupyter Notebooks as the interface with the library. If you don’t know how to launch a Jupyter Notebook please refer to the end of the <a class="reference external" href="getting_started_on_windows.html#Using-the-brightwind-library-in-Jupyter-notebooks">Getting started on Windows</a> tutorial. If you need to install it then look to the start of that tutorial.</p>
 <p>Once a Jupyter Notebook is opened in your browser, the first thing to do is import the brightwind library.</p>
@@ -803,7 +811,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_introduction_25_0.png" src="../_images/tutorials_introduction_25_0.png" />
+<img alt="../_images/tutorials_introduction_26_0.png" src="../_images/tutorials_introduction_26_0.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -825,7 +833,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_introduction_28_0.png" src="../_images/tutorials_introduction_28_0.png" />
+<img alt="../_images/tutorials_introduction_29_0.png" src="../_images/tutorials_introduction_29_0.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -847,7 +855,7 @@ Cleaning applied. (Please remember to assign the cleaned returned DataFrame to a
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_introduction_31_0.png" src="../_images/tutorials_introduction_31_0.png" />
+<img alt="../_images/tutorials_introduction_32_0.png" src="../_images/tutorials_introduction_32_0.png" />
 </div>
 </div>
 <hr class="docutils" />
@@ -915,7 +923,7 @@ Name: Spd80mN, dtype: float64
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorials_introduction_39_0.png" src="../_images/tutorials_introduction_39_0.png" />
+<img alt="../_images/tutorials_introduction_40_0.png" src="../_images/tutorials_introduction_40_0.png" />
 </div>
 </div>
 <div style="margin-top: 3em; margin-bottom: 3em;"></div><p>And we can export the numerical data in the form of a ‘.tab’ file into the current directory as follows.</p>
