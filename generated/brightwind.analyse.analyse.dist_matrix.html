@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.analyse.dist_matrix &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials/tutorial_welcome.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">brightwind.analyse.analyse.dist_matrix</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="brightwind-analyse-analyse-dist-matrix">
+<h1>brightwind.analyse.analyse.dist_matrix<a class="headerlink" href="#brightwind-analyse-analyse-dist-matrix" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="brightwind.analyse.analyse.dist_matrix">
+<code class="sig-prename descclassname">brightwind.analyse.analyse.</code><code class="sig-name descname">dist_matrix</code><span class="sig-paren">(</span><em class="sig-param">var_series</em>, <em class="sig-param">x_series</em>, <em class="sig-param">y_series</em>, <em class="sig-param">num_bins_x=None</em>, <em class="sig-param">num_bins_y=None</em>, <em class="sig-param">x_bins=None</em>, <em class="sig-param">y_bins=None</em>, <em class="sig-param">x_bin_labels=None</em>, <em class="sig-param">y_bin_labels=None</em>, <em class="sig-param">var_label=None</em>, <em class="sig-param">x_label=None</em>, <em class="sig-param">y_label=None</em>, <em class="sig-param">aggregation_method='%frequency'</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.dist_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the distribution of a variable against two other variables, on an X-Y plane, returning a heat map.
+By default, the X and Y variables are binned in bins of 1. However, this behaviour can be modified by the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var_series</strong> (<em>pandas.Series</em>) – Time-series of the variable whose distribution we need to find.</p></li>
+<li><p><strong>x_series</strong> (<em>pandas.Series</em>) – Time-series of the X variable which we want to bin against, forms columns of distribution.</p></li>
+<li><p><strong>y_series</strong> (<em>pandas.Series</em>) – Time-series of the Y variable which we want to bin against, forms rows of distribution.</p></li>
+<li><p><strong>num_bins_x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of evenly spaced bins to use for x_series. If this and x_bins are not specified, bins
+of width 1 are used.</p></li>
+<li><p><strong>num_bins_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of evenly spaced bins to use for y_series. If this and y_bins are not specified, bins
+of width 1 are used.</p></li>
+<li><p><strong>x_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – (optional) Array of numbers where adjacent elements of array form a bin. Overwrites num_bins_x.
+If set to None derives the min and max from the x_series series and creates evenly spaced number of
+bins specified by num_bins_x.</p></li>
+<li><p><strong>y_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – (optional) Array of numbers where adjacent elements of array form a bin. Overwrites num_bins_y.
+If set to None derives the min and max from the y_series series and creates evenly spaced number of
+bins specified by num_bins_y.</p></li>
+<li><p><strong>x_bin_labels</strong> – (optional) Labels of bins to be used for x_series, uses (bin-start, bin-end] format by
+default.</p></li>
+</ul>
+</dd>
+</dl>
+<p>:type x_bin_labels:list
+:param y_bin_labels: (optional) Labels of bins to be used for y_series, uses (bin-start, bin-end] format by</p>
+<blockquote>
+<div><p>default.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – (Optional) Label to use for variable distributed, by default name of the var_series is used.</p></li>
+<li><p><strong>x_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – (Optional) Label to use for x_label of heat map, by default name of the x_series is used.</p></li>
+<li><p><strong>y_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – (Optional) Label to use for y_label of heat map, by default name of the y_series is used.</p></li>
+<li><p><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><em>function</em>) – Statistical method used to find distribution. It can be mean, max, min, std, count,
+%frequency or a custom function. Computes frequency in percentages by default.</p></li>
+<li><p><strong>return_data</strong> – If True data is also returned with a plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A heat map and a distribution matrix if return_data is True, otherwise just a heat map.</p>
+</dd>
+</dl>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Stephen\Documents\Analysis\demo_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># For distribution of mean wind speed standard deviation against wind speed and temperature</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">dist_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mNStd</span><span class="p">,</span> <span class="n">x_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">y_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="c1"># To change the number of bins</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">dist_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mNStd</span><span class="p">,</span> <span class="n">x_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">y_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">num_bins_x</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_bins_y</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># To specify custom bins</span>
+<span class="n">bw</span><span class="o">.</span><span class="n">dist_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mNStd</span><span class="p">,</span> <span class="n">x_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">y_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span>
+               <span class="n">y_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">41</span><span class="p">],</span> <span class="n">y_bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;low wind&#39;</span><span class="p">,</span> <span class="s1">&#39;medium wind&#39;</span><span class="p">,</span> <span class="s1">&#39;gale&#39;</span><span class="p">,</span> <span class="s1">&#39;storm&#39;</span><span class="p">],</span>
+               <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># For custom aggregation function</span>
+<span class="k">def</span> <span class="nf">custom_agg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">dist_matrix</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mNStd</span><span class="p">,</span> <span class="n">x_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">T2m</span><span class="p">,</span> <span class="n">y_series</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span>
+                      <span class="n">aggregation_method</span><span class="o">=</span><span class="n">custom_agg</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

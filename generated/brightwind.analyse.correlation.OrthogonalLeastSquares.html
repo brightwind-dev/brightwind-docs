@@ -11,16 +11,18 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -88,7 +90,7 @@
 
         </div>
       </div>
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="brightwind-analyse-correlation-orthogonalleastsquares">
 <h1>brightwind.analyse.correlation.OrthogonalLeastSquares<a class="headerlink" href="#brightwind-analyse-correlation-orthogonalleastsquares" title="Permalink to this headline">¶</a></h1>
@@ -118,34 +120,41 @@
 <dd class="field-even"><p>Returns an object representing the model</p>
 </dd>
 </dl>
+<dl class="method">
+<dt id="brightwind.analyse.correlation.OrthogonalLeastSquares.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">ref_spd</em>, <em class="sig-param">target_spd</em>, <em class="sig-param">averaging_prd</em>, <em class="sig-param">coverage_threshold=0.9</em>, <em class="sig-param">preprocess=True</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.correlation.OrthogonalLeastSquares.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.__init__.html#brightwind.analyse.correlation.OrthogonalLeastSquares.__init__" title="brightwind.analyse.correlation.OrthogonalLeastSquares.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.__init__</span></code></a>(ref_spd, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#brightwind.analyse.correlation.OrthogonalLeastSquares.__init__" title="brightwind.analyse.correlation.OrthogonalLeastSquares.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(ref_spd, target_spd, averaging_prd)</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.get_error_metrics.html#brightwind.analyse.correlation.OrthogonalLeastSquares.get_error_metrics" title="brightwind.analyse.correlation.OrthogonalLeastSquares.get_error_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.get_error_metrics</span></code></a>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_error_metrics</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.get_r2.html#brightwind.analyse.correlation.OrthogonalLeastSquares.get_r2" title="brightwind.analyse.correlation.OrthogonalLeastSquares.get_r2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.get_r2</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_r2</span></code>()</p></td>
 <td><p>Returns the r2 score of the model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.linear_func.html#brightwind.analyse.correlation.OrthogonalLeastSquares.linear_func" title="brightwind.analyse.correlation.OrthogonalLeastSquares.linear_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.linear_func</span></code></a>(x)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">linear_func</span></code>(x)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.plot.html#brightwind.analyse.correlation.OrthogonalLeastSquares.plot" title="brightwind.analyse.correlation.OrthogonalLeastSquares.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.plot</span></code></a>([title])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code>([title])</p></td>
 <td><p>For plotting</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.run.html#brightwind.analyse.correlation.OrthogonalLeastSquares.run" title="brightwind.analyse.correlation.OrthogonalLeastSquares.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.run</span></code></a>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code>([show_params])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.show_params.html#brightwind.analyse.correlation.OrthogonalLeastSquares.show_params" title="brightwind.analyse.correlation.OrthogonalLeastSquares.show_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.show_params</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_params</span></code>()</p></td>
 <td><p>Show the dictionary of parameters</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="OrthogonalLeastSquares/brightwind.analyse.correlation.OrthogonalLeastSquares.synthesize.html#brightwind.analyse.correlation.OrthogonalLeastSquares.synthesize" title="brightwind.analyse.correlation.OrthogonalLeastSquares.synthesize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalLeastSquares.synthesize</span></code></a>([ext_input])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthesize</span></code>([ext_input])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -167,7 +176,7 @@
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
     </p>
   </div>
 </footer>

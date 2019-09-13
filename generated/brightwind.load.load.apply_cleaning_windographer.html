@@ -11,16 +11,18 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -88,13 +90,13 @@
 
         </div>
       </div>
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="brightwind-load-load-apply-cleaning-windographer">
 <h1>brightwind.load.load.apply_cleaning_windographer<a class="headerlink" href="#brightwind-load-load-apply-cleaning-windographer" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="brightwind.load.load.apply_cleaning_windographer">
-<code class="sig-prename descclassname">brightwind.load.load.</code><code class="sig-name descname">apply_cleaning_windographer</code><span class="sig-paren">(</span><em class="sig-param">data, windog_cleaning_file, flags_to_exclude=['Synthesized'], replacement_text='NaN'</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.load.load.apply_cleaning_windographer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">brightwind.load.load.</code><code class="sig-name descname">apply_cleaning_windographer</code><span class="sig-paren">(</span><em class="sig-param">data, windog_cleaning_file, inplace=False, flags_to_exclude=['Synthesized'], replacement_text='NaN'</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.load.load.apply_cleaning_windographer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply cleaning to a DataFrame using the Windographer flagging log file after Windographer was used to clean and
 filter the data.
 The flagged data will be replaced with NaN values which then do not appear in any plots or effect calculations.</p>
@@ -104,6 +106,10 @@ The flagged data will be replaced with NaN values which then do not appear in an
 <li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Data to be cleaned.</p></li>
 <li><p><strong>windog_cleaning_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – File path of the Windographer flagging log file which contains the list of sensor
 names along with the start and end timestamps of the periods that are flagged.</p></li>
+<li><p><strong>inplace</strong> (<em>Boolean</em>) – If ‘inplace’ is True, the original data, ‘data’, will be modified and and replaced with the cleaned
+data. If ‘inplace’ is False, the original data will not be touched and instead a new object
+containing the cleaned data is created. To store this cleaned data, please ensure it is assigned
+to a new variable.</p></li>
 <li><p><strong>flags_to_exclude</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>]</em><em>, </em><em>default</em><em> [</em><em>'Synthesized'</em><em>]</em>) – List of flags you do not want to use to clean the data e.g. Synthesized.</p></li>
 <li><p><strong>replacement_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>default 'NaN'</em>) – Text used to replace the flagged data.</p></li>
 </ul>
@@ -117,12 +123,19 @@ names along with the start and end timestamps of the periods that are flagged.</
 </dl>
 <p><strong>Example usage</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
-<span class="n">windog_cleaning_file</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\some\folder\windog_cleaning_file.txt&#39;</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning_windographer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">windog_cleaning_file</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
+<dl class="simple">
+<dt>Load data:</dt><dd><p>data = bw.load_csv(r’C:UsersStephenDocumentsAnalysisdemo_data’)
+windog_cleaning_file = r’C:somefolderwindog_cleaning_file.txt’</p>
+</dd>
+<dt>To apply cleaning to ‘data’ and store the cleaned data in ‘data_cleaned’:</dt><dd><p>data_cleaned = bw.apply_cleaning_windographer(data, windog_cleaning_file)
+print(data_cleaned)</p>
+</dd>
+<dt>To modify ‘data’ and replace it with the cleaned data:</dt><dd><p>bw.apply_cleaning_windographer(data, windog_cleaning_file, inplace=True)
+print(data)</p>
+</dd>
+</dl>
 <p>Apply cleaning where you do not want the flag ‘Tower shading’ to be used:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cleaning_file</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\some\folder\cleaning_file.csv&#39;</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">apply_cleaning_windographer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">windog_cleaning_file</span><span class="p">,</span>
@@ -147,7 +160,7 @@ names along with the start and end timestamps of the periods that are flagged.</
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
     </p>
   </div>
 </footer>

@@ -11,16 +11,18 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -88,13 +90,13 @@
 
         </div>
       </div>
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="brightwind-analyse-analyse-ti-by-speed">
 <h1>brightwind.analyse.analyse.TI.by_speed<a class="headerlink" href="#brightwind-analyse-analyse-ti-by-speed" title="Permalink to this headline">¶</a></h1>
 <dl class="method">
 <dt id="brightwind.analyse.analyse.TI.by_speed">
-<em class="property">static </em><code class="sig-prename descclassname">TI.</code><code class="sig-name descname">by_speed</code><span class="sig-paren">(</span><em class="sig-param">wspd</em>, <em class="sig-param">wspd_std</em>, <em class="sig-param">speed_bin_array=array([ -0.5</em>, <em class="sig-param">0.5</em>, <em class="sig-param">1.5</em>, <em class="sig-param">2.5</em>, <em class="sig-param">3.5</em>, <em class="sig-param">4.5</em>, <em class="sig-param">5.5</em>, <em class="sig-param">6.5</em>, <em class="sig-param">7.5</em>, <em class="sig-param">8.5</em>, <em class="sig-param">9.5</em>, <em class="sig-param">10.5</em>, <em class="sig-param">11.5</em>, <em class="sig-param">12.5</em>, <em class="sig-param">13.5</em>, <em class="sig-param">14.5</em>, <em class="sig-param">15.5</em>, <em class="sig-param">16.5</em>, <em class="sig-param">17.5</em>, <em class="sig-param">18.5</em>, <em class="sig-param">19.5</em>, <em class="sig-param">20.5</em>, <em class="sig-param">21.5</em>, <em class="sig-param">22.5</em>, <em class="sig-param">23.5</em>, <em class="sig-param">24.5</em>, <em class="sig-param">25.5</em>, <em class="sig-param">26.5</em>, <em class="sig-param">27.5</em>, <em class="sig-param">28.5</em>, <em class="sig-param">29.5</em>, <em class="sig-param">30.5</em>, <em class="sig-param">31.5</em>, <em class="sig-param">32.5</em>, <em class="sig-param">33.5</em>, <em class="sig-param">34.5</em>, <em class="sig-param">35.5</em>, <em class="sig-param">36.5</em>, <em class="sig-param">37.5</em>, <em class="sig-param">38.5</em>, <em class="sig-param">39.5</em>, <em class="sig-param">40.5])</em>, <em class="sig-param">speed_bin_labels=range(0</em>, <em class="sig-param">41)</em>, <em class="sig-param">percentile=90</em>, <em class="sig-param">IEC_class=None</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.TI.by_speed" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-prename descclassname">TI.</code><code class="sig-name descname">by_speed</code><span class="sig-paren">(</span><em class="sig-param">wspd</em>, <em class="sig-param">wspd_std</em>, <em class="sig-param">speed_bin_array=array([-0.5</em>, <em class="sig-param">0.5</em>, <em class="sig-param">1.5</em>, <em class="sig-param">2.5</em>, <em class="sig-param">3.5</em>, <em class="sig-param">4.5</em>, <em class="sig-param">5.5</em>, <em class="sig-param">6.5</em>, <em class="sig-param">7.5</em>, <em class="sig-param">8.5</em>, <em class="sig-param">9.5</em>, <em class="sig-param">10.5</em>, <em class="sig-param">11.5</em>, <em class="sig-param">12.5</em>, <em class="sig-param">13.5</em>, <em class="sig-param">14.5</em>, <em class="sig-param">15.5</em>, <em class="sig-param">16.5</em>, <em class="sig-param">17.5</em>, <em class="sig-param">18.5</em>, <em class="sig-param">19.5</em>, <em class="sig-param">20.5</em>, <em class="sig-param">21.5</em>, <em class="sig-param">22.5</em>, <em class="sig-param">23.5</em>, <em class="sig-param">24.5</em>, <em class="sig-param">25.5</em>, <em class="sig-param">26.5</em>, <em class="sig-param">27.5</em>, <em class="sig-param">28.5</em>, <em class="sig-param">29.5</em>, <em class="sig-param">30.5</em>, <em class="sig-param">31.5</em>, <em class="sig-param">32.5</em>, <em class="sig-param">33.5</em>, <em class="sig-param">34.5</em>, <em class="sig-param">35.5</em>, <em class="sig-param">36.5</em>, <em class="sig-param">37.5</em>, <em class="sig-param">38.5</em>, <em class="sig-param">39.5</em>, <em class="sig-param">40.5])</em>, <em class="sig-param">speed_bin_labels=range(0</em>, <em class="sig-param">41)</em>, <em class="sig-param">percentile=90</em>, <em class="sig-param">IEC_class=None</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.TI.by_speed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accepts a wind speed series and its standard deviation, calculates turbulence intensity (TI) and returns the
 distribution by of TI by speed bins</p>
 <dl class="field-list simple">
@@ -143,7 +145,7 @@ This may need to be placed in a separate function when updated IEC standard is r
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
     </p>
   </div>
 </footer>

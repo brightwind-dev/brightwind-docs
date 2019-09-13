@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>brightwind.analyse.analyse.dist_of_wind_speed &#8212; brightwind  documentation</title>
+    <title>brightwind.analyse.plot._ColorPalette &#8212; brightwind  documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -85,38 +85,65 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">brightwind.analyse.analyse.dist_of_wind_speed</a></li>
+<li><a class="reference internal" href="#">brightwind.analyse.plot._ColorPalette</a></li>
 </ul>
 
         </div>
       </div>
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="brightwind-analyse-analyse-dist-of-wind-speed">
-<h1>brightwind.analyse.analyse.dist_of_wind_speed<a class="headerlink" href="#brightwind-analyse-analyse-dist-of-wind-speed" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="brightwind.analyse.analyse.dist_of_wind_speed">
-<code class="sig-prename descclassname">brightwind.analyse.analyse.</code><code class="sig-name descname">dist_of_wind_speed</code><span class="sig-paren">(</span><em class="sig-param">wspd</em>, <em class="sig-param">max_speed=30</em>, <em class="sig-param">max_y_value=None</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.dist_of_wind_speed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accepts a wind speed time series and computes it’s frequency distribution. That is, how often does the wind
-blow within each wind speed bin.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wspd</strong> (<em>pd.Series</em>) – Time series of the wind speed variable whose distribution we need to find.</p></li>
-<li><p><strong>max_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max wind speed to consider, default is 30 m/s.</p></li>
-<li><p><strong>max_y_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Max value for the y-axis of the plot to be set. Default will be relative to max calculated
-data value.</p></li>
-<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
-</ul>
+  <div class="section" id="brightwind-analyse-plot-colorpalette">
+<h1>brightwind.analyse.plot._ColorPalette<a class="headerlink" href="#brightwind-analyse-plot-colorpalette" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="brightwind.analyse.plot._ColorPalette">
+<em class="property">class </em><code class="sig-prename descclassname">brightwind.analyse.plot.</code><code class="sig-name descname">_ColorPalette</code><a class="headerlink" href="#brightwind.analyse.plot._ColorPalette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color palette to be used for plotting graphs and tables. Colors can be reset by using</p>
+<dl class="simple">
+<dt>::</dt><dd><p>import brightwind as bw
+bw.analyse.plot.COLOR_PALETTE.primary = ‘#3366CC’</p>
 </dd>
 </dl>
-<p><strong>Example usage</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_data</span><span class="p">)</span>
+<p>Color are called ‘primary’, secondary’, ‘tertiary’, etc. Lighter and darker shades of primary are called
+‘primary_10’ for 10% of primary. Gradient goes from 0% (darkest) to 100% (lightest). See
+<a class="reference external" href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a> for more info.</p>
+<dl class="method">
+<dt id="brightwind.analyse.plot._ColorPalette.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.plot._ColorPalette.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color palette to be used for plotting graphs and tables. Colors can be reset by using</p>
+<dl class="simple">
+<dt>::</dt><dd><p>import brightwind as bw
+bw.analyse.plot.COLOR_PALETTE.primary = ‘#3366CC’</p>
+</dd>
+</dl>
+<p>Color are called ‘primary’, secondary’, ‘tertiary’, etc. Lighter and darker shades of primary are called
+‘primary_10’ for 10% of primary. Gradient goes from 0% (darkest) to 100% (lightest). See
+<a class="reference external" href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a> for more info.</p>
+</dd></dl>
 
-<span class="n">freq_dist_plot</span><span class="p">,</span> <span class="n">freq_dist</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">dist_of_wind_speed</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Spd80mN</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#brightwind.analyse.plot._ColorPalette.__init__" title="brightwind.analyse.plot._ColorPalette.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<td><p>Color palette to be used for plotting graphs and tables.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_map</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

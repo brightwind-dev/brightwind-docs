@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>brightwind.analyse.shear.Shear.TimeSeries &#8212; brightwind  documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          brightwind</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tutorials/tutorial_welcome.html">Tutorials</a></li>
+                <li><a href="../api.html">API</a></li>
+                <li><a href="../community.html">Community</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">brightwind.analyse.shear.Shear.TimeSeries</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="brightwind-analyse-shear-shear-timeseries">
+<h1>brightwind.analyse.shear.Shear.TimeSeries<a class="headerlink" href="#brightwind-analyse-shear-shear-timeseries" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="brightwind.analyse.shear.Shear.TimeSeries">
+<em class="property">class </em><code class="sig-prename descclassname">brightwind.analyse.shear.Shear.</code><code class="sig-name descname">TimeSeries</code><span class="sig-paren">(</span><em class="sig-param">wspds</em>, <em class="sig-param">heights</em>, <em class="sig-param">min_speed=3</em>, <em class="sig-param">calc_method='power_law'</em>, <em class="sig-param">max_plot_height=None</em>, <em class="sig-param">maximise_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.shear.Shear.TimeSeries" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Calculates alpha, using the power law, or the roughness coefficient, using the log law, for each timestamp
+of a wind series.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wspds</strong> (<em>pandas.DataFrame</em><em>, </em><em>list of pandas.Series</em><em> or </em><em>list.</em>) – pandas DataFrame, list of pandas.Series or list of wind speeds to be used for calculating shear.</p></li>
+<li><p><strong>heights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of anemometer heights.</p></li>
+<li><p><strong>min_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Only speeds higher than this would be considered for calculating shear, default is 3.</p></li>
+<li><p><strong>calc_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – method to use for calculation, either ‘power_law’ (returns alpha) or ‘log_law’
+(returns the roughness coefficient).</p></li>
+<li><p><strong>max_plot_height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – height to which the wind profile plot is extended.</p></li>
+<li><p><strong>maximise_data</strong> (<em>Boolean</em>) – If maximise_data is True, calculations will be carried out on all data where two or
+more anemometers readings exist for a timestamp. If False, calculations will only be
+carried out on timestamps where readings exist for all anemometers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:return TimeSeries object containing calculated alpha/roughness coefficient values, a plot</dt><dd><p>and other data.</p>
+</dd>
+</dl>
+<p>:rtype TimeSeries object</p>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="c1"># Load anemometer data to calculate exponents</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Stephen</span>\<span class="n">Documents</span>\<span class="n">Analysis</span>\<span class="n">demo_data</span><span class="p">)</span>
+<span class="n">anemometers</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span><span class="s1">&#39;Spd40mS&#39;</span><span class="p">]]</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># Using with a DataFrame of wind speeds</span>
+<span class="n">timeseries_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">maximise_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">timeseries_log_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">calc_method</span><span class="o">=</span><span class="s1">&#39;log_law&#39;</span><span class="p">,</span>
+                                         <span class="n">max_plot_height</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+
+<span class="c1"># Get the alpha or roughness values calculated</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">alpha</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">roughness</span>
+
+<span class="c1"># View plot</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">plot</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">plot</span>
+
+<span class="c1"># View input anemometer data</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">wspds</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">wspds</span>
+
+<span class="c1"># View other information</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="brightwind.analyse.shear.Shear.TimeSeries.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">wspds</em>, <em class="sig-param">heights</em>, <em class="sig-param">min_speed=3</em>, <em class="sig-param">calc_method='power_law'</em>, <em class="sig-param">max_plot_height=None</em>, <em class="sig-param">maximise_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.shear.Shear.TimeSeries.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Calculates alpha, using the power law, or the roughness coefficient, using the log law, for each timestamp
+of a wind series.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wspds</strong> (<em>pandas.DataFrame</em><em>, </em><em>list of pandas.Series</em><em> or </em><em>list.</em>) – pandas DataFrame, list of pandas.Series or list of wind speeds to be used for calculating shear.</p></li>
+<li><p><strong>heights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of anemometer heights.</p></li>
+<li><p><strong>min_speed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Only speeds higher than this would be considered for calculating shear, default is 3.</p></li>
+<li><p><strong>calc_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – method to use for calculation, either ‘power_law’ (returns alpha) or ‘log_law’
+(returns the roughness coefficient).</p></li>
+<li><p><strong>max_plot_height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – height to which the wind profile plot is extended.</p></li>
+<li><p><strong>maximise_data</strong> (<em>Boolean</em>) – If maximise_data is True, calculations will be carried out on all data where two or
+more anemometers readings exist for a timestamp. If False, calculations will only be
+carried out on timestamps where readings exist for all anemometers.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:return TimeSeries object containing calculated alpha/roughness coefficient values, a plot</dt><dd><p>and other data.</p>
+</dd>
+</dl>
+<p>:rtype TimeSeries object</p>
+<p><strong>Example usage</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="c1"># Load anemometer data to calculate exponents</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Stephen</span>\<span class="n">Documents</span>\<span class="n">Analysis</span>\<span class="n">demo_data</span><span class="p">)</span>
+<span class="n">anemometers</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Spd80mS&#39;</span><span class="p">,</span> <span class="s1">&#39;Spd60mS&#39;</span><span class="p">,</span><span class="s1">&#39;Spd40mS&#39;</span><span class="p">]]</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+
+<span class="c1"># Using with a DataFrame of wind speeds</span>
+<span class="n">timeseries_power_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">maximise_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">timeseries_log_law</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">Shear</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">anemometers</span><span class="p">,</span> <span class="n">heights</span><span class="p">,</span> <span class="n">calc_method</span><span class="o">=</span><span class="s1">&#39;log_law&#39;</span><span class="p">,</span>
+                                         <span class="n">max_plot_height</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+
+<span class="c1"># Get the alpha or roughness values calculated</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">alpha</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">roughness</span>
+
+<span class="c1"># View plot</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">plot</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">plot</span>
+
+<span class="c1"># View input anemometer data</span>
+<span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">wspds</span>
+<span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">wspds</span>
+
+<span class="c1"># View other information</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">timeseries_power_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">timeseries_log_law</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#brightwind.analyse.shear.Shear.TimeSeries.__init__" title="brightwind.analyse.shear.Shear.TimeSeries.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(wspds, heights[, min_speed, …])</p></td>
+<td><p>Calculates alpha, using the power law, or the roughness coefficient, using the log law, for each timestamp</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(wspds, height, shear_to)</p></td>
+<td><p><p>”</p>
+</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">roughness</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, BrightWind Analysis.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

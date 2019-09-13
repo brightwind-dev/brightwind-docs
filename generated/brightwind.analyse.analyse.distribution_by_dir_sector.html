@@ -11,16 +11,18 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -88,55 +90,10 @@
 
         </div>
       </div>
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="brightwind-analyse-analyse-distribution-by-dir-sector">
 <h1>brightwind.analyse.analyse.distribution_by_dir_sector<a class="headerlink" href="#brightwind-analyse-analyse-distribution-by-dir-sector" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="brightwind.analyse.analyse.distribution_by_dir_sector">
-<code class="sig-prename descclassname">brightwind.analyse.analyse.</code><code class="sig-name descname">distribution_by_dir_sector</code><span class="sig-paren">(</span><em class="sig-param">var_series</em>, <em class="sig-param">direction_series</em>, <em class="sig-param">sectors=12</em>, <em class="sig-param">aggregation_method='%frequency'</em>, <em class="sig-param">direction_bin_array=None</em>, <em class="sig-param">direction_bin_labels=None</em>, <em class="sig-param">return_data=False</em><span class="sig-paren">)</span><a class="headerlink" href="#brightwind.analyse.analyse.distribution_by_dir_sector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Derive the distribution of a time series variable with respect to wind direction sectors. For example, if time
-series of wind speeds is sent, it produces a wind rose.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>var_series</strong> (<em>pd.Series</em>) – Time series of the variable whose distribution we need to find.</p></li>
-<li><p><strong>direction_series</strong> (<em>pd.Series</em>) – Time series of wind directions between [0-360].</p></li>
-<li><p><strong>sectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of direction sectors to bin in to. The first sector is centered at 0 by default. To change
-that behaviour specify direction_bin_array, which overwrites sectors.</p></li>
-<li><p><strong>aggregation_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Statistical method used to find distribution it can be mean, max, min, std, count,
-%frequency or a custom function. Computes frequency in percentages by default.</p></li>
-<li><p><strong>direction_bin_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Optional, to change default behaviour of first sector centered at 0 assign an array of
-bins to this.</p></li>
-<li><p><strong>direction_bin_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>array</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Optional, you can specify an array of labels to be used for the bins. Uses string
-labels of the format ‘30-90’ by default. Overwrites sectors.</p></li>
-<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Set to True if you want the data returned.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A plot of a rose and a DataFrame/Series with wind direction sector as row indexes and columns with
-statistics chosen by aggregation_method.</p>
-</dd>
-</dl>
-<p><strong>Example usage</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">brightwind</span> <span class="k">as</span> <span class="nn">bw</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">load_campbell_scientific</span><span class="p">(</span><span class="n">bw</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">demo_campbell_scientific_site_data</span><span class="p">)</span>
-
-<span class="n">rose</span><span class="p">,</span> <span class="n">distribution</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1">#For using custom bins</span>
-<span class="n">rose</span><span class="p">,</span> <span class="n">distribution</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span>
-                        <span class="n">direction_bin_array</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">130</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">360</span><span class="p">],</span>
-                        <span class="n">direction_bin_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;northerly&#39;</span><span class="p">,</span><span class="s1">&#39;easterly&#39;</span><span class="p">,</span><span class="s1">&#39;southerly&#39;</span><span class="p">,</span><span class="s1">&#39;westerly&#39;</span><span class="p">],</span>
-                        <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1">#For measuring standard deviation in a sector rather than frequency in percentage (default)</span>
-<span class="n">rose</span><span class="p">,</span> <span class="n">distribution</span> <span class="o">=</span> <span class="n">bw</span><span class="o">.</span><span class="n">distribution_by_dir_sector</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Spd40mN</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Dir38mS</span><span class="p">,</span> <span class="n">aggregation_method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span>
-    <span class="n">return_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </div>
 
 
@@ -152,7 +109,7 @@ statistics chosen by aggregation_method.</p>
     </p>
     <p>
         &copy; Copyright 2019, BrightWind Analysis.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.0.<br/>
     </p>
   </div>
 </footer>
